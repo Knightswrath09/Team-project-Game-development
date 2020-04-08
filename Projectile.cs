@@ -28,6 +28,8 @@ namespace TeamProject
             set { velocity = value; }
         }
 
+        //maybe force a purple in if ot doesnt randpmly generate?
+        //***DUSTIN
         public Projectile(CombatSpriteColors newColor, Directions newDirection, int currentLevel)
         {
             SpriteColor = newColor;
@@ -44,6 +46,8 @@ namespace TeamProject
         /// <summary>
         /// moves projectile towards ship at velocity according to level
         /// </summary>
+        
+        //*****IRIS
         public void Move()
         {
             if(Direction == Directions.kBottom)

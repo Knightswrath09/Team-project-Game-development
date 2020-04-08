@@ -24,6 +24,8 @@ namespace TeamProject
             set { hp = value; }
         }
 
+        ///***CARLYN
+        //ShipSprite constructor
 
     }
 }

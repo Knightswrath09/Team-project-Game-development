@@ -109,8 +109,10 @@ namespace TeamProject
         }
 
         //moves all of the projectiles currently on the screen with Move() in projectile class
+        //***CARLYN
         void MoveProjectiles(List<Projectile> projectiles)
         {
+            //
             //for each of the projectiles in the list, trigger its move function
         }
 
@@ -124,6 +126,7 @@ namespace TeamProject
         /// -adds a hit to the ship if it is blue red or purple
         /// -power up if it is green
         /// </summary>
+        //***IRIS
         WinStatus CheckCollision(List<Projectile> projectiles, List<Shield> shields)
         {
             //cheack each projectile in list with each shield in list
@@ -131,7 +134,6 @@ namespace TeamProject
             //returns winstatus lose if hp of ship == 0
             //returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
             //returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
-
         }
 
         //variables for time counting
@@ -149,7 +151,8 @@ namespace TeamProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if(CurrentScreenState == ScreenState.kMain_Menu)
+            //***MENU WILL BE IMPLEMENTED AFTER THE PROTOTYPE PHASE
+            /*if(CurrentScreenState == ScreenState.kMain_Menu)
             {
                 //main menu logic
             }
@@ -177,7 +180,7 @@ namespace TeamProject
             }
 
             else if (CurrentScreenState == ScreenState.kGame_Play)
-            {
+            {*/
                 if (!GameStarted)
                 {
                     //have player name their ship
@@ -207,6 +210,7 @@ namespace TeamProject
                         MoveProjectiles(CurrentProjectiles);
 
                         //allow player to move shields
+                        
 
                         //check collisions and if the the winstate changes
                         //returns Winstatus inProgress if no change
@@ -221,19 +225,19 @@ namespace TeamProject
                     {
 
                     }
-                    else if (CurrentWinStatus == WinStatus.kWin_Level)
+                    /*else if (CurrentWinStatus == WinStatus.kWin_Level)
                     {
                         //increase current level
                         //change shield list if necessary
                         
-                    }
+                    }*/
                     else if (CurrentWinStatus == WinStatus.kWin_Game)
                     {
 
                     }
                 }
-            }
-
+            //}
+        
             base.Update(gameTime);
         }
 
@@ -245,7 +249,8 @@ namespace TeamProject
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            if(CurrentScreenState == ScreenState.kMain_Menu)
+            //MENUS WILL BE IMPLEMENTED AFTER PROTOTYPE PHASE
+            /*if(CurrentScreenState == ScreenState.kMain_Menu)
             {
                 //draw main menu
             }
@@ -258,7 +263,7 @@ namespace TeamProject
                 //draw pause menu
             }
             else if(CurrentScreenState == ScreenState.kGame_Play)
-            {
+            {*/
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
                     //draw all of the gameplay sprites and stats
@@ -267,15 +272,15 @@ namespace TeamProject
                 {
                     //draw "you lose!" screen
                 }
-                else if (CurrentWinStatus == WinStatus.kWin_Level)
+                /*else if (CurrentWinStatus == WinStatus.kWin_Level)
                 {
                     //draw win level screen
-                }
+                }*/
                 else if(CurrentWinStatus == WinStatus.kWin_Game)
                 {
                     //draw win game screen
                 }
-            }
+            //}
 
             base.Draw(gameTime);
         }

@@ -12,6 +12,7 @@ namespace TeamProject
     {
         private Texture2D texture;
         private Vector2 position;
+        private int indexInList;
         public Vector2 Position
         {
             get { return position; }
@@ -23,17 +24,22 @@ namespace TeamProject
         //red and blue not visible and purple visible when red and blue are overlapping
         public bool visible { get; set; }
 
-        public Shield(CombatSpriteColors newColor, Directions newDirection)
+        //***SOPHIE
+        public Shield(CombatSpriteColors newColor, Directions newDirection, int newIndex)
         {
             SpriteColor = newColor;
             Direction = newDirection;
-            //texture and position will depend on color and direction
+            indexInList = newIndex;
+            
+            //texture and position will depend on color and direction respectively
         }
 
-        public void MoveShield(Directions newDirection, List<Shield> otherShields)
+        //***SOPHIE
+        public void MoveShield(List<Shield> otherShields)
         {
-            //use input recieved in game class to move respective shield to the correct position
+            //use input recieved in the game class to move respective shield to the correct position
             //check if shields overlap and change visibilty if needed 
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)
