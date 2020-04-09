@@ -39,7 +39,7 @@ namespace TeamProject
     }
     public combatsprites(int color, int direction)
     {
-        int RandomColor = Random(0.14);
+        int RandomColor = Random(0, 14);
         int RandomDirection = Random(0, 5);
         //color randomization
         if (currentlevel.typesOfProjectiles == Level.ProjectileTypes.kRed_Only)
