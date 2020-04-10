@@ -27,26 +27,12 @@ namespace TeamProject
             get { return velocity; }
             set { velocity = value; }
         }
-        private Vector2 ScrSize;
-        public Vector2 ScreenSize
-        {
-            get { return ScrSize; }
-            set { ScrSize = ScreenSize; }
-        }
-        private int spritecolor;
-        public int SpriteColor
-        {
-            get { return spritecolor;}
-            set { spritecolor = SpriteColor; }
-        }
 
         //maybe force a purple in if ot doesnt randpmly generate?
         //***DUSTIN
-        public Projectile(CombatSpriteColors newColor, Directions newDirection, Level currentLevel)
+        public Projectile(Level currentLevel)
         {
-
-            SpriteColor = newColor;
-            Direction = newDirection;
+            
             //texture and position will depend on color and direction
             //velocity will depnd on the current level (if we decide that hte projectiles will move faster as the player advances levels)
         }
