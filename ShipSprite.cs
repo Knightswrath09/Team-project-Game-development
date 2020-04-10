@@ -39,9 +39,9 @@ namespace TeamProject
             
         ///***CARLYN
         //ShipSprite constructor
-        ShipSprite ship1 = new ShipSprite("GoodStar");
+        ShipSprite = new ShipSprite("GoodStar");
         
-        ship1.name = "GoodStar";
+        ShipSprite.name = "GoodStar";
        
         
     }
