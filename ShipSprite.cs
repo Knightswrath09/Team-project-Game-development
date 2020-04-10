@@ -50,9 +50,6 @@ namespace TeamProject
 size = newSize;
             
         ShipSprite = new ShipSprite("GoodStar");
-        
-        ShipSprite.name = "GoodStar";
        
-        
     }
 }
