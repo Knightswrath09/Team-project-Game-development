@@ -106,14 +106,17 @@ namespace TeamProject
             //create projectile with random color and direction according to the current level
             //add new projectile to the projectile list with CurrentProjectiles.Add(newProjectile)
             //use CurrentProjectiles.Count() to determine the index it was placed at, will be placed at the end of the list
+            Projectile newProjectile = new Projectile(currLevel);
+            CurrentProjectiles.Add(newProjectile);
         }
 
         //moves all of the projectiles currently on the screen with Move() in projectile class
         //***CARLYN
         void MoveProjectiles(List<Projectile> projectiles)
         {
-            //
-            //for each of the projectiles in the list, trigger its move function
+            
+            for (int i = 0; i < projectiles.Count; ++i)
+                projectiles[i].Move();
         }
 
         /// <summary>

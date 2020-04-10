@@ -32,7 +32,7 @@ namespace TeamProject
             set { firedProjectiles = value; }
         }
 
-        //so we know which projectiles to fire in this level
+        //so we know which projectiles to fire in this level. all of these include green as well
         public enum ProjectileTypes
         {
             kRed_Only = 0,
