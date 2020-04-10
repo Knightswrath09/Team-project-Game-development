@@ -35,7 +35,11 @@ namespace TeamProject
         {
             get(return Size);
         }
-        
+        private Vector2 Position;
+        public Vector2 Position
+        {
+            get(return Position);
+        }
             
         ///***CARLYN
         //ShipSprite constructor
