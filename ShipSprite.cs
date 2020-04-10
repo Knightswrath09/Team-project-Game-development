@@ -15,10 +15,7 @@ namespace TeamProject
         {
             get { return name; }
         }
-        public ship1 (string name) 
-        {
-            this.name = name;
-        }
+       
         
         private Texture2D texture; //ship texture
         private Vector2 position; //ship position
