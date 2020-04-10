@@ -33,9 +33,12 @@ namespace TeamProject
             get { return screensize; }
             set { screensize = new Vector2(ScreenWidth, ScreenHeight); }
         }
+
+        private Vector2 size { get; set; }
+        public Vector2 Size { get { return size; } set { size = Size; } }
         //maybe force a purple in if ot doesnt randpmly generate?
         //***DUSTIN
-        public Projectile(Level currentLevel)
+        public Projectile(Level currentLevel, Vector2 screens, Vector2 siz)
         {
             int RandomColor = Random(0, 14); //random for color
             int RandomDirection = Random(0, 5); //random for direction
@@ -78,6 +81,8 @@ namespace TeamProject
                 direction = CombatSprites.Directions.kRight;
             SpriteColor = color;
             Direction = direction;
+            Screensize = screens;
+            Size = siz;
             //texture and position will depend on color and direction
             //velocity will depnd on the current level (if we decide that hte projectiles will move faster as the player advances levels)
         }
