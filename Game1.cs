@@ -108,6 +108,7 @@ namespace TeamProject
             //use CurrentProjectiles.Count() to determine the index it was placed at, will be placed at the end of the list
             Projectile newProjectile = new Projectile(currLevel);
             CurrentProjectiles.Add(newProjectile);
+            CurrentProjectiles.Count();
         }
 
         //moves all of the projectiles currently on the screen with Move() in projectile class
