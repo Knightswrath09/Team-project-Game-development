@@ -49,7 +49,7 @@ namespace TeamProject
       screenSize = newScreenSize;
       size = newSize;
       position = newPosition;  
-        ShipSprite = new ShipSprite("GoodStar");
+      ShipSprite = new ShipSprite("GoodStar");
         
        
     }
