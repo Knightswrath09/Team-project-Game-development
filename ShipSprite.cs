@@ -43,7 +43,7 @@ namespace TeamProject
             
         ///***CARLYN
         //ShipSprite constructor
-        public ShipSprite(Vector2 newScreenSize, Vector2 newSize, string newName)
+        public ShipSprite(Vector2 newScreenSize, Vector2 newSize, Vector2 newPosition, string newName)
         {
       
       screenSize = newScreenSize;
