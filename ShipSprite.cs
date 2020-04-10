@@ -15,6 +15,11 @@ namespace TeamProject
         {
             get { return name; }
         }
+        public ship1 (string name) 
+        {
+            this.name = name;
+        }
+        
         private Texture2D texture; //ship texture
         private Vector2 position; //ship position
         private int hp; //field for hit point
@@ -23,9 +28,24 @@ namespace TeamProject
             get { return hp; }
             set { hp = value; }
         }
-
+        private Vector2 screenSize;
+        public Vector2  screenSize
+        {
+            get(return screenSize);
+        }
+        private Vector2 size;
+        public Vector2 size
+        {
+            get(return size);
+        }
+        
+            
         ///***CARLYN
         //ShipSprite constructor
-
+        ShipSprite ship1 = new ShipSprite("GoodStar");
+        
+        ship1.name = "GoodStar";
+       
+        
     }
 }
