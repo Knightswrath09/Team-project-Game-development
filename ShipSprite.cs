@@ -25,15 +25,15 @@ namespace TeamProject
             get { return hp; }
             set { hp = value; }
         }
-        private Vector2 screenSize;
-        public Vector2  screenSize
+        private Vector2 ScreenSize;
+        public Vector2  ScreenSize
         {
-            get(return screenSize);
+            get(return ScreenSize);
         }
-        private Vector2 size;
-        public Vector2 size
+        private Vector2 Size;
+        public Vector2 Size
         {
-            get(return size);
+            get(return Size);
         }
         
             
