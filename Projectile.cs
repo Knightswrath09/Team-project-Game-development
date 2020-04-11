@@ -95,15 +95,31 @@ namespace TeamProject
         /// <summary>
         /// moves projectile towards ship at velocity according to level
         /// </summary>
-        
         //*****IRIS
         public void Move()
         {
+            ///If the projectile is coming from the bottom of the screen, move it up
             if(Direction == Directions.kBottom)
             {
-                //move projectile up
+                velocity = new Vector2(velocity.X, -velocity.Y);
             }
-            //if statements and logic for remaiing directions
+            ///If it's coming from the top, move it down
+            if (Direction == Directions.kTop)
+            {
+                velocity = new Vector2(velocity.X, -velocity.Y);
+            }
+            ///If it's coming from the left, move it right
+            if (Direction == Directions.kLeft)
+            {
+                velocity = new Vector2(-velocity.X, velocity.Y);
+            }
+            ///If it's coming from the right, move it left
+            if (Direction == Directions.kRight)
+            {
+                velocity = new Vector2(-velocity.X, velocity.Y);
+            }
+            ///adds the adjusted velocity to the current position
+            position += velocity;
         }
     }
 }
