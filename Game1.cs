@@ -119,7 +119,6 @@ namespace TeamProject
             for (int i = 0; i < projectiles.Count; ++i)
                 projectiles[i].Move();
         }
-
         /// <summary>
         /// checks collision between projectiles, shields, and ship
         /// returns result of any collisions
@@ -130,14 +129,40 @@ namespace TeamProject
         /// -adds a hit to the ship if it is blue red or purple
         /// -power up if it is green
         /// </summary>
+        
         //***IRIS
+        /// <summary>
+        /// check each projectile in list with each shield in list
+        ///returns Winstatus inProgress if no change
+        ///returns winstatus lose if hp of ship == 0
+        ///returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
+        ///returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
+        /// </summary>
         WinStatus CheckCollision(List<Projectile> projectiles, List<Shield> shields)
         {
-            //cheack each projectile in list with each shield in list
-            //returns Winstatus inProgress if no change
-            //returns winstatus lose if hp of ship == 0
-            //returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
-            //returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
+            for (int i = 0; i <= CurrentProjectiles.Count; i++) {
+                if ((Projectile.Directions == CombatSprites.Directions.kBottom) && (CurrentShield == CurrentShields[i].Size.X)) {
+                    CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                }
+                if ((Projectile.Directions == CombatSprites.Directions.kTop) && (CurrentShield == CurrentShields[i].Size.X)) {
+                    CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                }
+                if ((Projectile.Directions == CombatSprites.Directions.kLeft) && (CurrentShield == CurrentShields[i].Size.Y)) {
+                    CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                }
+                if ((Projectile.Directions == CombatSprites.Directions.kRight) && (CurrentShield == CurrentShields[i].Size.Y)) {
+                    CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                }
+            }
+            if (ShipSprite.HP == 0) {
+                CurrentWinStatus = WinStatus.kLose;
+            }
+            if (CurrentLevel.FiredProjectiles == CurrentLevel.TotalProjectiles) {
+                CurrentWinStatus = WinStatus.kWin_Level;
+            }
+            if ((CurrentLevel.FiredProjectiles == CurrentLevel.TotalProjectiles) && (CurrentLevel == maxLevel)) {
+                CurrentWinStatus = WinStatus.kWin_Game;
+            }
         }
 
         //variables for time counting
