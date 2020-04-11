@@ -141,16 +141,16 @@ namespace TeamProject
         WinStatus CheckCollision(List<Projectile> projectiles, List<Shield> shields)
         {
             for (int i = 0; i <= CurrentProjectiles.Count; i++) {
-                if ((Projectile.Directions == CombatSprites.Directions.kBottom) && (CurrentShield == CurrentShields[i].Size.X)) {
+                if ((Projectile.Direction == CombatSprites.Directions.kBottom) && (CurrentShield == CurrentShields[i].Size.X)) {
                     CurrentWinStatus = WinStatus.kLevel_In_Progress;
                 }
-                if ((Projectile.Directions == CombatSprites.Directions.kTop) && (CurrentShield == CurrentShields[i].Size.X)) {
+                if ((Projectile.Direction == CombatSprites.Directions.kTop) && (CurrentShield == CurrentShields[i].Size.X)) {
                     CurrentWinStatus = WinStatus.kLevel_In_Progress;
                 }
-                if ((Projectile.Directions == CombatSprites.Directions.kLeft) && (CurrentShield == CurrentShields[i].Size.Y)) {
+                if ((Projectile.Direction == CombatSprites.Directions.kLeft) && (CurrentShield == CurrentShields[i].Size.Y)) {
                     CurrentWinStatus = WinStatus.kLevel_In_Progress;
                 }
-                if ((Projectile.Directions == CombatSprites.Directions.kRight) && (CurrentShield == CurrentShields[i].Size.Y)) {
+                if ((Projectile.Direction == CombatSprites.Directions.kRight) && (CurrentShield == CurrentShields[i].Size.Y)) {
                     CurrentWinStatus = WinStatus.kLevel_In_Progress;
                 }
             }
