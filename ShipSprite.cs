@@ -15,8 +15,6 @@ namespace TeamProject
         {
             get { return name; }
         }
-       
-        
         private Texture2D texture; //ship texture
         private Vector2 position; //ship position
         private int hp; //field for hit point
@@ -25,32 +23,24 @@ namespace TeamProject
             get { return hp; }
             set { hp = value; }
         }
-        private Vector2 ScreenSize;
-        public Vector2  ScreenSize
-        {
-            get(return ScreenSize);
-        }
-        private Vector2 Size;
-        public Vector2 Size
-        {
-            get(return Size);
-        }
-        private Vector2 Position;
-        public Vector2 Position
-        {
-            get(return Position);
-        }
+        private Vector2 screenSize;
+        private Vector2 size;
             
         ///***CARLYN
         //ShipSprite constructor
-        public ShipSprite(Vector2 newScreenSize, Vector2 newSize, Vector2 newPosition, string newName)
-        {
-      
-      screenSize = newScreenSize;
-      size = newSize;
-      position = newPosition;  
-      ShipSprite = new ShipSprite("GoodStar");
+        public ShipSprite(string newName, Texture2D newTexture, Vector2 newScreenSize, Vector2 newSize)
+       {
+          name = newName;
+          texture = newTexture;
+          screenSize = newScreenSize;
+          size = newSize;
+          hp = 3;
+          position = newVector2((screenSize.X / 2) - (size.X / 2), (screenSize.Y / 2) - (size.Y / 2));
+        }
         
-       
-    }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, Color.White);
+        }
+   
 }
