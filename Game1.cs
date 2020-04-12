@@ -138,7 +138,7 @@ namespace TeamProject
         ///returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
         ///returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
         /// </summary>
-        WinStatus CheckCollision(List<Projectile> projectiles, List<Shield> shields)
+        WinStatus CheckCollision()
         {
             for (int i = 0; i <= CurrentProjectiles.Count; i++) {
                 if ((Projectile.Direction == CombatSprites.Directions.kBottom) && (CurrentShield == CurrentShields[i].Size.X)) {
