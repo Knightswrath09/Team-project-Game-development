@@ -16,6 +16,12 @@ namespace TeamProject
             get { return LevelNum; }
         }
 
+        private float projectileSpeed;
+        public float ProjectileSpeed
+        {
+            get { return projectileSpeed; }
+        }
+
         //stores total projectiles to be fired this level
         private int totalProjectiles;
         //read-only the total number of projectiles to be fired in this level
@@ -41,6 +47,10 @@ namespace TeamProject
         }
 
         private ProjectileTypes typesOfProjectiles;
+        public ProjectileTypes TypesOfProjectiles
+        {
+            get { return typesOfProjectiles; }
+        }
 
         //second between fires
         private int fireFreq;
@@ -51,13 +61,14 @@ namespace TeamProject
 
 
         //constructor
-        public Level(int newLevelNum, int newTotalProjectiles, ProjectileTypes newTypesProj, int newFireFreq)
+        public Level(int newLevelNum, int newTotalProjectiles, ProjectileTypes newTypesProj, int newFireFreq, float newSpeed)
         {
             levelNum = newLevelNum;
             totalProjectiles = newTotalProjectiles;
             typesOfProjectiles = newTypesProj;
             firedProjectiles = 0;
             fireFreq = newFireFreq;
+            projectileSpeed = newSpeed;
         }
     }
 }

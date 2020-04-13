@@ -27,62 +27,55 @@ namespace TeamProject
             get { return velocity; }
             set { velocity = value; }
         }
+
         private Vector2 screensize { get; set; }
         public Vector2 Screensize
         {
             get { return screensize; }
-            set { screensize = new Vector2(ScreenWidth, ScreenHeight); }
+            set { screensize = value; }
         }
 
         private Vector2 size { get; set; }
-        public Vector2 Size { get { return size; } set { size = Size; } }
+        public Vector2 Size 
+        { 
+            get { return size; } 
+            set { size = value; } 
+        }
+
         //maybe force a purple in if ot doesnt randpmly generate?
         //***DUSTIN
-        public Projectile(Level currentLevel, Vector2 screens, Vector2 siz)
+        public Projectile(Level currentLevel, Vector2 newScreensize, Vector2 newSize, Directions newDirection, CombatSpriteColors newColor, 
+            Texture2D newTexture)
         {
-            int RandomColor = Random(0, 14); //random for color
-            int RandomDirection = Random(0, 5); //random for direction
-            //color randomization
-            if (currentlevel.typesOfProjectiles == Level.ProjectileTypes.kRed_Only)
+            screensize = newScreensize;
+            size = newSize;
+            Direction = newDirection;
+            SpriteColor = newColor;
+            texture = newTexture;
+            
+            //set velocity and position according to direction
+            if (newDirection == Directions.kTop)
             {
-                if (RandomColor <= 12)
-                    color = CombatSprites.CombatSpriteColors.kRed;
-                if (RandomColor == 13 || RandomColor == 14)
-                    color = CombatSprites.CombatSpriteColorskGreen;
+                velocity = new Vector2(0, currentLevel.ProjectileSpeed);
+                position = new Vector2((newScreensize.X / 2) - (newSize.X / 2), 0);
             }
-            else if (currentlevel.typesOfProjectiles == Level.ProjectileTypes.Red_And_Blue)
+            else if (newDirection == Directions.kRight)
             {
-                if (RandomColor <= 6)
-                    color = CombatSprites.CombatSpriteColors.kRed;
-                if (RandomColor > 6 && RandomColor < 13)
-                    color = CombatSprites.CombatSpriteColors.kBlue;
-                else if (RandomColor == 13)
-                    color = CombatSprites.CombatSpriteColors.kGreen;
+                velocity = new Vector2(-currentLevel.ProjectileSpeed, 0);
+                position = new Vector2(newScreensize.X, (newScreensize.Y / 2) - (newSize.Y / 2));
             }
-            else if (currentlevel.typesOfProjectiles == Level.ProjectileTypes.kRBP)
+            else if (newDirection == Directions.kBottom)
             {
-                if (RandomColor <= 5)
-                    color = CombatSprites.CombatSpriteColors.kRed;
-                if (RandomColor > 5 && RandomColor < 11)
-                    color = CombatSpriteColors.kBlue;
-                if (RandomColor == 11 || RandomColor == 12)
-                    color = CombatSprites.CombatSpriteColors.kPurple;
-                else if (RandomColor == 13)
-                    color = CombatSprites.CombatSpriteColors.kGreen;
+                velocity = new Vector2(0, -currentLevel.ProjectileSpeed);
+                position = new Vector2((newScreensize.X / 2) - (newSize.X / 2), newScreensize.Y);
             }
-            //direction randomization
-            if (RandomDirection == 1)
-                direction = CombatSprites.Directions.kBottom;
-            else if (RandomDirection == 2)
-                direction = CombatSprites.Directions.kUp;
-            else if (RandomDirection == 3)
-                direction = CombatSprites.Directions.kLeft;
-            else if (RandomDirection == 4)
-                direction = CombatSprites.Directions.kRight;
-            SpriteColor = color;
-            Direction = direction;
-            Screensize = screens;
-            Size = siz;
+            else if (newDirection == Directions.kLeft)
+            {
+                velocity = new Vector2(currentLevel.ProjectileSpeed, 0);
+                position = new Vector2(0, (newScreensize.Y / 2) - (newSize.Y / 2));
+            }
+            
+            
             //texture and position will depend on color and direction
             //velocity will depnd on the current level (if we decide that hte projectiles will move faster as the player advances levels)
         }
@@ -95,29 +88,10 @@ namespace TeamProject
         /// <summary>
         /// moves projectile towards ship at velocity according to level
         /// </summary>
+
         //*****IRIS
         public void Move()
         {
-            ///If the projectile is coming from the bottom of the screen, move it up
-            if(Direction == Directions.kBottom)
-            {
-                velocity = new Vector2(velocity.X, -velocity.Y);
-            }
-            ///If it's coming from the top, move it down
-            if (Direction == Directions.kTop)
-            {
-                velocity = new Vector2(velocity.X, -velocity.Y);
-            }
-            ///If it's coming from the left, move it right
-            if (Direction == Directions.kLeft)
-            {
-                velocity = new Vector2(-velocity.X, velocity.Y);
-            }
-            ///If it's coming from the right, move it left
-            if (Direction == Directions.kRight)
-            {
-                velocity = new Vector2(-velocity.X, velocity.Y);
-            }
             ///adds the adjusted velocity to the current position
             position += velocity;
         }
