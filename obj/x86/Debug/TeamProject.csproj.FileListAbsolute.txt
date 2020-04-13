@@ -33,3 +33,5 @@ C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\D
 C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\SirenandVoice.xnb
 C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\111048__cyberkineticfilms__gunshot-with-metal-hit.xnb
 C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\244394__werra__bang-explosion-metallic.xnb
+C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\274211__littlerobotsoundfactory__whoosh-electric-00.xnb
+C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm.xnb

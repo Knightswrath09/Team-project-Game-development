@@ -29,11 +29,18 @@ namespace TeamProject
 
 
         //sound effects
+        SoundEffect Hullhit;
         SoundEffect HullCritical;
         SoundEffect ProjectileFired;
         SoundEffect ShieldBlock;
-        SoundEffect Hullhit;
+        SoundEffect ShieldMove;
         SoundEffect ShipBlowsUp;
+        SoundEffect VictoryJingle;
+
+        SoundEffectInstance ShieldM; //sound effect instance of shieldmove soundeffect.
+        SoundEffectInstance ShieldM2; //sound effect instance for blue shield.
+        SoundEffectInstance Victory; //sound effect instance for victory song so it doesn't sound haunted.
+        SoundEffectInstance ShipisGone; //sound effect instance for the ship blowing up
         
 
         Shield rShield;
@@ -113,8 +120,16 @@ namespace TeamProject
             HullCritical = Content.Load<SoundEffect>("SirenandVoice"); //siren sound effect made by user Samsterbirdies on FreeSound.org
             ProjectileFired = Content.Load<SoundEffect>("Blast"); //laster-shots sound effect made by user theogobbo on FreeSound.org
             ShieldBlock = Content.Load<SoundEffect>("440783__wcoltd__pulsar");//pulsar sound effect made by user Wcoltd on FreeSound.org
+            ShieldMove = Content.Load<SoundEffect>("274211__littlerobotsoundfactory__whoosh-electric-00");//Whoosh eletric sound effect made by user Littlerobotsoundfactory on Freesound.org
             Hullhit = Content.Load<SoundEffect>("111048__cyberkineticfilms__gunshot-with-metal-hit");//Gunshot with metal hit sound effect made by user Cyberkineticfilms on FreeSound.org
             ShipBlowsUp = Content.Load<SoundEffect>("244394__werra__bang-explosion-metallic");//Bang explosion metallic sound effect made by user Werra on FreeSound.org
+            VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Dream Boy sound effect by user Xcreenplay on Freesound.org
+
+            //sound effect instances
+            ShieldM = ShieldMove.CreateInstance();
+            ShieldM2 = ShieldMove.CreateInstance();
+            Victory = VictoryJingle.CreateInstance();
+            ShipisGone = ShipBlowsUp.CreateInstance();
 
             CurrentLevel = new Level(1, 10, Level.ProjectileTypes.kRBP, 3, 10);
 
@@ -260,23 +275,46 @@ namespace TeamProject
             KeyboardState keyboardState = Keyboard.GetState();
             //arrow keys control red shield, which has index 0 in CurrentShield list
             if (keyboardState.IsKeyDown(Keys.Up))
+               {
                 CurrentShields[0].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
+                ShieldM.Play();
+                }
             else if (keyboardState.IsKeyDown(Keys.Right))
+                {
                 CurrentShields[0].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+                                ShieldM.Play();
+                }
             else if (keyboardState.IsKeyDown(Keys.Down))
-                CurrentShields[0].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                                ShieldM.Play();
+                }
             else if (keyboardState.IsKeyDown(Keys.Left))
-                CurrentShields[0].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                {
+                        CurrentShields[0].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                            ShieldM.Play();
+                }
 
             //WASD keys control blue shield, index 1
             if (keyboardState.IsKeyDown(Keys.W))
+                {
                 CurrentShields[1].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
+                ShieldM2.Play();
+                }
             else if (keyboardState.IsKeyDown(Keys.D))
-                CurrentShields[1].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+               { CurrentShields[1].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+                ShieldM2.Play();
+                }
             else if (keyboardState.IsKeyDown(Keys.S))
+               {
                 CurrentShields[1].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                ShieldM2.Play();
+                }
             else if (keyboardState.IsKeyDown(Keys.A))
+               { 
                 CurrentShields[1].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                ShieldM2.Play();
+                }
                 
         }
 
@@ -486,7 +524,7 @@ namespace TeamProject
                 }*/
                 else if (CurrentWinStatus == WinStatus.kWin_Game)
                 {
-
+                    
                 }
             }
             //}
@@ -534,11 +572,13 @@ namespace TeamProject
             }
             else if (CurrentWinStatus == WinStatus.kLose)
             {
+                ShipisGone.Play();
                 //draw "you lose!" screen
             }
             else if (CurrentWinStatus == WinStatus.kWin_Level)
             {
                 ship.Draw(spriteBatch);
+                Victory.Play();
             }
             else if (CurrentWinStatus == WinStatus.kWin_Game)
             {

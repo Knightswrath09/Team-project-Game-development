@@ -6,7 +6,9 @@
   <SourceFiles>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/111048__cyberkineticfilms__gunshot-with-metal-hit.wav</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/244394__werra__bang-explosion-metallic.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/274211__littlerobotsoundfactory__whoosh-electric-00.wav</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/440783__wcoltd__pulsar.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm.wav</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/Blast.wav</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueProjectile.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueShield.bmp</File>
@@ -19,6 +21,8 @@
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/SirenandVoice.wav</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
