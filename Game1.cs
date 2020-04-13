@@ -24,10 +24,7 @@ namespace TeamProject
         List<Projectile> CurrentProjectiles = new List<Projectile>();
 
         //list to keep track of current shields
-        //0 = red, 1 = blue, 2 = purple
         List<Shield> CurrentShields = new List<Shield>();
-
-        ShipSprite ship;
 
         //enumerator for the possible states of the game
         enum ScreenState
@@ -62,9 +59,6 @@ namespace TeamProject
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            graphics.PreferredBackBufferHeight = 1800;
-            graphics.PreferredBackBufferWidth = 3200;
         }
 
         /// <summary>
@@ -91,15 +85,6 @@ namespace TeamProject
 
             CurrentLevel = new Level(1, 10, Level.ProjectileTypes.kRed_Only, 3);
 
-            ship = new ShipSprite("ship", Content.Load<Texture2D>("PlayerShip"), new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), new Vector2(360f, 253f));
-
-            CurrentShields[0] = new Shield(CombatSprites.CombatSpriteColors.kRed, CombatSprites.Directions.kLeft, 0, 
-                Content.Load<Texture2D>("BlueShield"), new Vector2(56f, 253f), ship);
-            CurrentShields[1] = new Shield(CombatSprites.CombatSpriteColors.kRed, CombatSprites.Directions.kRight, 1,
-                Content.Load<Texture2D>("RedShield"), new Vector2(56f, 253f), ship);
-            CurrentShields[2] = new Shield(CombatSprites.CombatSpriteColors.kPurple, CombatSprites.Directions.kTop, 2,
-                Content.Load<Texture2D>("PurpleShield"), new Vector2(56f, 253f), ship);
-
             // TODO: use this.Content to load your game content here
         }
 
@@ -122,9 +107,8 @@ namespace TeamProject
             //add new projectile to the projectile list with CurrentProjectiles.Add(newProjectile)
             //use CurrentProjectiles.Count() to determine the index it was placed at, will be placed at the end of the list
             Projectile newProjectile = new Projectile(currLevel);
-            int numProjectiles = CurrentProjectiles.Count;
             CurrentProjectiles.Add(newProjectile);
-            CurrentProjectiles[numProjectiles].indexInList = numProjectiles;
+            CurrentProjectiles.Count();
         }
 
         //moves all of the projectiles currently on the screen with Move() in projectile class
@@ -135,7 +119,6 @@ namespace TeamProject
             for (int i = 0; i < projectiles.Count; ++i)
                 projectiles[i].Move();
         }
-
         /// <summary>
         /// checks collision between projectiles, shields, and ship
         /// returns result of any collisions
@@ -146,14 +129,54 @@ namespace TeamProject
         /// -adds a hit to the ship if it is blue red or purple
         /// -power up if it is green
         /// </summary>
+        
         //***IRIS
-        WinStatus CheckCollision(List<Projectile> projectiles, List<Shield> shields)
-        {
-            //cheack each projectile in list with each shield in list
+        /// <summary>
+        /// check each projectile in list with each shield in list
+        ///returns Winstatus inProgress if no change
+        ///returns winstatus lose if hp of ship == 0
+        ///returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
+        ///returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
+        /// </summary>
+        WinStatus CheckCollision()
+            //check each projectile in list with each shield in list
             //returns Winstatus inProgress if no change
-            //returns winstatus lose if hp of ship == 0
-            //returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
-            //returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
+            for (int a = 0; a <= CurrentProjectiles.Count; a++) {
+                if (//the projectile is past the shield line)
+                {
+                    int blocked;
+                    for (int i = 0; i < CurrentShields.Count; i++)
+                    {
+                        if ((projectiles[i].Direction == shields[i].direction) && (projectiles[i].SpriteColor == shields[i].SpriteColor))
+                        {
+                            ///0 = hasn't reached shields, 1 = blocked, 2 = hit
+                            if (blocked == 0)
+                            {
+                                CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                            }
+                            if (blocked == 1)
+                            {
+                                CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                                CurrentLevel.FiredProjectiles++;
+                            }
+                            if (blocked == 2)
+                            {
+                                CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                                CurrentLevel.FiredProjectiles++;
+                                ShipSprite.HP--;
+                            }
+                        }
+                    }
+                }
+            if (ShipSprite.HP == 0) {
+                CurrentWinStatus = WinStatus.kLose;
+            }
+            if (CurrentLevel.FiredProjectiles == CurrentLevel.TotalProjectiles) {
+                CurrentWinStatus = WinStatus.kWin_Level;
+            }
+            if ((CurrentLevel.FiredProjectiles == CurrentLevel.TotalProjectiles) && (CurrentLevel == maxLevel)) {
+                CurrentWinStatus = WinStatus.kWin_Game;
+            }
         }
 
         //variables for time counting
@@ -203,9 +226,8 @@ namespace TeamProject
             {*/
                 if (!GameStarted)
                 {
-                //have player name their ship
-                //set gamestarted = true
-                
+                    //have player name their ship
+                    //set gamestarted = true
                 }
 
                 else
@@ -231,7 +253,6 @@ namespace TeamProject
                         MoveProjectiles(CurrentProjectiles);
 
                         //allow player to move shields
-
                         
 
                         //check collisions and if the the winstate changes
