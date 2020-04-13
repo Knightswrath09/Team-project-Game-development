@@ -41,6 +41,10 @@ namespace TeamProject
         SoundEffectInstance ShieldM2; //sound effect instance for blue shield.
         SoundEffectInstance Victory; //sound effect instance for victory song so it doesn't sound haunted.
         SoundEffectInstance ShipisGone; //sound effect instance for the ship blowing up
+        SoundEffectInstance Hullcrit; //sound effect instance of HullCritical
+
+       //Loop disablers
+        bool explode = true; //sound effect bool to ensure that the ShipisGone instance does not loop.
         
 
         Shield rShield;
@@ -130,6 +134,9 @@ namespace TeamProject
             ShieldM2 = ShieldMove.CreateInstance();
             Victory = VictoryJingle.CreateInstance();
             ShipisGone = ShipBlowsUp.CreateInstance();
+            Hullcrit = HullCritical.CreateInstance();
+
+
 
             CurrentLevel = new Level(1, 10, Level.ProjectileTypes.kRBP, 3, 10);
 
@@ -396,7 +403,7 @@ namespace TeamProject
 
                         //emergency sound effect
                         if (ship.HP == 1)
-                            HullCritical.Play(1.0f, 0, 0);
+                            Hullcrit.Play();
 
                     }
                     CurrentProjectiles[a] = null;
@@ -572,11 +579,14 @@ namespace TeamProject
             }
             else if (CurrentWinStatus == WinStatus.kLose)
             {
-                ShipisGone.Play();
+                Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
+                if(explode)
+                {ShipisGone.Play(); explode = false;} //plays instanced sound effect and disables looping.
                 //draw "you lose!" screen
             }
             else if (CurrentWinStatus == WinStatus.kWin_Level)
             {
+                 Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship is out of danger.
                 ship.Draw(spriteBatch);
                 Victory.Play();
             }
