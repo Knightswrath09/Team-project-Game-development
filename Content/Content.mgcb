@@ -13,6 +13,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin 111048__cyberkineticfilms__gunshot-with-metal-hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:111048__cyberkineticfilms__gunshot-with-metal-hit.wav
+
+#begin 244394__werra__bang-explosion-metallic.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:244394__werra__bang-explosion-metallic.wav
+
+#begin 440783__wcoltd__pulsar.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:440783__wcoltd__pulsar.wav
+
+#begin Blast.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Blast.wav
+
 #begin BlueProjectile.bmp
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -108,4 +132,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:RedShield.bmp
+
+#begin SirenandVoice.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SirenandVoice.wav
 

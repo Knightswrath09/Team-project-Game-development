@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio; //for sound effects and music.
 using System.Collections.Generic; //for list
 using System;
 
@@ -26,6 +27,13 @@ namespace TeamProject
         //list to keep track of current projectiles on screen
         List<Projectile> CurrentProjectiles = new List<Projectile>();
 
+
+        //sound effects
+        SoundEffect HullCritical;
+        SoundEffect ProjectileFired;
+        SoundEffect ShieldBlock;
+        SoundEffect Hullhit;
+        SoundEffect ShipBlowsUp;
         
 
         Shield rShield;
@@ -100,6 +108,13 @@ namespace TeamProject
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            //load sound effects
+            HullCritical = Content.Load<SoundEffect>("SirenandVoice"); //siren sound effect made by user Samsterbirdies on FreeSounds.org
+            ProjectileFired = Content.Load<SoundEffect>("Blast"); //laster-shots sound effect made by user theogobbo on FreeSounds.org
+            ShieldBlock = Content.Load<SoundEffect>("440783__wcoltd__pulsar");//pulsar sound effect made by user Wcoltd on FreeSounds.org
+            Hullhit = Content.Load<SoundEffect>("111048__cyberkineticfilms__gunshot-with-metal-hit");//Gunshot with metal hit sound effect made by user Cyberkineticfilms on FreeSounds.org
+            ShipBlowsUp = Content.Load<SoundEffect>("244394__werra__bang-explosion-metallic");//Gunshot with metal hit sound effect made by user Cyberkineticfilms on FreeSounds.org
 
             CurrentLevel = new Level(1, 10, Level.ProjectileTypes.kRBP, 3, 10);
 
@@ -198,23 +213,31 @@ namespace TeamProject
 
             if(spriteColor == CombatSprites.CombatSpriteColors.kRed)
             {
+                ProjectileFired.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("RedProjectile"));
+                
             }
             else if(spriteColor == CombatSprites.CombatSpriteColors.kBlue)
             {
+                ProjectileFired.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("BlueProjectile"));
+                
             }
             else if(spriteColor == CombatSprites.CombatSpriteColors.kPurple)
             {
+                ProjectileFired.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("PurpleProjectile"));
+               
             }
             else
             {
+                ProjectileFired.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("GreenProjectile"));
+                
             }
 
 
@@ -320,6 +343,7 @@ namespace TeamProject
                         if ((CurrentProjectiles[a].Direction == CurrentShields[i].Direction) && (CurrentProjectiles[a].SpriteColor == CurrentShields[i].SpriteColor) && CurrentShields[i].visible)
                         {
                             blocked = 1;
+                            ShieldBlock.Play(1f, 0, 0);
                         }
                         else if (blocked != 1)
                         {
@@ -330,6 +354,12 @@ namespace TeamProject
                     if(blocked == 2)
                     {
                         ship.HP--;
+                        Hullhit.Play(1f, 0, 0);
+
+                        //emergency sound effect
+                        if (ship.HP == 1)
+                            HullCritical.Play(1.0f, 0, 0);
+
                     }
                     CurrentProjectiles[a] = null;
                     CurrentProjectiles.RemoveAt(a);

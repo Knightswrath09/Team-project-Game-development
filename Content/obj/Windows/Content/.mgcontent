@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/111048__cyberkineticfilms__gunshot-with-metal-hit.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/244394__werra__bang-explosion-metallic.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/440783__wcoltd__pulsar.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/Blast.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueProjectile.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueShield.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/GreenProjectile.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PlayerShip.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PurpleProjectile.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PurpleShield.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/RedProjectile.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/RedShield.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/SirenandVoice.wav</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
