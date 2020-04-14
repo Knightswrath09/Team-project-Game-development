@@ -46,8 +46,15 @@ namespace TeamProject
         SoundEffectInstance Hullcrit; //sound effect instance of HullCritical
         SoundEffectInstance GameTh; //sound effect instance of GameTheme
 
-       //Loop disablers
+       //Soundeffect Loop disablers
         bool explode = true; //sound effect bool to ensure that the ShipisGone instance does not loop.
+
+        //font
+        SpriteFont Font1; //font
+        Vector2 FontPos; //position of font
+        
+        string Winner; //message for winning the level
+        string Loser; //message for losing the level
         
 
         Shield rShield;
@@ -140,6 +147,13 @@ namespace TeamProject
             ShipisGone = ShipBlowsUp.CreateInstance();
             Hullcrit = HullCritical.CreateInstance();
             GameTh = GameTheme.CreateInstance();
+
+            //load font
+            Font1 = Content.Load<SpriteFont>("Courier New");
+
+            //load strings for font
+           Winner = "We    are    clear    to    warp! \nExcellent    work,    officer.";
+            Loser = "Well,    that    could    have    gone    just    a    slight    bit    better.";
 
 
             CurrentLevel = new Level(1, 10, Level.ProjectileTypes.kRBP, 3, 10);
@@ -573,6 +587,11 @@ namespace TeamProject
                 ship.Draw(spriteBatch);
                 //play theme music
                 GameTh.Play();
+                //font position
+                FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width/2) - 150, (graphics.GraphicsDevice.Viewport.Height / 2)+550);
+                //draw hull status on screen
+                spriteBatch.DrawString(Font1,"HULL  INTEGRITY: " + ship.HP, FontPos, Color.White);
+
                 //draw function for each projectile in current projectiles
                 for (int i = 0; i < CurrentProjectiles.Count; i++)
                     CurrentProjectiles[i].Draw(spriteBatch);
@@ -586,9 +605,11 @@ namespace TeamProject
             else if (CurrentWinStatus == WinStatus.kLose)
             {
                 Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
-                GameTh().Stop(); //ends the theme song
+                GameTh.Stop(); //ends the theme song
                 if(explode)
                 {ShipisGone.Play(); explode = false;} //plays instanced sound effect and disables looping.
+                //Defeat message
+               spriteBatch.DrawString(Font1,Loser, FontPos, Color.White);
                 //draw "you lose!" screen
             }
             else if (CurrentWinStatus == WinStatus.kWin_Level)
@@ -596,7 +617,10 @@ namespace TeamProject
                  Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship is out of danger.
                 GameTh.Stop(); //ends the theme song
                 ship.Draw(spriteBatch);
+                //victory jingle
                 Victory.Play();
+                //victory message
+                spriteBatch.DrawString(Font1,Winner, FontPos, Color.White);
             }
             else if (CurrentWinStatus == WinStatus.kWin_Game)
             {

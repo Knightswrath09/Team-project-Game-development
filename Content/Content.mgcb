@@ -79,6 +79,13 @@
 /processorParam:TextureFormat=Color
 /build:BlueShield.bmp
 
+#begin Courier New.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Courier New.spritefont
+
 #begin GreenProjectile.bmp
 /importer:TextureImporter
 /processor:TextureProcessor
