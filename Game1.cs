@@ -36,12 +36,15 @@ namespace TeamProject
         SoundEffect ShieldMove;
         SoundEffect ShipBlowsUp;
         SoundEffect VictoryJingle;
+        SoundEffect GameTheme;
 
+        //sound effect instances
         SoundEffectInstance ShieldM; //sound effect instance of shieldmove soundeffect.
         SoundEffectInstance ShieldM2; //sound effect instance for blue shield.
         SoundEffectInstance Victory; //sound effect instance for victory song so it doesn't sound haunted.
         SoundEffectInstance ShipisGone; //sound effect instance for the ship blowing up
         SoundEffectInstance Hullcrit; //sound effect instance of HullCritical
+        SoundEffectInstance GameTh; //sound effect instance of GameTheme
 
        //Loop disablers
         bool explode = true; //sound effect bool to ensure that the ShipisGone instance does not loop.
@@ -127,15 +130,16 @@ namespace TeamProject
             ShieldMove = Content.Load<SoundEffect>("274211__littlerobotsoundfactory__whoosh-electric-00");//Whoosh eletric sound effect made by user Littlerobotsoundfactory on Freesound.org
             Hullhit = Content.Load<SoundEffect>("111048__cyberkineticfilms__gunshot-with-metal-hit");//Gunshot with metal hit sound effect made by user Cyberkineticfilms on FreeSound.org
             ShipBlowsUp = Content.Load<SoundEffect>("244394__werra__bang-explosion-metallic");//Bang explosion metallic sound effect made by user Werra on FreeSound.org
+            GameTheme = Content.Load<SoundEffect>("371516__mrthenoronha__space-game-theme-loop");//Space Game Loop sound effect by user Mrthenoronha on Freesound.org
             VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Dream Boy sound effect by user Xcreenplay on Freesound.org
-
+            
             //sound effect instances
             ShieldM = ShieldMove.CreateInstance();
             ShieldM2 = ShieldMove.CreateInstance();
             Victory = VictoryJingle.CreateInstance();
             ShipisGone = ShipBlowsUp.CreateInstance();
             Hullcrit = HullCritical.CreateInstance();
-
+            GameTh = GameTheme.CreateInstance();
 
 
             CurrentLevel = new Level(1, 10, Level.ProjectileTypes.kRBP, 3, 10);
@@ -567,6 +571,8 @@ namespace TeamProject
             {
                 //draw the ship
                 ship.Draw(spriteBatch);
+                //play theme music
+                GameTh.Play();
                 //draw function for each projectile in current projectiles
                 for (int i = 0; i < CurrentProjectiles.Count; i++)
                     CurrentProjectiles[i].Draw(spriteBatch);
@@ -580,6 +586,7 @@ namespace TeamProject
             else if (CurrentWinStatus == WinStatus.kLose)
             {
                 Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
+                GameTh().Stop(); //ends the theme song
                 if(explode)
                 {ShipisGone.Play(); explode = false;} //plays instanced sound effect and disables looping.
                 //draw "you lose!" screen
@@ -587,6 +594,7 @@ namespace TeamProject
             else if (CurrentWinStatus == WinStatus.kWin_Level)
             {
                  Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship is out of danger.
+                GameTh.Stop(); //ends the theme song
                 ship.Draw(spriteBatch);
                 Victory.Play();
             }

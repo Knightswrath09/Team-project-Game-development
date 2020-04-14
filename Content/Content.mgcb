@@ -31,6 +31,12 @@
 /processorParam:Quality=Best
 /build:274211__littlerobotsoundfactory__whoosh-electric-00.wav
 
+#begin 371516__mrthenoronha__space-game-theme-loop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:371516__mrthenoronha__space-game-theme-loop.wav
+
 #begin 440783__wcoltd__pulsar.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
