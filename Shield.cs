@@ -52,7 +52,8 @@ namespace TeamProject
             texture = newTexture;
             size = newSize;
 
-            //position for when the shield is at the top, index 0
+            //position for when the shield is at the top, index 0, note that the integer value for Directions.kTop is 0. This 
+            //same concept is true for all of the elemments in PositionsByDirection
             PositionsByDirection.Add(new Vector2(newShipPos.X + (newShipSize.X / 2), 
                 newShipPos.Y - newSize.X - (newSize.X / 2)));
             //position for shield on right, index 1
@@ -98,31 +99,43 @@ namespace TeamProject
         //***SOPHIE
         public void MoveShield(Directions newDirection, List<Shield> otherShields)
         {
+            //sets direction of the shield to the direction determined by input from the Game1 class
             Direction = newDirection;
+            //uses PositionsByDirection list to set the position with the integer value of the direction enumerator
             position = PositionsByDirection[(int)newDirection];
+            //float to store new angle of the shield(s)
             float newAngle;
-            //change angle according to new position
+            //change newAngle according to new direction, shields on top and bottom are rotated, shields on left and right are not
             if (newDirection == Directions.kLeft || newDirection == Directions.kRight)
                 newAngle = 0f;
             else
                 newAngle = MathHelper.PiOver2;
 
+            //sets the angle of the moved sprite to newAngle
             angle = newAngle;
 
+            //this part checks if the two shields overlap after the shield is moved, and activates the purple shield if they are
+            //if the red shield is being controlled
             if (indexInList == 0)
             {
+                //if the blue shield is in the direction that the red shield is being moved to 
                 if (otherShields[1].Direction == newDirection)
                 {
+                    //move the purple to the direction/position that the red shield is being moved to
                     otherShields[2].Direction = newDirection;
                     otherShields[2].Position = PositionsByDirection[(int)newDirection];
                     otherShields[2].Angle = newAngle;
+                    //make red and blue shields invisible
                     this.visible = false;
                     otherShields[1].visible = false;
+                    //make the purple shield invisible
                     otherShields[2].visible = true;
                     
                 }
+                //if the red and blue shields do not overlap with this move
                 else
                 {
+                    //make red and blue visible, but purple not visible
                     this.visible = true;
                     otherShields[1].visible = true;
                     otherShields[2].visible = false;
