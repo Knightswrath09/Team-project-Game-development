@@ -298,7 +298,56 @@ namespace TeamProject
         void MoveShields()
         {
             KeyboardState keyboardState = Keyboard.GetState();
-            //arrow keys control red shield, which has index 0 in CurrentShield list
+            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
+            //Checks if a controller is connected, and if so, implements the controller buttons for the shield
+            if (gamePadState.IsConnected)
+            {
+                //DPad controls red shield
+                if (gamePadState.DPad.Up == ButtonState.Pressed)
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
+                    ShieldM.Play();
+                }
+                else if (gamePadState.DPad.Right == ButtonState.Pressed)
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+                    ShieldM.Play();
+                }
+                else if (gamePadState.DPad.Down == ButtonState.Pressed)
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                    ShieldM.Play();
+                }
+                else if (gamePadState.DPad.Left == ButtonState.Pressed)
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                    ShieldM.Play();
+                }
+
+                //Buttons on the right control blue shield
+                if (gamePadState.Buttons.Y == ButtonState.Pressed)
+                {
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
+                    ShieldM2.Play();
+                }
+                else if (gamePadState.Buttons.B == ButtonState.Pressed)
+                {
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+                    ShieldM2.Play();
+                }
+                else if (gamePadState.Buttons.A == ButtonState.Pressed)
+                {
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                    ShieldM2.Play();
+                }
+                else if (gamePadState.Buttons.X == ButtonState.Pressed)
+                {
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                    ShieldM2.Play();
+                }
+            }
+            
+            //If no controller, keyboard is used: arrow keys control red shield, which has index 0 in CurrentShield list
             if (keyboardState.IsKeyDown(Keys.Up))
                {
                 CurrentShields[0].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
@@ -339,8 +388,7 @@ namespace TeamProject
                { 
                 CurrentShields[1].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
                 ShieldM2.Play();
-                }
-                
+                }                
         }
 
         /// <summary>
