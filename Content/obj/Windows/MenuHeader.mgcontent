@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/Courier New.spritefont</SourceFile>
-  <SourceTime>2020-04-26T10:21:58.1442739-10:00</SourceTime>
-  <DestFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/Content/Courier New.xnb</DestFile>
-  <DestTime>2020-04-26T11:05:47.3871603-10:00</DestTime>
+  <SourceFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/MenuHeader.spritefont</SourceFile>
+  <SourceTime>2020-04-26T11:05:16.2849995-10:00</SourceTime>
+  <DestFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/MenuHeader.xnb</DestFile>
+  <DestTime>2020-04-26T11:09:24.4274113-10:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2018-12-08T06:35:54-10:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

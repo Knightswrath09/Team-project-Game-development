@@ -185,6 +185,9 @@ namespace TeamProject
 
             Level1 = new Level(1, 10, Level.ProjectileTypes.kRed_Only, 3, 10);
             Level2 = new Level(2, 15, Level.ProjectileTypes.kRed_And_Blue, 2, 13);
+            Level3 = new Level(3,25,Level.ProjectileTypes.kRBP, 2, 12);
+            Level4 = new Level(4,40,Level.ProjectileTypes.kRBP,2,13);
+            Level5 = new Level(5,100,Level.ProjectileTypes.kRBP, 1, 15);
             CurrentLevel = Level1;
             CurrentLevelNum = 0;
             Levels.Add(Level1);
@@ -344,6 +347,56 @@ namespace TeamProject
         void MoveShields()
         {
             KeyboardState keyboardState = Keyboard.GetState();
+            GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
+            //Checks if a controller is connected, and if so, implements the controller buttons for the shield
+            if (gamePadState.IsConnected)
+            {
+                //DPad controls red shield
+                if (gamePadState.DPad.Up == ButtonState.Pressed)
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
+                    ShieldM.Play();
+                }
+                else if (gamePadState.DPad.Right == ButtonState.Pressed)
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+                    ShieldM.Play();
+                }
+                else if (gamePadState.DPad.Down == ButtonState.Pressed)
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                    ShieldM.Play();
+                }
+                else if (gamePadState.DPad.Left == ButtonState.Pressed)
+                {
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                    ShieldM.Play();
+                }
+
+                //Buttons on the right control blue shield
+                if (gamePadState.Buttons.Y == ButtonState.Pressed)
+                {
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
+                    ShieldM2.Play();
+                }
+                else if (gamePadState.Buttons.B == ButtonState.Pressed)
+                {
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+                    ShieldM2.Play();
+                }
+                else if (gamePadState.Buttons.A == ButtonState.Pressed)
+                {
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                    ShieldM2.Play();
+                }
+                else if (gamePadState.Buttons.X == ButtonState.Pressed)
+                {
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                    ShieldM2.Play();
+                }
+            }
+            
+            //If no controller, keyboard is used: arrow keys control red shield, which has index 0 in CurrentShield list
             //arrow keys control red shield, which has index 0 in CurrentShield list
             if (keyboardState.IsKeyDown(Keys.Up))
                {

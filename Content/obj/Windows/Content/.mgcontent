@@ -15,14 +15,20 @@
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueShield.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/Courier New.spritefont</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/GreenProjectile.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/MenuHeader.spritefont</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PixelFont.spritefont</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PlayerShip.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PurpleProjectile.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PurpleShield.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/RedProjectile.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/RedShield.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/SirenandVoice.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/StarSprite.bmp</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -98,6 +98,20 @@
 /processorParam:TextureFormat=Color
 /build:GreenProjectile.bmp
 
+#begin MenuHeader.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MenuHeader.spritefont
+
+#begin PixelFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:PixelFont.spritefont
+
 #begin PlayerShip.bmp
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -163,4 +177,16 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:SirenandVoice.wav
+
+#begin StarSprite.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:StarSprite.bmp
 

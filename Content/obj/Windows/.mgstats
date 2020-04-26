@@ -1,0 +1,4 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/MenuHeader.spritefont","C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/MenuHeader.xnb","FontDescriptionProcessor","SpriteFontContent",2072,267281,0.3452438
+"C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PixelFont.spritefont","C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/PixelFont.xnb","FontDescriptionProcessor","SpriteFontContent",2072,136209,0.3402218
+"C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/StarSprite.bmp","C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/StarSprite.xnb","TextureProcessor","Texture2DContent",9462,12629,0.3715203
