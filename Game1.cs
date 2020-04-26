@@ -23,7 +23,11 @@ namespace TeamProject
         //im thinking a list of all of the levels might be easier to handle
         //you would access the current level object using the current level integer as the index
         Level CurrentLevel;
-
+        Level level1;
+        Level level2;
+        Level level3;
+        Level level4;
+        Level level5;
         //list to keep track of current projectiles on screen
         List<Projectile> CurrentProjectiles = new List<Projectile>();
 
@@ -156,7 +160,14 @@ namespace TeamProject
             Loser = "Well,    that    could    have    gone    just    a    slight    bit    better.";
 
 
+            //constructors for levels
+            level1 = new Level(1,10, Level.ProjectileTypes.kRed_Only, 3, 10);
+            level2 = new Level(2,15,Level.ProjectileTypes.kRed_And_Blue,2,10);
+            level3 = new Level(3,25,Level.ProjectileTypes.kRBP, 2, 12);
+            level4 = new Level(4,40,Level.ProjectileTypes.kRBP,2,13);
+            level5 = new Level(5,100,Level.ProjectileTypes.kRBP, 1, 15);
             CurrentLevel = new Level(1, 10, Level.ProjectileTypes.kRBP, 3, 10);
+            CurrentLevel = level1;
 
             ship = new ShipSprite("ship", Content.Load<Texture2D>("PlayerShip"), new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), new Vector2(360f, 253f));
 
