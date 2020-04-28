@@ -669,6 +669,8 @@ namespace TeamProject
 
             else if (CurrentScreenState == ScreenState.kPaused)
             {
+               Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
+                    GameTh.Stop(); //ends the theme song
                 if (CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                     PauseMenu.ChangeSelection(CombatSprites.Directions.kTop);
                 else if (CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
@@ -695,6 +697,7 @@ namespace TeamProject
                 GameStarted = true;
                 if (CurrentKeyboardState.IsKeyDown(Keys.P))
                     CurrentScreenState = ScreenState.kPaused;
+
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
                     LevelChanged = false;
@@ -735,6 +738,8 @@ namespace TeamProject
                     {
                         CurrentLevel = Level1;
                         CurrentLevelNum = 0;
+                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
+                    GameTh.Stop(); //ends the theme song
                         CurrentScreenState = ScreenState.kMain_Menu;
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
                         ship.HP = 3;
@@ -762,6 +767,8 @@ namespace TeamProject
                     {
                         CurrentScreenState = ScreenState.kMain_Menu;
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
+                    GameTh.Stop(); //ends the theme song
                         CurrentLevel = Level1;
                         CurrentLevelNum = 0;
                         ship.HP = 3;
