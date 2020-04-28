@@ -184,14 +184,17 @@ namespace TeamProject
 
 
             Level1 = new Level(1, 10, Level.ProjectileTypes.kRed_Only, 3, 10);
-            Level2 = new Level(2, 15, Level.ProjectileTypes.kRed_And_Blue, 2, 13);
-            Level3 = new Level(3,25,Level.ProjectileTypes.kRBP, 2, 12);
-            Level4 = new Level(4,40,Level.ProjectileTypes.kRBP,2,13);
-            Level5 = new Level(5,100,Level.ProjectileTypes.kRBP, 1, 15);
+            Level2 = new Level(2, 15, Level.ProjectileTypes.kRed_And_Blue, 2, 11);
+            Level3 = new Level(3, 25, Level.ProjectileTypes.kRBP, 2, 12);
+            Level4 = new Level(4, 40, Level.ProjectileTypes.kRBP, 2, 13);
+            Level5 = new Level(5, 100, Level.ProjectileTypes.kRBP, 1, 15);
             CurrentLevel = Level1;
             CurrentLevelNum = 0;
             Levels.Add(Level1);
             Levels.Add(Level2);
+            Levels.Add(Level3);
+            Levels.Add(Level4);
+            Levels.Add(Level5);
 
             maxLevel = Levels.Count - 1;
 
@@ -395,8 +398,6 @@ namespace TeamProject
                     ShieldM2.Play();
                 }
             }
-            
-            //If no controller, keyboard is used: arrow keys control red shield, which has index 0 in CurrentShield list
             //arrow keys control red shield, which has index 0 in CurrentShield list
             if (keyboardState.IsKeyDown(Keys.Up))
                {
@@ -557,7 +558,7 @@ namespace TeamProject
             }
             else if (CurrentLevel.FiredProjectiles == CurrentLevel.TotalProjectiles)
             {
-                if (CurrentLevelNum == maxLevel)
+                if (CurrentLevelNum == Levels.Count)
                     newWinStatus = WinStatus.kWin_Game;
                 else
                     newWinStatus = WinStatus.kWin_Level;
@@ -622,15 +623,30 @@ namespace TeamProject
                 else if(CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                 {
                     if (SelectLevel.Selection == 0)
+                    {
                         CurrentLevel = Level1;
+                        CurrentLevelNum = 0;
+                    }
                     else if (SelectLevel.Selection == 1)
+                    {
                         CurrentLevel = Level2;
+                        CurrentLevelNum = 1;
+                    }
                     else if (SelectLevel.Selection == 2)
+                    {
                         CurrentLevel = Level3;
+                        CurrentLevelNum = 2;
+                    }
                     else if (SelectLevel.Selection == 3)
+                    {
                         CurrentLevel = Level4;
+                        CurrentLevelNum = 3;
+                    }
                     else if (SelectLevel.Selection == 4)
+                    {
                         CurrentLevel = Level5;
+                        CurrentLevelNum = 4;
+                    }
                     //else if (SelectLevel.Selection == 5)
                     //check if gauntlet mode has been unlocked
                     //set current level to 1 and change type of projectiles to no green for all levels
@@ -664,7 +680,11 @@ namespace TeamProject
                     else if (PauseMenu.Selection == 1)
                         CurrentScreenState = ScreenState.kGame_Play;
                     else if (PauseMenu.Selection == 2)
+                    {
                         CurrentScreenState = ScreenState.kMain_Menu;
+                        CurrentLevelNum = 0;
+                        CurrentLevel = Level1;
+                    }
 
                 }
                 LastKeyboardState = CurrentKeyboardState;
@@ -808,6 +828,9 @@ namespace TeamProject
                     FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - 150, (graphics.GraphicsDevice.Viewport.Height / 2) + 550);
                     //draw hull status on screen
                     spriteBatch.DrawString(PixelFont, "HULL INTEGRITY: " + ship.HP, FontPos, Color.White);
+                    //draw current level on screen
+                    int levelDisplayed = CurrentLevelNum + 1;
+                    spriteBatch.DrawString(PixelFont, "Current Level: " + levelDisplayed, FontPos + new Vector2(0, 150), Color.White);
 
                     //draw function for each projectile in current projectiles
                     for (int i = 0; i < CurrentProjectiles.Count; i++)
