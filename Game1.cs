@@ -195,7 +195,7 @@ namespace TeamProject
             Level2 = new Level(2, 15, Level.ProjectileTypes.kRed_And_Blue, 2, 11);
             Level3 = new Level(3, 25, Level.ProjectileTypes.kRBP, 2, 12);
             Level4 = new Level(4, 40, Level.ProjectileTypes.kRBP, 2, 13);
-            Level5 = new Level(5, 100, Level.ProjectileTypes.kRBP, 1, 15);
+            Level5 = new Level(5, 75, Level.ProjectileTypes.kRBP, 1, 15);
             Endless = new Level(6, 10, Level.ProjectileTypes.kRBP, 1, 15);
             CurrentLevel = Level1;
             CurrentLevelNum = 0;
@@ -718,6 +718,7 @@ namespace TeamProject
             {
                 Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                 GameTh.Stop(); //ends the theme song
+                Victory.Stop(); //ends victory Jingle
                 if (CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                     PauseMenu.ChangeSelection(CombatSprites.Directions.kTop);
                 else if (CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
@@ -847,8 +848,36 @@ namespace TeamProject
                     {
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                         GameTh.Stop(); //ends the theme song
+                        if(HighestUnlocked != 6)
+                            {
                         HighestUnlocked = 6;
+                                                   if(HighestUnlocked < CurrentLevel.LevelNum)
+                            {
+                        HighestUnlocked = CurrentLevel.LevelNum;
+                                                    SelectLevel = null;
+                                                                            try{
+                        //Pass the filepath and filename to the StreamWriter Constructor
+                        StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
+
+                        //Write a line of text
+                        sw.WriteLine(HighestUnlocked);
+
+                            //Write a second line of text
+
+                                //Close the file
+                                sw.Close();
+                            }
+                        catch(Exception e)
+                                {
+                        Console.WriteLine("Exception: " + e.Message);
+                                    }
+                            finally 
+                                    {
+                            Console.WriteLine("Executing finally block.");
+                                }
+                            }
                         SelectLevel = null;
+                            }
                         SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
                             new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode" },
                             Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f),
