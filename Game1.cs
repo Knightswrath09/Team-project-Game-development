@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio; //for sound effects and music.
 using System.Collections.Generic; //for list
 using System;
+using System.IO;
 
 
 
@@ -214,7 +215,31 @@ namespace TeamProject
 
             //READ HIGHESTUNLOCKED FROM FILE
             //current value is for testing purposes
-            HighestUnlocked = 1;
+            try
+            {
+                //Pass the file path and file name to the StreamReader constructor
+                StreamReader sr = new StreamReader("MedExSave.txt");
+
+                //Read the first line of text
+                string line = sr.ReadLine();
+
+                HighestUnlocked = Int32.Parse(line);
+                 
+
+                //close the file
+                sr.Close();
+                Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+                Exit();
+            }
+            finally
+            {
+                Console.WriteLine("Executing finally block.");
+            }
+            //HighestUnlocked = 1;
 
             //initialize menus
             MainMenu = new Menu(HeaderFont, PixelFont, "Main Menu",
