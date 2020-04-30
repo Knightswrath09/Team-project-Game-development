@@ -218,7 +218,7 @@ namespace TeamProject
             try
             {
                 //Pass the file path and file name to the StreamReader constructor
-                StreamReader sr = new StreamReader("MedExSave.txt");
+                StreamReader sr = new StreamReader(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
 
                 //Read the first line of text
                 string line = sr.ReadLine();
@@ -671,12 +671,34 @@ namespace TeamProject
                     if (SelectLevel.Selection == 0)
                     {
                         CurrentLevel = Level1;
+
                         CurrentLevelNum = 0;
                     }
                     else if (SelectLevel.Selection == 1)
                     {
                         CurrentLevel = Level2;
                         CurrentLevelNum = 1;
+                                                HighestUnlocked = 2; //test delete this
+                        try{
+                        //Pass the filepath and filename to the StreamWriter Constructor
+                        StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
+
+                        //Write a line of text
+                        sw.WriteLine(HighestUnlocked);
+
+                            //Write a second line of text
+
+                                //Close the file
+                                sw.Close();
+                            }
+                        catch(Exception e)
+                                {
+                        Console.WriteLine("Exception: " + e.Message);
+                                    }
+                            finally 
+                                    {
+                            Console.WriteLine("Executing finally block.");
+                                }
                     }
                     else if (SelectLevel.Selection == 2)
                     {

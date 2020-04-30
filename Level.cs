@@ -13,7 +13,7 @@ namespace TeamProject
         //this public property can be used to read-only the level number
         public int LevelNum
         {
-            get { return LevelNum; }
+            get { return levelNum; }
         }
 
         private float projectileSpeed;
