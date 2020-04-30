@@ -25,6 +25,21 @@ namespace TeamProject
         Level CurrentLevel;
         List<Level> Levels = new List<Level>();
         int maxLevel;
+        //Levels
+        Level Level1;
+        Level Level2;
+        Level Level3;
+        Level Level4;
+        Level Level5;
+        Level Endless;
+        //integer indicating highest level unlocked (1 = level 1, 2 = level 2 ... 6 = endless)
+        //****WE NEED TO IMPORT THE VALUE FROM A FILE AT THE BEGINNING OF THE GAME
+        int HighestUnlocked;
+        
+
+        //to make sure the level only changes once when a level is beat
+        bool LevelChanged = false;
+
 
         //list to keep track of current projectiles on screen
         List<Projectile> CurrentProjectiles = new List<Projectile>();
@@ -65,12 +80,8 @@ namespace TeamProject
         Menu SelectLevel;
         Menu PauseMenu;
 
-        //Levels
-        Level Level1;
-        Level Level2;
-        Level Level3;
-        Level Level4;
-        Level Level5;
+        //mostly to determine if controls or volume menus direct back to pause menu or main menu
+        bool GameStarted = false;
 
         string Winner; //message for winning the level
         string Loser; //message for losing the level
@@ -102,11 +113,7 @@ namespace TeamProject
         //variable to store current screenstate, start with the main menu
         ScreenState CurrentScreenState = ScreenState.kMain_Menu;
 
-        //mostly to determine if controls or volume menus direct back to pause menu or main menu
-        bool GameStarted = false;
-
-        //to make sure the level only changes once when a level is beat
-        bool LevelChanged = false;
+        
 
         //enumerator to store the win status of the player
         enum WinStatus
@@ -182,12 +189,13 @@ namespace TeamProject
             Winner = "We are clear to warp! \nExcellent work, officer.";
             Loser = "Well, that could have gone just a slight bit better.";
 
-
+            //create each level
             Level1 = new Level(1, 10, Level.ProjectileTypes.kRed_Only, 3, 10);
             Level2 = new Level(2, 15, Level.ProjectileTypes.kRed_And_Blue, 2, 11);
             Level3 = new Level(3, 25, Level.ProjectileTypes.kRBP, 2, 12);
             Level4 = new Level(4, 40, Level.ProjectileTypes.kRBP, 2, 13);
             Level5 = new Level(5, 100, Level.ProjectileTypes.kRBP, 1, 15);
+            Endless = new Level(6, 10, Level.ProjectileTypes.kRBP, 1, 15);
             CurrentLevel = Level1;
             CurrentLevelNum = 0;
             Levels.Add(Level1);
@@ -195,26 +203,32 @@ namespace TeamProject
             Levels.Add(Level3);
             Levels.Add(Level4);
             Levels.Add(Level5);
+            Levels.Add(Endless);
 
-            maxLevel = Levels.Count - 1;
+            maxLevel = 5;
 
+            //create ship object
             ship = new ShipSprite("ship", Content.Load<Texture2D>("PlayerShip"), new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), new Vector2(360f, 253f));
 
             ShipPosition = new Vector2((graphics.PreferredBackBufferWidth / 2) - (shipSize.X / 2), (graphics.PreferredBackBufferHeight / 2) - (shipSize.Y / 2));
+
+            //READ HIGHESTUNLOCKED FROM FILE
+            //current value is for testing purposes
+            HighestUnlocked = 1;
 
             //initialize menus
             MainMenu = new Menu(HeaderFont, PixelFont, "Main Menu",
                 new List<string>() { "How to Play", "Select Level", "High Scores", "Start Game" }, 
                 Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f), 
-                new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
+                new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), 4);
             SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level", 
-                new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Gauntlet Mode (Locked)"},
+                new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode"},
                 Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f),
-                new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
+                new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), HighestUnlocked);
             PauseMenu = new Menu(HeaderFont, PixelFont, "Pause Menu", 
                 new List<string> { "How to Play", "Resume Game", "Return to Main Menu"}, Content.Load<Texture2D>("StarSprite"),
                 new Vector2(56f, 56f),
-                new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
+                new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), 3);
 
 
             rShield = new Shield(CombatSprites.CombatSpriteColors.kRed, CombatSprites.Directions.kTop, 0,
@@ -548,7 +562,9 @@ namespace TeamProject
                     }
                     CurrentProjectiles[a] = null;
                     CurrentProjectiles.RemoveAt(a);
-                    CurrentLevel.FiredProjectiles++;
+                    //stops level from ending if the player is playing in endless mode
+                    if(CurrentLevel != Endless)
+                        CurrentLevel.FiredProjectiles++;
                 }
                 
             }
@@ -589,13 +605,18 @@ namespace TeamProject
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            //keyboard input used for menus
             KeyboardState CurrentKeyboardState = Keyboard.GetState();
-            //***MENU WILL BE IMPLEMENTED AFTER THE PROTOTYPE PHASE
+
+           //main menu logic
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
                 GameStarted = false;
                 ship.HP = 3;
-                CurrentLevel.FiredProjectiles = 0;
+                //resets all levels to firedprojectiles = 0
+                for (int i = 0; i < Levels.Count; i++)
+                    Levels[i].FiredProjectiles = 0;
+                //keyboard input to change selection and select option
                 if (CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                     MainMenu.ChangeSelection(CombatSprites.Directions.kTop);
                 else if (CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
@@ -648,10 +669,9 @@ namespace TeamProject
                         CurrentLevelNum = 4;
                     }
                     //else if (SelectLevel.Selection == 5)
-                    //check if gauntlet mode has been unlocked
-                    //set current level to 1 and change type of projectiles to no green for all levels
+                    //endless mode, we need to figure out scoring
 
-                    CurrentScreenState = ScreenState.kMain_Menu;
+                    CurrentScreenState = ScreenState.kGame_Play;
                     
                 }
                 LastKeyboardState = CurrentKeyboardState;
@@ -669,8 +689,8 @@ namespace TeamProject
 
             else if (CurrentScreenState == ScreenState.kPaused)
             {
-               Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
-                    GameTh.Stop(); //ends the theme song
+                Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
+                GameTh.Stop(); //ends the theme song
                 if (CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                     PauseMenu.ChangeSelection(CombatSprites.Directions.kTop);
                 else if (CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
@@ -697,7 +717,6 @@ namespace TeamProject
                 GameStarted = true;
                 if (CurrentKeyboardState.IsKeyDown(Keys.P))
                     CurrentScreenState = ScreenState.kPaused;
-
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
                     LevelChanged = false;
@@ -736,10 +755,10 @@ namespace TeamProject
                 {
                     if(CurrentKeyboardState.IsKeyDown(Keys.Enter))
                     {
+                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
+                        GameTh.Stop(); //ends the theme song
                         CurrentLevel = Level1;
                         CurrentLevelNum = 0;
-                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
-                    GameTh.Stop(); //ends the theme song
                         CurrentScreenState = ScreenState.kMain_Menu;
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
                         ship.HP = 3;
@@ -750,14 +769,22 @@ namespace TeamProject
                 {
                     if (LevelChanged == false)
                     {
-                            CurrentLevelNum++;
-                            CurrentLevel = Levels[CurrentLevelNum];
-                            ship.HP += 2;
-                      
+                        CurrentLevelNum++;
+                        CurrentLevel = Levels[CurrentLevelNum];
+                        ship.HP += 2;
+                        HighestUnlocked = CurrentLevel.LevelNum;
+                        SelectLevel = null;
+                        SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
+                            new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode" },
+                            Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f),
+                            new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), HighestUnlocked);
                         LevelChanged = true;
                     }
                     if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    {
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
+                        Victory.Stop();
+                    }
 
                     LastKeyboardState = CurrentKeyboardState;
                 }
@@ -765,10 +792,16 @@ namespace TeamProject
                 {
                     if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     {
+                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
+                        GameTh.Stop(); //ends the theme song
+                        HighestUnlocked = 6;
+                        SelectLevel = null;
+                        SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
+                            new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode" },
+                            Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f),
+                            new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), HighestUnlocked);
                         CurrentScreenState = ScreenState.kMain_Menu;
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
-                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
-                    GameTh.Stop(); //ends the theme song
                         CurrentLevel = Level1;
                         CurrentLevelNum = 0;
                         ship.HP = 3;
@@ -836,7 +869,7 @@ namespace TeamProject
                     //draw hull status on screen
                     spriteBatch.DrawString(PixelFont, "HULL INTEGRITY: " + ship.HP, FontPos, Color.White);
                     //draw current level on screen
-                    int levelDisplayed = CurrentLevelNum + 1;
+                    int levelDisplayed = CurrentLevel.LevelNum;
                     spriteBatch.DrawString(PixelFont, "Current Level: " + levelDisplayed, FontPos + new Vector2(0, 150), Color.White);
 
                     //draw function for each projectile in current projectiles

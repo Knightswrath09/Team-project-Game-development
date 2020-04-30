@@ -26,9 +26,12 @@ namespace TeamProject
         //corresponds with SelectorPositions
         public int Selection;
         public Vector2 SelectorPosition;
+        //list of bools indicating which options are unlocked
+        List<bool> unlocked = new List<bool>();
 
+        //constructor for menu class
         public Menu(SpriteFont header, SpriteFont optionFont, string newHeader, List<string> newOptions, Texture2D newTexture,
-            Vector2 newSelectorSize, Vector2 newScreenSize)
+            Vector2 newSelectorSize, Vector2 newScreenSize, int maxUnlocked)
         {
             HeaderText = newHeader;
             HeaderPosition = new Vector2((newScreenSize.X / 2) - (header.MeasureString(newHeader).X / 2), newScreenSize.Y / 5);
@@ -45,15 +48,38 @@ namespace TeamProject
             SelectorSize = newSelectorSize;
             Selection = 0;
             SelectorPosition = SelectorPositions[0];
+
+            //adjust unlocked list for the highest level unlocked, this will only end up applying
+            //to the level select menu
+            for(int i = 0; i < maxUnlocked; i++)
+            {
+                unlocked.Add(true);
+            }
+            for(int j = maxUnlocked; j < NumOptions; j++)
+            {
+                unlocked.Add(false);
+            }
+            //add locked to the end of each level that is still locked
+            for(int k = 0; k < NumOptions; k++)
+            {
+                if(unlocked[k] == false)
+                {
+                    Options[k] = Options[k] + " (locked)";
+                }
+            }
         }
 
         public void ChangeSelection(CombatSprites.Directions direction)
         {
+            int nextSelection;
             if(direction == CombatSprites.Directions.kTop)
             {
                 if(Selection == 0)
                 {
-                    Selection = NumOptions - 1;
+                    nextSelection = NumOptions - 1;
+                    while (unlocked[nextSelection] == false)
+                        nextSelection--;
+                    Selection = nextSelection;
                 }
                 else
                 {
@@ -68,7 +94,14 @@ namespace TeamProject
                 }
                 else
                 {
-                    Selection += 1;
+                    nextSelection = Selection + 1;
+                    while(unlocked[nextSelection] == false)
+                    {
+                        nextSelection++;
+                        if (nextSelection == NumOptions - 1)
+                            nextSelection = 0;
+                    }
+                    Selection = nextSelection;
                 }
             }
             SelectorPosition = SelectorPositions[Selection];
