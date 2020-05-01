@@ -20,6 +20,18 @@ namespace TeamProject
         //integer to keep track of current level number
         int CurrentLevelNum = 1;
 
+
+        List<string> Stories = new List<string>() 
+        {
+            "Hello Officer Joseph Stalwart,\n We at the board of MEDEX would like to thank you for undertaking this mission to deliver highly requested medical supplies to the blockaded world of Sedeth-18. We understand that this mission would normally be reserved for employees who have demonstrated a higher score of competence on their SSATs tests, but please know, we have full faith in you since you scored 677th out of all MEDEX employees, and we are 67% certain that you will succeed in this endeavor!\nWe have also provided you with the Goodstar, a ship that is only a mere thrity-four years old and still has a working shield generator that has as of yet to critically fail! We wish you the best of luck, but you won’t need that, since you scored a 170 out of 300 on your reactions test.",
+            "ALERT! Hostile drone detected! Weapons scan indicate that charged weapons are positive. Shield management: highly recommended!",
+            "Hostile scouting party with energy and slug munitions detected. Secondary shield activated",
+            "Hostile fleet has commenced hostilities. Energy-charged munitions are positive. Activating trinary shielding system. WARNING: tertiary shielding can only be activated by suspending primary and secondary shielding. To activate tertiary shielding, combine primary and secondary shielding.",
+            "Approaching blockaded world. Hostile ships incoming from all directions. Threat assessment: EVACUATE SHIP! THERE IS NO HOPE OF SURVIVAL!",
+            "Officer Stalwart, I will be honest with you, I had never expected you of all officers to succeed in this mission. That was why your cargo only had two bandages; we were hoping you’d act as a distraction so the real medical supplies would make it. Regardless, good work is good work, and we’ll be sending you on missions with a higher risk-rating from here on out. Congratulations!",
+            "Officer Stalwart, judging from your recent success on the blockade of Sedeth-18, we have decided to task you with another mission of vital important: we require you to deliver a bandage to a captain of a war vessel. This vessel is currently located in the middle of a warzone between two superpowers, but it’s nothing you can’t handle! [REDACTED MESSAGE: FOR MEDEX BOARD EYES ONLY] The Goodstar is a horribly old ship and its costing us more money to keep it active than what it’s bringing to us. It’s lifetime warranty is about to expire in a month, so now’s the time to have an “unforeseen destruction of property” so we can collect the insurance money on it."
+        };
+
         //level object for current level
         //im thinking a list of all of the levels might be easier to handle
         //you would access the current level object using the current level integer as the index
