@@ -1004,7 +1004,7 @@ namespace TeamProject
                     //play theme music
                     GameTh.Play();
                     //font position
-                    FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - 150, (graphics.GraphicsDevice.Viewport.Height / 2) + 550);
+                    FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width / 15) - 150, (graphics.GraphicsDevice.Viewport.Height / 2) + 550);
                     StoryPos = new Vector2((graphics.GraphicsDevice.Viewport.Width/2 - 1600), (graphics.GraphicsDevice.Viewport.Height-1800));
                     if (levelactive == false)
                         spriteBatch.DrawString(PixelFont, Stories[CurrentLevelNum], StoryPos, Color.White);
