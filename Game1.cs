@@ -200,7 +200,7 @@ namespace TeamProject
             HeaderFont = Content.Load<SpriteFont>("MenuHeader");
 
             //load strings for font
-            Winner = "We are clear to warp! \nExcellent work, officer.";
+            Winner = "We are clear to warp! \nExcellent work, officer. \nPress Enter to continue.";
             Loser = "Well, that could have gone just a slight bit better.";
 
             //create each level
@@ -1005,7 +1005,7 @@ namespace TeamProject
                     //play theme music
                     GameTh.Play();
                     //font position
-                    FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - 150, (graphics.GraphicsDevice.Viewport.Height / 2) + 550);
+                    FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width / 15) - 150, (graphics.GraphicsDevice.Viewport.Height / 2) + 550);
                     StoryPos = new Vector2((graphics.GraphicsDevice.Viewport.Width/2 - 1600), (graphics.GraphicsDevice.Viewport.Height-1800));
                     if (levelactive == false)
                         spriteBatch.DrawString(PixelFont, Stories[CurrentLevelNum], StoryPos, Color.White);
