@@ -23,7 +23,7 @@ namespace TeamProject
 
         List<string> Stories = new List<string>() 
         {
-            "Hello Officer Joseph Stalwart,\n We at the board of MEDEX would like to thank you for undertaking this mission to deliver highly requested medical supplies to the blockaded world of Sedeth-18. We understand that this mission would normally be reserved for employees who have demonstrated a higher score of competence on their SSATs tests, but please know, we have full faith in you since you scored 677th out of all MEDEX employees, and we are 67% certain that you will succeed in this endeavor!\nWe have also provided you with the Goodstar, a ship that is only a mere thrity-four years old and still has a working shield generator that has as of yet to critically fail! We wish you the best of luck, but you won’t need that, since you scored a 170 out of 300 on your reactions test.",
+            "Hello Officer Joseph Stalwart,We at the board of MEDEX would like to thank you for undertaking this mission to deliver highly requested medical supplies to the blockaded world of Sedeth 18. We understand that this mission would normally be reserved for employees who have demonstrated a higher score of competence on their SSATs tests, but please know, we have full faith in you since you scored 677th out of all MEDEX employees, and we are 67% certain that you will succeed in this endeavor!We have also provided you with the Goodstar, a ship that is only a mere thrity-four years old and still has a working shield generator that has as of yet to critically fail!", 
             "ALERT! Hostile drone detected! Weapons scan indicate that charged weapons are positive. Shield management: highly recommended!",
             "Hostile scouting party with energy and slug munitions detected. Secondary shield activated",
             "Hostile fleet has commenced hostilities. Energy-charged munitions are positive. Activating trinary shielding system. WARNING: tertiary shielding can only be activated by suspending primary and secondary shielding. To activate tertiary shielding, combine primary and secondary shielding.",
@@ -49,6 +49,8 @@ namespace TeamProject
         //****WE NEED TO IMPORT THE VALUE FROM A FILE AT THE BEGINNING OF THE GAME
         int HighestUnlocked;
         
+        //bool to pause level until players read level start text.
+        bool levelactive = false;
 
         //to make sure the level only changes once when a level is beat
         bool LevelChanged = false;
@@ -82,7 +84,7 @@ namespace TeamProject
         //font
         SpriteFont Font1; //font
         Vector2 FontPos; //position of font
-
+        Vector2 StoryPos; //position for story text
         //main font
         SpriteFont PixelFont;
         //header font
@@ -776,11 +778,13 @@ namespace TeamProject
 
             else if (CurrentScreenState == ScreenState.kGame_Play)
             {
-                GameStarted = true;
+
                 if (CurrentKeyboardState.IsKeyDown(Keys.P) || CurrentGamePadState.Buttons.RightShoulder == ButtonState.Pressed)
                     CurrentScreenState = ScreenState.kPaused;
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
+                    if(levelactive)
+                        {
                     LevelChanged = false;
                     //this creates a new projectile at a frequency established in the currentlevel object
                     int Limit = CurrentLevel.FireFreq;
@@ -797,6 +801,7 @@ namespace TeamProject
                         CreateProjectile();
                     }
 
+                   //checks if level is active before starting
                     //move current projectiles in CurrentProjectiles list
                     MoveProjectiles();
 
@@ -810,7 +815,16 @@ namespace TeamProject
                     //returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
                     //returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
                     CheckCollision();
-
+                        }
+                   //turns text off and allows gameplay
+                    if(levelactive == false)
+                    {
+                     if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState || CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState)
+                    levelactive = true;
+                                     GameStarted = true;
+                    }
+                                        LastKeyboardState = CurrentKeyboardState;
+                    lastGamePadState = CurrentGamePadState;
                     //allow player to pause game
                 }
                 else if (CurrentWinStatus == WinStatus.kLose)
@@ -993,6 +1007,9 @@ namespace TeamProject
                     GameTh.Play();
                     //font position
                     FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width / 2) - 150, (graphics.GraphicsDevice.Viewport.Height / 2) + 550);
+                    StoryPos = new Vector2((graphics.GraphicsDevice.Viewport.Width/2 - 1600), (graphics.GraphicsDevice.Viewport.Height-1800));
+                    if (levelactive == false)
+                        spriteBatch.DrawString(PixelFont, Stories[CurrentLevelNum], StoryPos, Color.White);
                     //draw hull status on screen
                     spriteBatch.DrawString(PixelFont, "HULL INTEGRITY: " + ship.HP, FontPos, Color.White);
                     //draw current level on screen

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/BlueProjectile.bmp</SourceFile>
-  <SourceTime>2020-05-02T21:29:22.3100084-06:00</SourceTime>
-  <DestFile>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/bin/Windows/Content/BlueProjectile.xnb</DestFile>
-  <DestTime>2020-05-02T21:30:00.2139964-06:00</DestTime>
+  <SourceFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueProjectile.bmp</SourceFile>
+  <SourceTime>2020-04-13T05:23:11.4653545-10:00</SourceTime>
+  <DestFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/Content/BlueProjectile.xnb</DestFile>
+  <DestTime>2020-05-03T07:24:06.1610322-10:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2018-12-08T09:35:54-07:00</ImporterTime>
+  <ImporterTime>2018-12-08T06:35:54-10:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2018-12-08T09:35:54-07:00</ProcessorTime>
+  <ProcessorTime>2018-12-08T06:35:54-10:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>
