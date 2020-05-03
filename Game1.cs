@@ -701,7 +701,6 @@ namespace TeamProject
                     {
                         CurrentLevel = Level2;
                         CurrentLevelNum = 1;
-                                                HighestUnlocked = 2; //test delete this
                     }
                     else if (SelectLevel.Selection == 2)
                     {
