@@ -812,31 +812,31 @@ namespace TeamProject
                         CurrentLevelNum++;
                         CurrentLevel = Levels[CurrentLevelNum];
                         ship.HP += 2;
-                       if(HighestUnlocked < CurrentLevel.LevelNum)
-                            {
-                        HighestUnlocked = CurrentLevel.LevelNum;
-                                                    SelectLevel = null;
-                                                                            try{
-                        //Pass the filepath and filename to the StreamWriter Constructor
-                        StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
+                        if(HighestUnlocked < CurrentLevel.LevelNum)
+                        {
+                            HighestUnlocked = CurrentLevel.LevelNum;
+                            SelectLevel = null;
+                            try{
+                                //Pass the filepath and filename to the StreamWriter Constructor
+                                StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
 
-                        //Write a line of text
-                        sw.WriteLine(HighestUnlocked);
+                                //Write a line of text
+                                sw.WriteLine(HighestUnlocked);
 
-                            //Write a second line of text
+                                //Write a second line of text
 
                                 //Close the file
                                 sw.Close();
                             }
-                        catch(Exception e)
-                                {
-                        Console.WriteLine("Exception: " + e.Message);
-                                    }
-                            finally 
-                                    {
-                            Console.WriteLine("Executing finally block.");
-                                }
+                            catch(Exception e)
+                            {
+                                Console.WriteLine("Exception: " + e.Message);
                             }
+                            finally 
+                            {
+                                Console.WriteLine("Executing finally block.");
+                            }
+                        }
 
                         SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
                             new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode" },
@@ -861,39 +861,39 @@ namespace TeamProject
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                         GameTh.Stop(); //ends the theme song
                         if(HighestUnlocked != 6)
+                        {
+                            HighestUnlocked = 6;
+                            if(HighestUnlocked < CurrentLevel.LevelNum)
                             {
-                        HighestUnlocked = 6;
-                                                   if(HighestUnlocked < CurrentLevel.LevelNum)
-                            {
-                        HighestUnlocked = CurrentLevel.LevelNum;
-                                                    SelectLevel = null;
-                                                                            try{
-                        //Pass the filepath and filename to the StreamWriter Constructor
-                        StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
+                                HighestUnlocked = CurrentLevel.LevelNum;
+                                SelectLevel = null;
+                                try{
+                                    //Pass the filepath and filename to the StreamWriter Constructor
+                                    StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
 
-                        //Write a line of text
-                        sw.WriteLine(HighestUnlocked);
+                                    //Write a line of text
+                                    sw.WriteLine(HighestUnlocked);
 
-                            //Write a second line of text
+                                    //Write a second line of text
 
-                                //Close the file
-                                sw.Close();
-                            }
-                        catch(Exception e)
+                                        //Close the file
+                                        sw.Close();
+                                }
+                                catch(Exception e)
                                 {
-                        Console.WriteLine("Exception: " + e.Message);
-                                    }
-                            finally 
-                                    {
-                            Console.WriteLine("Executing finally block.");
+                                    Console.WriteLine("Exception: " + e.Message);
+                                }
+                                finally 
+                                {
+                                    Console.WriteLine("Executing finally block.");
                                 }
                             }
-                        SelectLevel = null;
-                            }
-                        SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
+                            SelectLevel = null;
+                            SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
                             new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode" },
                             Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f),
                             new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), HighestUnlocked);
+                        }
                         CurrentScreenState = ScreenState.kMain_Menu;
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
                         CurrentLevel = Level1;
@@ -949,6 +949,10 @@ namespace TeamProject
                     spriteBatch.DrawString(PixelFont, PauseMenu.Options[i], PauseMenu.OptionPositions[i], Color.White);
                 }
                 PauseMenu.Draw(spriteBatch);
+            }
+            else if (CurrentScreenState == ScreenState.kControls)
+            {
+                spriteBatch.Draw(Content.Load<Texture2D>("HowToPlay"), new Vector2(0f, 0f), Color.White);
             }
             else if (CurrentScreenState == ScreenState.kGame_Play)
             {
