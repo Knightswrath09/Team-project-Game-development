@@ -199,7 +199,7 @@ namespace TeamProject
             HeaderFont = Content.Load<SpriteFont>("MenuHeader");
 
             //load strings for font
-            Winner = "We are clear to warp! \nExcellent work, officer.";
+            Winner = "We are clear to warp! \nExcellent work, officer. \nPress Enter to continue.";
             Loser = "Well, that could have gone just a slight bit better.";
 
             //create each level
