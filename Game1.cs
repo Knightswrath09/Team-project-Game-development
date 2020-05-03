@@ -652,6 +652,7 @@ namespace TeamProject
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
                 GameStarted = false;
+                levelactive = false;
                 ship.HP = 3;
                 //resets all levels to firedprojectiles = 0
                 for (int i = 0; i < Levels.Count; i++)
@@ -833,6 +834,7 @@ namespace TeamProject
                     {
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                         GameTh.Stop(); //ends the theme song
+                        levelactive = false;
                         CurrentLevel = Level1;
                         CurrentLevelNum = 0;
                         CurrentScreenState = ScreenState.kMain_Menu;
@@ -850,6 +852,7 @@ namespace TeamProject
                         CurrentLevelNum++;
                         CurrentLevel = Levels[CurrentLevelNum];
                         ship.HP += 2;
+                        levelactive = false;
                         if(HighestUnlocked < CurrentLevel.LevelNum)
                         {
                             HighestUnlocked = CurrentLevel.LevelNum;
