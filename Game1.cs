@@ -405,47 +405,47 @@ namespace TeamProject
             //Checks if a controller is connected, and if so, implements the controller buttons for the shield
             if (gamePadState.IsConnected)
             {
-                //DPad controls red shield
+                //DPad controls blue shield
                 if (gamePadState.DPad.Up == ButtonState.Pressed)
                 {
-                    CurrentShields[0].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
                     ShieldM.Play();
                 }
                 else if (gamePadState.DPad.Right == ButtonState.Pressed)
                 {
-                    CurrentShields[0].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
                     ShieldM.Play();
                 }
                 else if (gamePadState.DPad.Down == ButtonState.Pressed)
                 {
-                    CurrentShields[0].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
                     ShieldM.Play();
                 }
                 else if (gamePadState.DPad.Left == ButtonState.Pressed)
                 {
-                    CurrentShields[0].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                    CurrentShields[1].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
                     ShieldM.Play();
                 }
 
-                //Buttons on the right control blue shield
+                //Buttons on the right control red shield
                 if (gamePadState.Buttons.Y == ButtonState.Pressed)
                 {
-                    CurrentShields[1].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kTop, CurrentShields);
                     ShieldM2.Play();
                 }
                 else if (gamePadState.Buttons.B == ButtonState.Pressed)
                 {
-                    CurrentShields[1].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kRight, CurrentShields);
                     ShieldM2.Play();
                 }
                 else if (gamePadState.Buttons.A == ButtonState.Pressed)
                 {
-                    CurrentShields[1].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kBottom, CurrentShields);
                     ShieldM2.Play();
                 }
                 else if (gamePadState.Buttons.X == ButtonState.Pressed)
                 {
-                    CurrentShields[1].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
+                    CurrentShields[0].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
                     ShieldM2.Play();
                 }
             }
@@ -631,6 +631,7 @@ namespace TeamProject
 
         //for menu selection
         KeyboardState LastKeyboardState;
+        GamePadState lastGamePadState;
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -644,6 +645,7 @@ namespace TeamProject
 
             //keyboard input used for menus
             KeyboardState CurrentKeyboardState = Keyboard.GetState();
+            GamePadState CurrentGamePadState = GamePad.GetState(PlayerIndex.One);
 
            //main menu logic
             if (CurrentScreenState == ScreenState.kMain_Menu)
@@ -653,12 +655,17 @@ namespace TeamProject
                 //resets all levels to firedprojectiles = 0
                 for (int i = 0; i < Levels.Count; i++)
                     Levels[i].FiredProjectiles = 0;
-                //keyboard input to change selection and select option
-                if (CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
+                for (int j = 0; j < CurrentProjectiles.Count; j++)
+                    CurrentProjectiles[j] = null;
+                //keyboard and controller input to change selection and select option
+                if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
+                    || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     MainMenu.ChangeSelection(CombatSprites.Directions.kTop);
-                else if (CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
+                else if ((CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
+                    || (CurrentGamePadState.DPad.Down == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     MainMenu.ChangeSelection(CombatSprites.Directions.kBottom);
-                else if(CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                else if((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
                     if (MainMenu.Selection == 0)
                         CurrentScreenState = ScreenState.kControls;
@@ -670,15 +677,19 @@ namespace TeamProject
                         CurrentScreenState = ScreenState.kGame_Play;
                 }
                 LastKeyboardState = CurrentKeyboardState;
+                lastGamePadState = CurrentGamePadState;
             }
 
             else if (CurrentScreenState == ScreenState.kLevel_Select)
             {
-                if (CurrentKeyboardState.IsKeyDown(Keys.Up) && LastKeyboardState != CurrentKeyboardState)
+                if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
+                    || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     SelectLevel.ChangeSelection(CombatSprites.Directions.kTop);
-                else if (CurrentKeyboardState.IsKeyDown(Keys.Down) && LastKeyboardState != CurrentKeyboardState)
+                else if ((CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
+                    || (CurrentGamePadState.DPad.Down == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     SelectLevel.ChangeSelection(CombatSprites.Directions.kBottom);
-                else if(CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                else if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
                     if (SelectLevel.Selection == 0)
                     {
@@ -707,23 +718,31 @@ namespace TeamProject
                         CurrentLevel = Level5;
                         CurrentLevelNum = 4;
                     }
-                    //else if (SelectLevel.Selection == 5)
-                    //endless mode, we need to figure out scoring
+                    else if (SelectLevel.Selection == 5)
+                    {
+                        CurrentLevel = Endless;
+                        CurrentLevelNum = 5;
+                    }
+                    
 
                     CurrentScreenState = ScreenState.kGame_Play;
                     
                 }
                 LastKeyboardState = CurrentKeyboardState;
+                lastGamePadState = CurrentGamePadState;
             }
 
             else if (CurrentScreenState == ScreenState.kControls)
             {
-                if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && !GameStarted && LastKeyboardState != CurrentKeyboardState)
+                if (!GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     CurrentScreenState = ScreenState.kMain_Menu;
-                else if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && GameStarted && LastKeyboardState != CurrentKeyboardState)
+                else if (GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     CurrentScreenState = ScreenState.kPaused;
 
                 LastKeyboardState = CurrentKeyboardState;
+                lastGamePadState = CurrentGamePadState;
             }
 
             else if (CurrentScreenState == ScreenState.kPaused)
@@ -731,11 +750,14 @@ namespace TeamProject
                 Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                 GameTh.Stop(); //ends the theme song
                 Victory.Stop(); //ends victory Jingle
-                if (CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
+                if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
+                    || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     PauseMenu.ChangeSelection(CombatSprites.Directions.kTop);
-                else if (CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
+                else if ((CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
+                    || (CurrentGamePadState.DPad.Down == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     PauseMenu.ChangeSelection(CombatSprites.Directions.kBottom);
-                else if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                else if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
                     if (PauseMenu.Selection == 0)
                         CurrentScreenState = ScreenState.kControls;
@@ -750,12 +772,13 @@ namespace TeamProject
 
                 }
                 LastKeyboardState = CurrentKeyboardState;
+                lastGamePadState = CurrentGamePadState;
             }
 
             else if (CurrentScreenState == ScreenState.kGame_Play)
             {
                 GameStarted = true;
-                if (CurrentKeyboardState.IsKeyDown(Keys.P))
+                if (CurrentKeyboardState.IsKeyDown(Keys.P) || CurrentGamePadState.Buttons.RightShoulder == ButtonState.Pressed)
                     CurrentScreenState = ScreenState.kPaused;
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
@@ -793,7 +816,8 @@ namespace TeamProject
                 }
                 else if (CurrentWinStatus == WinStatus.kLose)
                 {
-                    if(CurrentKeyboardState.IsKeyDown(Keys.Enter))
+                    if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                         GameTh.Stop(); //ends the theme song
@@ -803,6 +827,8 @@ namespace TeamProject
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
                         ship.HP = 3;
                     }
+                    LastKeyboardState = CurrentKeyboardState;
+                    lastGamePadState = CurrentGamePadState;
                 }
 
                 else if (CurrentWinStatus == WinStatus.kWin_Level)
@@ -846,17 +872,20 @@ namespace TeamProject
 
 
                     }
-                    if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
                         Victory.Stop();
                     }
 
                     LastKeyboardState = CurrentKeyboardState;
+                    lastGamePadState = CurrentGamePadState;
                 }
                 else if (CurrentWinStatus == WinStatus.kWin_Game)
                 {
-                    if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                         GameTh.Stop(); //ends the theme song
@@ -905,6 +934,7 @@ namespace TeamProject
                         }
                     }
                     LastKeyboardState = CurrentKeyboardState;
+                    lastGamePadState = CurrentGamePadState;
                 }
                 
             }
