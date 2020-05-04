@@ -4,6 +4,7 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/menu-select.wav</File>
     <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/HowToPlay.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/StarSprite.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/MenuHeader.spritefont</File>

@@ -117,6 +117,12 @@
 /processorParam:TextureFormat=Compressed
 /build:MenuHeader.spritefont
 
+#begin menu-select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:menu-select.wav
+
 #begin PixelFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

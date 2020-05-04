@@ -662,7 +662,10 @@ namespace TeamProject
                 for (int i = 0; i < Levels.Count; i++)
                     Levels[i].FiredProjectiles = 0;
                 for (int j = 0; j < CurrentProjectiles.Count; j++)
+                {
                     CurrentProjectiles[j] = null;
+                    CurrentProjectiles.RemoveAt(j);
+                }
                 //keyboard and controller input to change selection and select option
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                      || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
