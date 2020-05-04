@@ -239,6 +239,9 @@ namespace TeamProject
             ship = new ShipSprite("ship", Content.Load<Texture2D>("PlayerShip"), new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), new Vector2(360f, 253f));
 
             ShipPosition = new Vector2((graphics.PreferredBackBufferWidth / 2) - (shipSize.X / 2), (graphics.PreferredBackBufferHeight / 2) - (shipSize.Y / 2));
+                        //READ HIGH SCORES FROM TEXT FILE INTO HIGHSCORES LIST
+            //CURRENT VALUES FOR TESTING PURPOSES
+            HighScores = new List<int>() { 1000, 200, 100, 50, 50 };
 
             //READ HIGHESTUNLOCKED FROM FILE
             //current value is for testing purposes
@@ -249,8 +252,16 @@ namespace TeamProject
 
                 //Read the first line of text
                 string line = sr.ReadLine();
-
                 HighestUnlocked = Int32.Parse(line);
+                while(line != null)
+                    {
+                    line = sr.ReadLine(); HighScores[0] = Int32.Parse(line);
+                    line = sr.ReadLine(); HighScores[1] = Int32.Parse(line);
+                    line = sr.ReadLine(); HighScores[2] = Int32.Parse(line);
+                    line = sr.ReadLine(); HighScores[3] = Int32.Parse(line);
+                    line = sr.ReadLine(); HighScores[4] = Int32.Parse(line);;
+                    line = sr.ReadLine();//refrences a null and closes text file
+                    }
                  
 
                 //close the file
@@ -267,9 +278,7 @@ namespace TeamProject
                 Console.WriteLine("Executing finally block.");
             }
 
-            //READ HIGH SCORES FROM TEXT FILE INTO HIGHSCORES LIST
-            //CURRENT VALUES FOR TESTING PURPOSES
-            HighScores = new List<int>() { 1000, 200, 100, 50, 50 };
+
 
             //initialize menus
             MainMenu = new Menu(HeaderFont, PixelFont, "Main Menu",
@@ -904,6 +913,29 @@ namespace TeamProject
                                 NewHighScore = true;
 
                                 //WRITE EACH ELEMENT OF THE UPDATED HIGHSCORES LIST TO THE FILE
+                                                            try{
+                                //Pass the filepath and filename to the StreamWriter Constructor
+                                StreamWriter swhs = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
+
+                                //Write a line of text
+                                swhs.WriteLine(HighestUnlocked);
+                                    swhs.WriteLine(HighScores[0]);
+                                    swhs.WriteLine(HighScores[1]);
+                                    swhs.WriteLine(HighScores[2]);
+                                    swhs.WriteLine(HighScores[3]);
+                                    swhs.WriteLine(HighScores[4]);
+
+                                //Close the file
+                                swhs.Close();
+                            }
+                            catch(Exception e)
+                            {
+                                Console.WriteLine("Exception: " + e.Message);
+                            }
+                            finally 
+                            {
+                                Console.WriteLine("Executing finally block.");
+                            }
                             }
                         }
                     }
