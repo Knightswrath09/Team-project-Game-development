@@ -68,6 +68,7 @@ namespace TeamProject
         SoundEffect ShipBlowsUp;
         SoundEffect VictoryJingle;
         SoundEffect GameTheme;
+        SoundEffect MenuSound;
 
         //sound effect instances
         SoundEffectInstance ShieldM; //sound effect instance of shieldmove soundeffect.
@@ -76,6 +77,7 @@ namespace TeamProject
         SoundEffectInstance ShipisGone; //sound effect instance for the ship blowing up
         SoundEffectInstance Hullcrit; //sound effect instance of HullCritical
         SoundEffectInstance GameTh; //sound effect instance of GameTheme
+        SoundEffectInstance MenuSelect; //sound effect instance of cursor moving over menu options.
 
        //Soundeffect Loop disablers
         bool explode = true; //sound effect bool to ensure that the ShipisGone instance does not loop.
@@ -183,6 +185,7 @@ namespace TeamProject
             ShipBlowsUp = Content.Load<SoundEffect>("244394__werra__bang-explosion-metallic");//Bang explosion metallic sound effect made by user Werra on FreeSound.org
             GameTheme = Content.Load<SoundEffect>("371516__mrthenoronha__space-game-theme-loop");//Space Game Loop sound effect by user Mrthenoronha on Freesound.org
             VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Dream Boy sound effect by user Xcreenplay on Freesound.org
+            MenuSound = Content.Load<SoundEffect>("menu-select");//cursor select sound effect, originally titled "cursor.mp3", made by user Loyalty_Freak_Music on Freesound.org
             
             //sound effect instances
             ShieldM = ShieldMove.CreateInstance();
@@ -191,6 +194,7 @@ namespace TeamProject
             ShipisGone = ShipBlowsUp.CreateInstance();
             Hullcrit = HullCritical.CreateInstance();
             GameTh = GameTheme.CreateInstance();
+            MenuSelect = MenuSound.CreateInstance();
 
             //load font
             Font1 = Content.Load<SpriteFont>("Courier New");
@@ -661,22 +665,31 @@ namespace TeamProject
                     CurrentProjectiles[j] = null;
                 //keyboard and controller input to change selection and select option
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
-                    || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                     || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                     {
                     MainMenu.ChangeSelection(CombatSprites.Directions.kTop);
+                    MenuSelect.Play();
+                    }
                 else if ((CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
                     || (CurrentGamePadState.DPad.Down == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                    {
                     MainMenu.ChangeSelection(CombatSprites.Directions.kBottom);
-                else if((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    MenuSelect.Play();
+                    }
+                else if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
-                {
-                    if (MainMenu.Selection == 0)
-                        CurrentScreenState = ScreenState.kControls;
-                    else if (MainMenu.Selection == 1)
-                        CurrentScreenState = ScreenState.kLevel_Select;
-                    else if (MainMenu.Selection == 2)
-                        CurrentScreenState = ScreenState.kHigh_Scores;
-                    else if (MainMenu.Selection == 3)
-                        CurrentScreenState = ScreenState.kGame_Play;
+                    {
+                    MenuSelect.Play();
+                    {
+                        if (MainMenu.Selection == 0)
+                            CurrentScreenState = ScreenState.kControls;
+                        else if (MainMenu.Selection == 1)
+                            CurrentScreenState = ScreenState.kLevel_Select;
+                        else if (MainMenu.Selection == 2)
+                            CurrentScreenState = ScreenState.kHigh_Scores;
+                        else if (MainMenu.Selection == 3)
+                            CurrentScreenState = ScreenState.kGame_Play;
+                    }
                 }
                 LastKeyboardState = CurrentKeyboardState;
                 lastGamePadState = CurrentGamePadState;
@@ -753,24 +766,32 @@ namespace TeamProject
                 Victory.Stop(); //ends victory Jingle
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                     || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                {
                     PauseMenu.ChangeSelection(CombatSprites.Directions.kTop);
+                    MenuSelect.Play();
+                }
                 else if ((CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
                     || (CurrentGamePadState.DPad.Down == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                {
                     PauseMenu.ChangeSelection(CombatSprites.Directions.kBottom);
+                    MenuSelect.Play();
+                }
                 else if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
-                    if (PauseMenu.Selection == 0)
-                        CurrentScreenState = ScreenState.kControls;
-                    else if (PauseMenu.Selection == 1)
-                        CurrentScreenState = ScreenState.kGame_Play;
-                    else if (PauseMenu.Selection == 2)
+                    MenuSelect.Play();
                     {
-                        CurrentScreenState = ScreenState.kMain_Menu;
-                        CurrentLevelNum = 0;
-                        CurrentLevel = Level1;
+                        if (PauseMenu.Selection == 0)
+                            CurrentScreenState = ScreenState.kControls;
+                        else if (PauseMenu.Selection == 1)
+                            CurrentScreenState = ScreenState.kGame_Play;
+                        else if (PauseMenu.Selection == 2)
+                        {
+                            CurrentScreenState = ScreenState.kMain_Menu;
+                            CurrentLevelNum = 0;
+                            CurrentLevel = Level1;
+                        }
                     }
-
                 }
                 LastKeyboardState = CurrentKeyboardState;
                 lastGamePadState = CurrentGamePadState;
