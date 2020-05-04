@@ -54,6 +54,9 @@ namespace TeamProject
         //to make sure the level only changes once when a level is beat
         bool LevelChanged = false;
 
+        //keep track of score for current game
+        int CurrentScore;
+
 
         //list to keep track of current projectiles on screen
         List<Projectile> CurrentProjectiles = new List<Projectile>();
@@ -568,6 +571,15 @@ namespace TeamProject
                         //blocked
                         if ((CurrentProjectiles[a].Direction == CurrentShields[i].Direction) && (CurrentProjectiles[a].SpriteColor == CurrentShields[i].SpriteColor) && CurrentShields[i].visible)
                         {
+                            if(CurrentLevel == Endless && (CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kBlue || 
+                                CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kRed))
+                            {
+                                CurrentScore += 100;
+                            }
+                            else if(CurrentLevel == Endless && CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kPurple)
+                            {
+                                CurrentScore += 150;
+                            }
                             blocked = 1;
                             ShieldBlock.Play(1f, 0, 0);
                         }
@@ -592,6 +604,10 @@ namespace TeamProject
                         }
                         else
                         {
+                            if(CurrentLevel == Endless)
+                            {
+                                CurrentScore -= 25;
+                            }
                             ship.HP++;
                             ShieldBlock.Play(1f, 0, 0);
                             //replace with powerup sound effect
@@ -1038,9 +1054,17 @@ namespace TeamProject
                         spriteBatch.DrawString(PixelFont, Stories[CurrentLevelNum], StoryPos, Color.White);
                     //draw hull status on screen
                     spriteBatch.DrawString(PixelFont, "HULL INTEGRITY: " + ship.HP, FontPos, Color.White);
-                    //draw current level on screen
-                    int levelDisplayed = CurrentLevel.LevelNum;
-                    spriteBatch.DrawString(PixelFont, "Current Level: " + levelDisplayed, FontPos + new Vector2(0, 150), Color.White);
+
+                    if (CurrentLevel != Endless)
+                    {
+                        //draw current level on screen
+                        int levelDisplayed = CurrentLevel.LevelNum;
+                        spriteBatch.DrawString(PixelFont, "Current Level: " + levelDisplayed, FontPos + new Vector2(0, 150), Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(PixelFont, "Current Score: " + CurrentScore, FontPos + new Vector2(0, 150), Color.White);
+                    }
 
                     //draw function for each projectile in current projectiles
                     for (int i = 0; i < CurrentProjectiles.Count; i++)
