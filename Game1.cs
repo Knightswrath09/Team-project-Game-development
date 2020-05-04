@@ -57,6 +57,13 @@ namespace TeamProject
         //keep track of score for current game
         int CurrentScore;
 
+        //reads high scores from text file in LoadContent method
+        //used to compare players score with high scores, and updte them if necessary
+        List<int> HighScores = new List<int>();
+
+        //true if the player beat a high score so "New highscore!" message can be displayed
+        bool NewHighScore = false;
+
 
         //list to keep track of current projectiles on screen
         List<Projectile> CurrentProjectiles = new List<Projectile>();
@@ -259,7 +266,10 @@ namespace TeamProject
             {
                 Console.WriteLine("Executing finally block.");
             }
-            //HighestUnlocked = 1;
+
+            //READ HIGH SCORES FROM TEXT FILE INTO HIGHSCORES LIST
+            //CURRENT VALUES FOR TESTING PURPOSES
+            HighScores = new List<int>() { 1000, 200, 100, 50, 50 };
 
             //initialize menus
             MainMenu = new Menu(HeaderFont, PixelFont, "Main Menu",
@@ -765,6 +775,15 @@ namespace TeamProject
                 lastGamePadState = CurrentGamePadState;
             }
 
+            else if (CurrentScreenState == ScreenState.kHigh_Scores)
+            {
+                if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
+                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                    CurrentScreenState = ScreenState.kMain_Menu;
+                lastGamePadState = CurrentGamePadState;
+                LastKeyboardState = CurrentKeyboardState;
+            }
+
             else if (CurrentScreenState == ScreenState.kControls)
             {
                 if (!GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
@@ -869,6 +888,25 @@ namespace TeamProject
                 }
                 else if (CurrentWinStatus == WinStatus.kLose)
                 {
+                    if((CurrentLevel == Endless) && !NewHighScore)
+                    {
+                        for(int i = 0; i < 5; i++)
+                        {
+                            if(CurrentScore > HighScores[i] && !NewHighScore)
+                            {
+                                for(int j = 3; j >= i; j--)
+                                {
+                                    
+                                    HighScores[j + 1] = HighScores[j];
+
+                                }
+                                HighScores[i] = CurrentScore;
+                                NewHighScore = true;
+
+                                //WRITE EACH ELEMENT OF THE UPDATED HIGHSCORES LIST TO THE FILE
+                            }
+                        }
+                    }
                     if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
@@ -880,6 +918,8 @@ namespace TeamProject
                         CurrentScreenState = ScreenState.kMain_Menu;
                         CurrentWinStatus = WinStatus.kLevel_In_Progress;
                         ship.HP = 3;
+                        NewHighScore = false;
+                        CurrentScore = 0;
                     }
                     LastKeyboardState = CurrentKeyboardState;
                     lastGamePadState = CurrentGamePadState;
@@ -1039,6 +1079,17 @@ namespace TeamProject
             {
                 spriteBatch.Draw(Content.Load<Texture2D>("HowToPlay"), new Vector2(0f, 0f), Color.White);
             }
+            else if (CurrentScreenState == ScreenState.kHigh_Scores)
+            {
+                //show high scores
+                spriteBatch.DrawString(HeaderFont, "High Scores",
+                    new Vector2((graphics.PreferredBackBufferWidth / 2) - (HeaderFont.MeasureString("High Scores").X / 2), 300), Color.Yellow);
+                for (int i = 0; i < 5; i++)
+                {
+                    spriteBatch.DrawString(PixelFont, HighScores[i].ToString(), 
+                        new Vector2((graphics.PreferredBackBufferWidth / 2) - (PixelFont.MeasureString(HighScores[i].ToString()).X / 2), 400 + (i*100)), Color.White);
+                }
+            }
             else if (CurrentScreenState == ScreenState.kGame_Play)
             {
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
@@ -1082,9 +1133,31 @@ namespace TeamProject
                     GameTh.Stop(); //ends the theme song
                     if (explode)
                     { ShipisGone.Play(); explode = false; } //plays instanced sound effect and disables looping.
-                                                            //Defeat message
+                    //Defeat message
                     spriteBatch.DrawString(PixelFont, Loser + "\n Press enter to return to main menu or esc to quit", FontPos, Color.White);
-                    //draw "you lose!" screen
+                    //if the player is in endless mode
+                    //show them their final score and high scores
+                    //if they beat the high score, notify them
+                    if(CurrentLevel == Endless)
+                    {
+                        spriteBatch.DrawString(PixelFont, "Your Score: " + CurrentScore,
+                            new Vector2((graphics.PreferredBackBufferWidth / 2) - (PixelFont.MeasureString("Your Score: " + CurrentScore).X / 2), 300),
+                            Color.White);
+                        if (NewHighScore)
+                        {
+                            spriteBatch.DrawString(PixelFont, "New High Score!",
+                                new Vector2((graphics.PreferredBackBufferWidth / 2) - (PixelFont.MeasureString("New High Score!").X / 2), 350),
+                                Color.White);
+                            
+                        }
+                        spriteBatch.DrawString(HeaderFont, "High Scores:",
+                                new Vector2((graphics.PreferredBackBufferWidth / 2) - (HeaderFont.MeasureString("High Scores:").X / 2), 450), Color.Yellow);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            spriteBatch.DrawString(PixelFont, HighScores[i].ToString(),
+                                new Vector2((graphics.PreferredBackBufferWidth / 2) - (PixelFont.MeasureString(HighScores[i].ToString()).X / 2), 550 + (i * 100)), Color.White);
+                        }
+                    }
                     
                 }
                 else if (CurrentWinStatus == WinStatus.kWin_Level)
