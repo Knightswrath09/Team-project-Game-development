@@ -98,6 +98,12 @@
 /processorParam:TextureFormat=Color
 /build:GreenProjectile.bmp
 
+#begin GreggLevel1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GreggLevel1.wav
+
 #begin HowToPlay.bmp
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -207,4 +213,34 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:StarSprite.bmp
+
+#begin VoiceGreggEndless.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:VoiceGreggEndless.wav
+
+#begin VoiceGreggLevel2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:VoiceGreggLevel2.wav
+
+#begin VoiceGreggLevel4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:VoiceGreggLevel4.wav
+
+#begin VoiceGreggLevel5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:VoiceGreggLevel5.wav
+
+#begin VoiceGregLevel3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:VoiceGregLevel3.wav
 

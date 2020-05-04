@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Content"
   ],
-  "SelectedNode": "\\Game1.cs",
+  "SelectedNode": "\\Content\\Content.mgcb",
   "PreviewInSolutionExplorer": false
 }
