@@ -15,6 +15,7 @@
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueShield.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/Courier New.spritefont</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/GreenProjectile.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/GreggLevel1.wav</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/HowToPlay.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/MenuHeader.spritefont</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/menu-select.wav</File>
@@ -26,8 +27,19 @@
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/RedShield.bmp</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/SirenandVoice.wav</File>
     <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/StarSprite.bmp</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggEndless.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggLevel2.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggLevel4.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggLevel5.wav</File>
+    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGregLevel3.wav</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

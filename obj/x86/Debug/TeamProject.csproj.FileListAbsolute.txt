@@ -43,3 +43,9 @@ C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\obj\x86\Debug\Tea
 C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\obj\x86\Debug\TeamProject.csproj.CoreCompileInputs.cache
 C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\obj\x86\Debug\TeamProject.csprojAssemblyReference.cache
 C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\menu-select.xnb
+C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\GreggLevel1.xnb
+C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\VoiceGreggEndless.xnb
+C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\VoiceGreggLevel2.xnb
+C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\VoiceGreggLevel4.xnb
+C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\VoiceGreggLevel5.xnb
+C:\Users\Dustin\Documents\GitHub\Team-project-Game-development\bin\Windows\x86\Debug\Content\VoiceGregLevel3.xnb

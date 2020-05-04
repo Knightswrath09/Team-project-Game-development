@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggLevel5.wav</SourceFile>
+  <SourceTime>2020-05-04T08:19:11.7889838-10:00</SourceTime>
+  <DestFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/Content/VoiceGreggLevel5.xnb</DestFile>
+  <DestTime>2020-05-04T08:30:38.4986626-10:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2018-12-08T06:35:54-10:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2018-12-08T06:35:54-10:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

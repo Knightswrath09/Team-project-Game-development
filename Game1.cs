@@ -30,7 +30,7 @@ namespace TeamProject
             "Officer Stalwart, judging from your recent sucess on the blockade of Sedeth-18, we have decided to task you with another\nmission of vital importance. We require you to deliver a bandage to a captain of a war vessel. This vessel is currently\nlocated in the middle of a warzone between two superpowers, but it's nothing you can't handle!\n[REDACTED MESSAGE FOR MEDEX BOARD EYES ONLY]: The Goodstar is a horribly old ship and its costing us more money to keep it\nactive than what it's bringing to us. Its lifetime warranty is about to expire in a month, so now's the time to have an \n\"unforseen desctruction of property\" so we can collect the insurance money on it.\nPress Enter on your keyboard or A on your controller to start...",
             "We are happy, Officer Stalwart, that you are above decent at your job, but if you really care about MEDEX and our values,\nwe'd like to collect that insurance money now, please.\nScoring system: Red and Blue: 100 Purple: 150 Green = -25\nPress Enter on your keyboard or A on your controller to start and eventaully blow up..."
         };
-
+        List<SoundEffectInstance> GreggV = new List<SoundEffectInstance>() {};
         //level object for current level
         //im thinking a list of all of the levels might be easier to handle
         //you would access the current level object using the current level integer as the index
@@ -50,6 +50,8 @@ namespace TeamProject
         
         //bool to pause level until players read level start text.
         bool levelactive = false;
+        //bool used to prevent gregg's voice from looping
+        bool Greggtalk = true;
 
         //to make sure the level only changes once when a level is beat
         bool LevelChanged = false;
@@ -80,6 +82,13 @@ namespace TeamProject
         SoundEffect GameTheme;
         SoundEffect MenuSound;
 
+        //Sound effects for GREGG
+        SoundEffect GREGG1;
+        SoundEffect GREGG2;
+        SoundEffect GREGG3;
+        SoundEffect GREGG4;
+        SoundEffect GREGG5;
+        SoundEffect GREGGEndless;
         //sound effect instances
         SoundEffectInstance ShieldM; //sound effect instance of shieldmove soundeffect.
         SoundEffectInstance ShieldM2; //sound effect instance for blue shield.
@@ -89,6 +98,13 @@ namespace TeamProject
         SoundEffectInstance GameTh; //sound effect instance of GameTheme
         SoundEffectInstance MenuSelect; //sound effect instance of cursor moving over menu options.
 
+        //Sound effect instances for GREGG
+         SoundEffectInstance G1;
+         SoundEffectInstance G2;
+         SoundEffectInstance G3;
+         SoundEffectInstance G4;
+         SoundEffectInstance G5;
+         SoundEffectInstance GE;
        //Soundeffect Loop disablers
         bool explode = true; //sound effect bool to ensure that the ShipisGone instance does not loop.
 
@@ -197,6 +213,14 @@ namespace TeamProject
             VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Dream Boy sound effect by user Xcreenplay on Freesound.org
             MenuSound = Content.Load<SoundEffect>("menu-select");//cursor select sound effect, originally titled "cursor.mp3", made by user Loyalty_Freak_Music on Freesound.org
             
+            //load GREGG voiceLines
+            GREGG1 = Content.Load<SoundEffect>("GreggLevel1");
+            GREGG2 = Content.Load<SoundEffect>("VoiceGreggLevel2");
+            GREGG3 = Content.Load<SoundEffect>("VoiceGregLevel3");
+            GREGG4 = Content.Load<SoundEffect>("VoiceGreggLevel4");
+            GREGG5 = Content.Load<SoundEffect>("VoiceGreggLevel5");
+            GREGGEndless = Content.Load<SoundEffect>("VoiceGreggEndless");
+
             //sound effect instances
             ShieldM = ShieldMove.CreateInstance();
             ShieldM2 = ShieldMove.CreateInstance();
@@ -206,6 +230,21 @@ namespace TeamProject
             GameTh = GameTheme.CreateInstance();
             MenuSelect = MenuSound.CreateInstance();
 
+            //sound effect instances for GREGG
+            G1 = GREGG1.CreateInstance();
+            G2 = GREGG2.CreateInstance();
+            G3 = GREGG3.CreateInstance();
+            G4 = GREGG4.CreateInstance();
+            G5 = GREGG5.CreateInstance();
+            GE = GREGGEndless.CreateInstance();
+
+            //adds gregg's lines to the gregg list
+            GreggV.Add(G1);
+            GreggV.Add(G2);
+            GreggV.Add(G3);
+            GreggV.Add(G4);
+            GreggV.Add(G5);
+            GreggV.Add(GE);
             //load font
             Font1 = Content.Load<SpriteFont>("Courier New");
 
@@ -692,6 +731,7 @@ namespace TeamProject
             {
                 GameStarted = false;
                 levelactive = false;
+                Greggtalk = true;
                 ship.HP = 3;
                 //resets all levels to firedprojectiles = 0
                 for (int i = 0; i < Levels.Count; i++)
@@ -888,8 +928,10 @@ namespace TeamProject
                     if(levelactive == false)
                     {
                      if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState || CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState)
-                    levelactive = true;
+                    {levelactive = true; 
                                      GameStarted = true;
+                            GreggV[CurrentLevelNum].Stop();//stops gregg's voice when player begins level
+                            }
                     }
                                         LastKeyboardState = CurrentKeyboardState;
                     lastGamePadState = CurrentGamePadState;
@@ -945,6 +987,7 @@ namespace TeamProject
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                         GameTh.Stop(); //ends the theme song
                         levelactive = false;
+                        Greggtalk = true;
                         CurrentLevel = Level1;
                         CurrentLevelNum = 0;
                         CurrentScreenState = ScreenState.kMain_Menu;
@@ -965,6 +1008,7 @@ namespace TeamProject
                         CurrentLevel = Levels[CurrentLevelNum];
                         ship.HP += 2;
                         levelactive = false;
+                        Greggtalk = true;
                         if(HighestUnlocked < CurrentLevel.LevelNum)
                         {
                             HighestUnlocked = CurrentLevel.LevelNum;
@@ -1134,7 +1178,14 @@ namespace TeamProject
                     FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width / 15) - 150, (graphics.GraphicsDevice.Viewport.Height / 2) + 550);
                     StoryPos = new Vector2((graphics.GraphicsDevice.Viewport.Width/2 - 1600), (graphics.GraphicsDevice.Viewport.Height-1800));
                     if (levelactive == false)
+                        {
                         spriteBatch.DrawString(PixelFont, Stories[CurrentLevelNum], StoryPos, Color.White);
+                        if(Greggtalk)
+                        {
+                        GreggV[CurrentLevelNum].Play();
+                            Greggtalk = false;
+                            }
+                        }
                     //draw hull status on screen
                     spriteBatch.DrawString(PixelFont, "HULL INTEGRITY: " + ship.HP, FontPos, Color.White);
 
