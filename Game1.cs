@@ -706,7 +706,7 @@ namespace TeamProject
                         else
                         {
                             ship.HP++;
-                            Greenhit.Play();
+                            
                             if (CurrentLevel == Endless)
                             {
                                 CurrentScore -= 25;
@@ -750,6 +750,9 @@ namespace TeamProject
 
             for(int x = 0; x < unblockedProjectiles.Count; x++)
             {
+                bool isGreen = false;
+                if (unblockedProjectiles[x].SpriteColor == CombatSprites.CombatSpriteColors.kGreen)
+                    isGreen = true;
                 if(unblockedProjectiles[x].Direction == CombatSprites.Directions.kTop)
                 {
                     if(unblockedProjectiles[x].Position.Y + unblockedProjectiles[x].Velocity.Y >= 
@@ -757,8 +760,11 @@ namespace TeamProject
                     {
                         unblockedProjectiles[x] = null;
                         unblockedProjectiles.RemoveAt(x);
-                        Hullhit.Play();
-                        
+                        if(!isGreen)
+                            Hullhit.Play();
+                        else
+                            Greenhit.Play();
+
                     }
                     else
                     {
@@ -772,7 +778,10 @@ namespace TeamProject
                     {
                         unblockedProjectiles[x] = null;
                         unblockedProjectiles.RemoveAt(x);
-                        Hullhit.Play(1f, 0, 0);
+                        if(!isGreen)
+                            Hullhit.Play(1f, 0, 0);
+                        else
+                            Greenhit.Play();
                     }
                     else
                     {
@@ -786,7 +795,10 @@ namespace TeamProject
                     {
                         unblockedProjectiles[x] = null;
                         unblockedProjectiles.RemoveAt(x);
-                        Hullhit.Play(1f, 0, 0);
+                        if(!isGreen)
+                            Hullhit.Play(1f, 0, 0);
+                        else
+                            Greenhit.Play();
                     }
                     else
                     {
@@ -800,7 +812,10 @@ namespace TeamProject
                     {
                         unblockedProjectiles[x] = null;
                         unblockedProjectiles.RemoveAt(x);
-                        Hullhit.Play(1f, 0, 0);
+                        if(!isGreen)
+                            Hullhit.Play(1f, 0, 0);
+                        else
+                            Greenhit.Play();
                     }
                     else
                     {
