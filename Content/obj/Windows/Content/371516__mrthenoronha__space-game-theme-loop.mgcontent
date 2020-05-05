@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Iris/Desktop/Team-project-Game-development/Content/371516__mrthenoronha__space-game-theme-loop.wav</SourceFile>
-  <SourceTime>2020-05-05T01:05:27.8354459-06:00</SourceTime>
-  <DestFile>C:/Users/Iris/Desktop/Team-project-Game-development/Content/bin/Windows/Content/371516__mrthenoronha__space-game-theme-loop.xnb</DestFile>
-  <DestTime>2020-05-05T01:14:54.8579099-06:00</DestTime>
+  <SourceFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/371516__mrthenoronha__space-game-theme-loop.wav</SourceFile>
+  <SourceTime>2020-04-13T16:36:22.9520825-10:00</SourceTime>
+  <DestFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/Content/371516__mrthenoronha__space-game-theme-loop.xnb</DestFile>
+  <DestTime>2020-05-05T07:07:58.2715527-10:00</DestTime>
   <Importer>WavImporter</Importer>
-  <ImporterTime>2018-12-08T09:35:54-07:00</ImporterTime>
+  <ImporterTime>2018-12-08T06:35:54-10:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>
-  <ProcessorTime>2018-12-08T09:35:54-07:00</ProcessorTime>
+  <ProcessorTime>2018-12-08T06:35:54-10:00</ProcessorTime>
   <Parameters>
     <Key>Quality</Key>
     <Value>Best</Value>

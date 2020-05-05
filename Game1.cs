@@ -223,7 +223,7 @@ namespace TeamProject
             MenuSound = Content.Load<SoundEffect>("menu-select");//cursor select sound effect, originally titled "cursor.mp3", made by user Loyalty_Freak_Music on Freesound.org
             MenuMusic = Content.Load<SoundEffect>("menu-music");//menu background music, originally titled "Futuristic Rhythmic Game Ambience", made by user PatrickLieberkind on Freesound.org
             GreenSpawn = Content.Load<SoundEffect>("55853__sergenious__teleport"); //teleport sound effect by user Sergenious on Freesound.org
-            Greenhit = Content.Load<SoundEffect>("483608__raclure__improvement-healing-chime.wavt"); //improved healing chime sound effect by user Raclure on Freesound.org
+            Greenhit = Content.Load<SoundEffect>("GreenHeal"); //improved healing chime sound effect by user Raclure on Freesound.org
 
             //load GREGG voiceLines
             GREGG1 = Content.Load<SoundEffect>("GreggLevel1");
@@ -485,7 +485,7 @@ namespace TeamProject
             }
             else
             {
-                ProjectileFired.Play(1f, 0, 0);
+                GreenSpawn.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("GreenProjectile"));
                 
@@ -706,6 +706,7 @@ namespace TeamProject
                         else
                         {
                             ship.HP++;
+                            Greenhit.Play();
                             if (CurrentLevel == Endless)
                             {
                                 CurrentScore -= 25;
@@ -756,7 +757,8 @@ namespace TeamProject
                     {
                         unblockedProjectiles[x] = null;
                         unblockedProjectiles.RemoveAt(x);
-                        Hullhit.Play(1f, 0, 0);
+                        Hullhit.Play();
+                        
                     }
                     else
                     {
