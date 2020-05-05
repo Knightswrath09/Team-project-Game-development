@@ -49,6 +49,12 @@
 /processorParam:Quality=Best
 /build:453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm.wav
 
+#begin 55853__sergenious__teleport.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:55853__sergenious__teleport.wav
+
 #begin Blast.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -85,6 +91,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Courier New.spritefont
+
+#begin GreenHeal.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GreenHeal.wav
 
 #begin GreenProjectile.bmp
 /importer:TextureImporter
@@ -134,6 +146,12 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:MenuHeader.spritefont
+
+#begin menu-music.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:menu-music.wav
 
 #begin menu-select.wav
 /importer:WavImporter

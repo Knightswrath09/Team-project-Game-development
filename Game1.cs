@@ -81,6 +81,9 @@ namespace TeamProject
         SoundEffect VictoryJingle;
         SoundEffect GameTheme;
         SoundEffect MenuSound;
+        SoundEffect MenuMusic;
+        SoundEffect GreenSpawn;
+        SoundEffect Greenhit;
 
         //Sound effects for GREGG
         SoundEffect GREGG1;
@@ -97,6 +100,9 @@ namespace TeamProject
         SoundEffectInstance Hullcrit; //sound effect instance of HullCritical
         SoundEffectInstance GameTh; //sound effect instance of GameTheme
         SoundEffectInstance MenuSelect; //sound effect instance of cursor moving over menu options.
+        SoundEffectInstance MenuM;
+        SoundEffectInstance Greensp;
+        SoundEffectInstance Greenh;
 
         //Sound effect instances for GREGG
          SoundEffectInstance G1;
@@ -213,9 +219,12 @@ namespace TeamProject
             Hullhit = Content.Load<SoundEffect>("111048__cyberkineticfilms__gunshot-with-metal-hit");//Gunshot with metal hit sound effect made by user Cyberkineticfilms on FreeSound.org
             ShipBlowsUp = Content.Load<SoundEffect>("244394__werra__bang-explosion-metallic");//Bang explosion metallic sound effect made by user Werra on FreeSound.org
             GameTheme = Content.Load<SoundEffect>("371516__mrthenoronha__space-game-theme-loop");//Space Game Loop sound effect by user Mrthenoronha on Freesound.org
-            VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Dream Boy sound effect by user Xcreenplay on Freesound.org
+            VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Move Dream Boy sound effect by user Xcreenplay on Freesound.org
             MenuSound = Content.Load<SoundEffect>("menu-select");//cursor select sound effect, originally titled "cursor.mp3", made by user Loyalty_Freak_Music on Freesound.org
-            
+            MenuMusic = Content.Load<SoundEffect>("menu-music");//menu background music, originally titled "Futuristic Rhythmic Game Ambience", made by user PatrickLieberkind on Freesound.org
+            GreenSpawn = Content.Load<SoundEffect>("55853__sergenious__teleport"); //teleport sound effect by user Sergenious on Freesound.org
+            Greenhit = Content.Load<SoundEffect>("GreenHeal"); //improved healing chime sound effect by user Raclure on Freesound.org
+
             //load GREGG voiceLines
             GREGG1 = Content.Load<SoundEffect>("GreggLevel1");
             GREGG2 = Content.Load<SoundEffect>("VoiceGreggLevel2");
@@ -232,6 +241,9 @@ namespace TeamProject
             Hullcrit = HullCritical.CreateInstance();
             GameTh = GameTheme.CreateInstance();
             MenuSelect = MenuSound.CreateInstance();
+            MenuM = MenuMusic.CreateInstance();
+            Greensp = GreenSpawn.CreateInstance();
+            Greenh = Greenhit.CreateInstance();
 
             //sound effect instances for GREGG
             G1 = GREGG1.CreateInstance();
@@ -473,7 +485,7 @@ namespace TeamProject
             }
             else
             {
-                ProjectileFired.Play(1f, 0, 0);
+                GreenSpawn.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("GreenProjectile"));
                 
@@ -694,6 +706,7 @@ namespace TeamProject
                         else
                         {
                             ship.HP++;
+                            Greenhit.Play();
                             if (CurrentLevel == Endless)
                             {
                                 CurrentScore -= 25;
@@ -744,7 +757,8 @@ namespace TeamProject
                     {
                         unblockedProjectiles[x] = null;
                         unblockedProjectiles.RemoveAt(x);
-                        Hullhit.Play(1f, 0, 0);
+                        Hullhit.Play();
+                        
                     }
                     else
                     {
@@ -825,6 +839,7 @@ namespace TeamProject
            //main menu logic
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
+                MenuM.Play();
                 GameStarted = false;
                 levelactive = false;
                 Greggtalk = true;
@@ -1309,6 +1324,7 @@ namespace TeamProject
             {
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
+                    MenuM.Stop();
                     //draw the ship
                     ship.Draw(spriteBatch);
                     //play theme music

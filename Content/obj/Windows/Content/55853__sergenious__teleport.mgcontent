@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/55853__sergenious__teleport.wav</SourceFile>
+  <SourceTime>2020-05-05T06:56:57.4141851-10:00</SourceTime>
+  <DestFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/Content/55853__sergenious__teleport.xnb</DestFile>
+  <DestTime>2020-05-05T07:07:59.1486881-10:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2018-12-08T06:35:54-10:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2018-12-08T06:35:54-10:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
