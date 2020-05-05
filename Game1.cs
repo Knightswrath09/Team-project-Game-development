@@ -276,7 +276,7 @@ namespace TeamProject
             Level2 = new Level(2, 15, Level.ProjectileTypes.kRed_And_Blue, 2, 11);
             Level3 = new Level(3, 25, Level.ProjectileTypes.kRBP, 2, 12);
             Level4 = new Level(4, 40, Level.ProjectileTypes.kRBP, 2, 13);
-            Level5 = new Level(5, 75, Level.ProjectileTypes.kRBP, 1, 15);
+            Level5 = new Level(5, 15, Level.ProjectileTypes.kRBP, 1, 15);
             Endless = new Level(6, 10, Level.ProjectileTypes.kRBP, 1, 15);
             CurrentLevel = Level1;
             CurrentLevelNum = 0;
@@ -1039,51 +1039,53 @@ namespace TeamProject
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
                     if(levelactive)
+                    {
+                        LevelChanged = false;
+                        //this creates a new projectile at a frequency established in the currentlevel object
+                        int Limit = CurrentLevel.FireFreq;
+                        currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; //Time passed since last Update()
+                        if (currentTime >= countDuration)
                         {
-                    LevelChanged = false;
-                    //this creates a new projectile at a frequency established in the currentlevel object
-                    int Limit = CurrentLevel.FireFreq;
-                    currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; //Time passed since last Update()
-                    if (currentTime >= countDuration)
-                    {
-                        Counter++;
-                        currentTime = 0f; // "use up" the time
-                                            //any actions to perform
-                    }
-                    if (Counter >= Limit)
-                    {
-                        Counter = 0;//Reset the counter;
-                        CreateProjectile();
-                    }
-
-                   //checks if level is active before starting
-                    //move current projectiles in CurrentProjectiles list
-                    MoveProjectiles();
-
-                    //allow player to move shields
-                    MoveShields();
-
-
-                    //check collisions and if the the winstate changes
-                    //returns Winstatus inProgress if no change
-                    //returns winstatus lose if hp of ship == 0
-                    //returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
-                    //returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
-                    CheckCollision();
+                            Counter++;
+                            currentTime = 0f; // "use up" the time
+                                                //any actions to perform
                         }
+                        if (Counter >= Limit)
+                        {
+                            Counter = 0;//Reset the counter;
+                            CreateProjectile();
+                        }
+
+                       //checks if level is active before starting
+                        //move current projectiles in CurrentProjectiles list
+                        MoveProjectiles();
+
+                        //allow player to move shields
+                        MoveShields();
+
+
+                        //check collisions and if the the winstate changes
+                        //returns Winstatus inProgress if no change
+                        //returns winstatus lose if hp of ship == 0
+                        //returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
+                        //returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
+                        CheckCollision();
+                    }
                    //turns text off and allows gameplay
                     if(levelactive == false)
                     {
-                     if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState || CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState)
-                    {levelactive = true; 
-                                     GameStarted = true;
+                        if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState || CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState)
+                        {
+                            levelactive = true; 
+                            GameStarted = true;
                             GreggV[CurrentLevelNum].Stop();//stops gregg's voice when player begins level
-                            }
+                        }
                     }
                                         LastKeyboardState = CurrentKeyboardState;
                     lastGamePadState = CurrentGamePadState;
                     //allow player to pause game
                 }
+
                 else if (CurrentWinStatus == WinStatus.kLose)
                 {
                     if((CurrentLevel == Endless) && !NewHighScore)
@@ -1155,6 +1157,11 @@ namespace TeamProject
                         {
                             unblockedProjectiles[j] = null;
                             unblockedProjectiles.RemoveAt(j);
+                        }
+                        for (int j = 0; j < CurrentProjectiles.Count; j++)
+                        {
+                            CurrentProjectiles[j] = null;
+                            CurrentProjectiles.RemoveAt(j);
                         }
                         CurrentLevelNum++;
                         CurrentLevel = Levels[CurrentLevelNum];
