@@ -81,6 +81,7 @@ namespace TeamProject
         SoundEffect VictoryJingle;
         SoundEffect GameTheme;
         SoundEffect MenuSound;
+        SoundEffect MenuMusic;
 
         //Sound effects for GREGG
         SoundEffect GREGG1;
@@ -97,6 +98,7 @@ namespace TeamProject
         SoundEffectInstance Hullcrit; //sound effect instance of HullCritical
         SoundEffectInstance GameTh; //sound effect instance of GameTheme
         SoundEffectInstance MenuSelect; //sound effect instance of cursor moving over menu options.
+        SoundEffectInstance MenuM;
 
         //Sound effect instances for GREGG
          SoundEffectInstance G1;
@@ -215,7 +217,8 @@ namespace TeamProject
             GameTheme = Content.Load<SoundEffect>("371516__mrthenoronha__space-game-theme-loop");//Space Game Loop sound effect by user Mrthenoronha on Freesound.org
             VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Dream Boy sound effect by user Xcreenplay on Freesound.org
             MenuSound = Content.Load<SoundEffect>("menu-select");//cursor select sound effect, originally titled "cursor.mp3", made by user Loyalty_Freak_Music on Freesound.org
-            
+            MenuMusic = Content.Load<SoundEffect>("menu-music");//menu background music, originally titled "Futuristic Rhythmic Game Ambience", made by user PatrickLieberkind on Freesound.org
+
             //load GREGG voiceLines
             GREGG1 = Content.Load<SoundEffect>("GreggLevel1");
             GREGG2 = Content.Load<SoundEffect>("VoiceGreggLevel2");
@@ -232,6 +235,7 @@ namespace TeamProject
             Hullcrit = HullCritical.CreateInstance();
             GameTh = GameTheme.CreateInstance();
             MenuSelect = MenuSound.CreateInstance();
+            MenuM = MenuMusic.CreateInstance();
 
             //sound effect instances for GREGG
             G1 = GREGG1.CreateInstance();
@@ -825,6 +829,7 @@ namespace TeamProject
            //main menu logic
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
+                MenuM.Play();
                 GameStarted = false;
                 levelactive = false;
                 Greggtalk = true;
@@ -1309,6 +1314,7 @@ namespace TeamProject
             {
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
+                    MenuM.Stop();
                     //draw the ship
                     ship.Draw(spriteBatch);
                     //play theme music
