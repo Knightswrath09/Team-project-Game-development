@@ -82,6 +82,8 @@ namespace TeamProject
         SoundEffect GameTheme;
         SoundEffect MenuSound;
         SoundEffect MenuMusic;
+        SoundEffect GreenSpawn;
+        SoundEffect Greenhit;
 
         //Sound effects for GREGG
         SoundEffect GREGG1;
@@ -99,6 +101,8 @@ namespace TeamProject
         SoundEffectInstance GameTh; //sound effect instance of GameTheme
         SoundEffectInstance MenuSelect; //sound effect instance of cursor moving over menu options.
         SoundEffectInstance MenuM;
+        SoundEffectInstance Greensp;
+        SoundEffectInstance Greenh;
 
         //Sound effect instances for GREGG
          SoundEffectInstance G1;
@@ -215,9 +219,11 @@ namespace TeamProject
             Hullhit = Content.Load<SoundEffect>("111048__cyberkineticfilms__gunshot-with-metal-hit");//Gunshot with metal hit sound effect made by user Cyberkineticfilms on FreeSound.org
             ShipBlowsUp = Content.Load<SoundEffect>("244394__werra__bang-explosion-metallic");//Bang explosion metallic sound effect made by user Werra on FreeSound.org
             GameTheme = Content.Load<SoundEffect>("371516__mrthenoronha__space-game-theme-loop");//Space Game Loop sound effect by user Mrthenoronha on Freesound.org
-            VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Dream Boy sound effect by user Xcreenplay on Freesound.org
+            VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Move Dream Boy sound effect by user Xcreenplay on Freesound.org
             MenuSound = Content.Load<SoundEffect>("menu-select");//cursor select sound effect, originally titled "cursor.mp3", made by user Loyalty_Freak_Music on Freesound.org
             MenuMusic = Content.Load<SoundEffect>("menu-music");//menu background music, originally titled "Futuristic Rhythmic Game Ambience", made by user PatrickLieberkind on Freesound.org
+            GreenSpawn = Content.Load<SoundEffect>("55853__sergenious__teleport"); //teleport sound effect by user Sergenious on Freesound.org
+            Greenhit = Content.Load<SoundEffect>("483608__raclure__improvement-healing-chime.wavt"); //improved healing chime sound effect by user Raclure on Freesound.org
 
             //load GREGG voiceLines
             GREGG1 = Content.Load<SoundEffect>("GreggLevel1");
@@ -236,6 +242,8 @@ namespace TeamProject
             GameTh = GameTheme.CreateInstance();
             MenuSelect = MenuSound.CreateInstance();
             MenuM = MenuMusic.CreateInstance();
+            Greensp = GreenSpawn.CreateInstance();
+            Greenh = Greenhit.CreateInstance();
 
             //sound effect instances for GREGG
             G1 = GREGG1.CreateInstance();

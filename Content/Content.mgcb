@@ -49,6 +49,18 @@
 /processorParam:Quality=Best
 /build:453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm.wav
 
+#begin 483608__raclure__improvement-healing-chime.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:483608__raclure__improvement-healing-chime.wav
+
+#begin 55853__sergenious__teleport.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:55853__sergenious__teleport.wav
+
 #begin Blast.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
