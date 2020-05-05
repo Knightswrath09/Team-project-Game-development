@@ -48,6 +48,7 @@
     <Compile Include="Projectile.cs" />
     <Compile Include="Shield.cs" />
     <Compile Include="ShipSprite.cs" />
+    <Compile Include="Stars.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

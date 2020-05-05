@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/440783__wcoltd__pulsar.wav</SourceFile>
-  <SourceTime>2020-04-13T07:35:00.9315161-10:00</SourceTime>
-  <DestFile>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/bin/Windows/Content/440783__wcoltd__pulsar.xnb</DestFile>
-  <DestTime>2020-05-04T08:09:24.1904654-10:00</DestTime>
+  <SourceFile>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/440783__wcoltd__pulsar.wav</SourceFile>
+  <SourceTime>2020-05-02T21:29:22.2679084-06:00</SourceTime>
+  <DestFile>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/bin/Windows/Content/440783__wcoltd__pulsar.xnb</DestFile>
+  <DestTime>2020-05-04T16:24:16.0249441-06:00</DestTime>
   <Importer>WavImporter</Importer>
-  <ImporterTime>2018-12-08T06:35:54-10:00</ImporterTime>
+  <ImporterTime>2018-12-08T09:35:54-07:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>
-  <ProcessorTime>2018-12-08T06:35:54-10:00</ProcessorTime>
+  <ProcessorTime>2018-12-08T09:35:54-07:00</ProcessorTime>
   <Parameters>
     <Key>Quality</Key>
     <Value>Best</Value>

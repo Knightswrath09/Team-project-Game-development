@@ -4,36 +4,40 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/111048__cyberkineticfilms__gunshot-with-metal-hit.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/244394__werra__bang-explosion-metallic.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/274211__littlerobotsoundfactory__whoosh-electric-00.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/371516__mrthenoronha__space-game-theme-loop.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/440783__wcoltd__pulsar.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/Blast.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueProjectile.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/BlueShield.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/Courier New.spritefont</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/GreenProjectile.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/GreggLevel1.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/HowToPlay.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/MenuHeader.spritefont</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/menu-select.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PixelFont.spritefont</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PlayerShip.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PurpleProjectile.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/PurpleShield.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/RedProjectile.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/RedShield.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/SirenandVoice.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/StarSprite.bmp</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggEndless.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggLevel2.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggLevel4.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGreggLevel5.wav</File>
-    <File>C:/Users/Dustin/Documents/GitHub/Team-project-Game-development/Content/VoiceGregLevel3.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/111048__cyberkineticfilms__gunshot-with-metal-hit.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/244394__werra__bang-explosion-metallic.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/274211__littlerobotsoundfactory__whoosh-electric-00.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/371516__mrthenoronha__space-game-theme-loop.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/440783__wcoltd__pulsar.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/Blast.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/BlueProjectile.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/BlueShield.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/Courier New.spritefont</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/GreenProjectile.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/GreggLevel1.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/HowToPlay.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/MedEx.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/MenuHeader.spritefont</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/menu-select.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/PixelFont.spritefont</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/PlayerShip.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/PurpleProjectile.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/PurpleShield.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/RedProjectile.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/RedShield.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/SirenandVoice.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/StarSprite.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/StarSpriteBackground.bmp</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/VoiceGreggEndless.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/VoiceGreggLevel2.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/VoiceGreggLevel4.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/VoiceGreggLevel5.wav</File>
+    <File>C:/Users/bophie/Documents/cu denver/csci 2941/final project/repository/Team-project-Game-development/Content/VoiceGregLevel3.wav</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

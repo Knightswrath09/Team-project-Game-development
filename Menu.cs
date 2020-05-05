@@ -34,7 +34,7 @@ namespace TeamProject
             Vector2 newSelectorSize, Vector2 newScreenSize, int maxUnlocked)
         {
             HeaderText = newHeader;
-            HeaderPosition = new Vector2((newScreenSize.X / 2) - (header.MeasureString(newHeader).X / 2), newScreenSize.Y / 5);
+            HeaderPosition = new Vector2((newScreenSize.X / 2) - (header.MeasureString(newHeader).X / 2), newScreenSize.Y / 3);
             NumOptions = newOptions.Count;
             Options = newOptions;
             float YValue = HeaderPosition.Y + 100f;

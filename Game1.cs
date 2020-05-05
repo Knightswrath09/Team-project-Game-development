@@ -171,6 +171,9 @@ namespace TeamProject
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //list of stars in the background
+        List<Stars> stars = new List<Stars>();
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -344,6 +347,33 @@ namespace TeamProject
             CurrentShields.Add(rShield);
             CurrentShields.Add(bShield);
             CurrentShields.Add(pShield);
+
+            Vector2 screenSize = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            //initialize stars
+            Stars Star0 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 8, 1, 2f, 0, screenSize);
+            stars.Add(Star0);
+            Stars Star1 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 3, 2, 2f, 1, screenSize);
+            stars.Add(Star1);
+            Stars Star2 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 10, 2, 2f, 2, screenSize);
+            stars.Add(Star2);
+            Stars Star3 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 6, 3, 3f, 3, screenSize);
+            stars.Add(Star3);
+            Stars Star4 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 1, 4, 2f, 4, screenSize);
+            stars.Add(Star4);
+            Stars Star5 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 5, 5, 2f, 5, screenSize);
+            stars.Add(Star5);
+            Stars Star6 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 9, 6, 2f, 6, screenSize);
+            stars.Add(Star6);
+            Stars Star7 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 2, 7, 3f, 7, screenSize);
+            stars.Add(Star7);
+            Stars Star8 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 7, 8, 2f, 8, screenSize);
+            stars.Add(Star8);
+            Stars Star9 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 4, 9, 2f, 9, screenSize);
+            stars.Add(Star9);
+            Stars Star10 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 1, 10, 3f, 10, screenSize);
+            stars.Add(Star10);
+            Stars Star11 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 10, 10, 3f, 11, screenSize);
+            stars.Add(Star11);
 
             // TODO: use this.Content to load your game content here
         }
@@ -560,6 +590,8 @@ namespace TeamProject
                 
         }
 
+        List<Projectile> unblockedProjectiles = new List<Projectile>();
+
         /// <summary>
         /// checks collision between projectiles, shields, and ship
         /// returns result of any collisions
@@ -629,12 +661,12 @@ namespace TeamProject
                         //blocked
                         if ((CurrentProjectiles[a].Direction == CurrentShields[i].Direction) && (CurrentProjectiles[a].SpriteColor == CurrentShields[i].SpriteColor) && CurrentShields[i].visible)
                         {
-                            if(CurrentLevel == Endless && (CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kBlue || 
+                            if (CurrentLevel == Endless && (CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kBlue ||
                                 CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kRed))
                             {
                                 CurrentScore += 100;
                             }
-                            else if(CurrentLevel == Endless && CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kPurple)
+                            else if (CurrentLevel == Endless && CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kPurple)
                             {
                                 CurrentScore += 150;
                             }
@@ -651,23 +683,21 @@ namespace TeamProject
                         {
                             blocked = 2;
                         }
-                        
+
                     }
-                    if(blocked == 2)
+                    if (blocked == 2)
                     {
                         if (!green)
                         {
                             ship.HP--;
-                            Hullhit.Play(1f, 0, 0);
                         }
                         else
                         {
-                            if(CurrentLevel == Endless)
+                            if (CurrentLevel == Endless)
                             {
                                 CurrentScore -= 25;
                             }
                             ship.HP++;
-                            ShieldBlock.Play(1f, 0, 0);
                             //replace with powerup sound effect
                         }
 
@@ -675,9 +705,14 @@ namespace TeamProject
                         if (ship.HP == 1)
                             Hullcrit.Play();
 
+                        //so that unblocked projectiles dont stop before hitting the ship
+                        unblockedProjectiles.Add(CurrentProjectiles[a]);
                     }
+                    
                     CurrentProjectiles[a] = null;
                     CurrentProjectiles.RemoveAt(a);
+                    
+                    
                     //stops level from ending if the player is playing in endless mode
                     if(CurrentLevel != Endless)
                         CurrentLevel.FiredProjectiles++;
@@ -698,6 +733,66 @@ namespace TeamProject
             }
             else
                 newWinStatus = WinStatus.kLevel_In_Progress;
+
+            for(int x = 0; x < unblockedProjectiles.Count; x++)
+            {
+                if(unblockedProjectiles[x].Direction == CombatSprites.Directions.kTop)
+                {
+                    if(unblockedProjectiles[x].Position.Y + unblockedProjectiles[x].Velocity.Y >= 
+                        ship.Position.Y + 67f - unblockedProjectiles[x].Size.Y)
+                    {
+                        unblockedProjectiles[x] = null;
+                        unblockedProjectiles.RemoveAt(x);
+                        Hullhit.Play(1f, 0, 0);
+                    }
+                    else
+                    {
+                        unblockedProjectiles[x].Move();
+                    }
+                }
+                else if(unblockedProjectiles[x].Direction == CombatSprites.Directions.kRight)
+                {
+                    if (unblockedProjectiles[x].Position.X + unblockedProjectiles[x].Velocity.X <=
+                        ship.Position.X + ship.Size.X)
+                    {
+                        unblockedProjectiles[x] = null;
+                        unblockedProjectiles.RemoveAt(x);
+                        Hullhit.Play(1f, 0, 0);
+                    }
+                    else
+                    {
+                        unblockedProjectiles[x].Move();
+                    }
+                }
+                else if(unblockedProjectiles[x].Direction == CombatSprites.Directions.kBottom)
+                {
+                    if (unblockedProjectiles[x].Position.Y + unblockedProjectiles[x].Velocity.Y <=
+                        ship.Position.Y + ship.Size.Y - 67f)
+                    {
+                        unblockedProjectiles[x] = null;
+                        unblockedProjectiles.RemoveAt(x);
+                        Hullhit.Play(1f, 0, 0);
+                    }
+                    else
+                    {
+                        unblockedProjectiles[x].Move();
+                    }
+                }
+                else
+                {
+                    if (unblockedProjectiles[x].Position.X + unblockedProjectiles[x].Velocity.X >=
+                        ship.Position.X - unblockedProjectiles[x].Size.X)
+                    {
+                        unblockedProjectiles[x] = null;
+                        unblockedProjectiles.RemoveAt(x);
+                        Hullhit.Play(1f, 0, 0);
+                    }
+                    else
+                    {
+                        unblockedProjectiles[x].Move();
+                    }
+                }
+            }
             
             CurrentWinStatus = newWinStatus;
         }
@@ -741,6 +836,11 @@ namespace TeamProject
                     CurrentProjectiles[j] = null;
                     CurrentProjectiles.RemoveAt(j);
                 }
+                for (int j = 0; j < unblockedProjectiles.Count; j++)
+                {
+                    unblockedProjectiles[j] = null;
+                    unblockedProjectiles.RemoveAt(j);
+                }
                 //keyboard and controller input to change selection and select option
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                      || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
@@ -777,13 +877,20 @@ namespace TeamProject
             {
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                     || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                {
+                    MenuSelect.Play();
                     SelectLevel.ChangeSelection(CombatSprites.Directions.kTop);
+                }
                 else if ((CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
                     || (CurrentGamePadState.DPad.Down == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                {
                     SelectLevel.ChangeSelection(CombatSprites.Directions.kBottom);
+                    MenuSelect.Play();
+                }
                 else if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
+                    MenuSelect.Play();
                     if (SelectLevel.Selection == 0)
                     {
                         CurrentLevel = Level1;
@@ -815,10 +922,10 @@ namespace TeamProject
                         CurrentLevel = Endless;
                         CurrentLevelNum = 5;
                     }
-                    
+
 
                     CurrentScreenState = ScreenState.kGame_Play;
-                    
+
                 }
                 LastKeyboardState = CurrentKeyboardState;
                 lastGamePadState = CurrentGamePadState;
@@ -828,7 +935,10 @@ namespace TeamProject
             {
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                {
                     CurrentScreenState = ScreenState.kMain_Menu;
+                    MenuSelect.Play();
+                }
                 lastGamePadState = CurrentGamePadState;
                 LastKeyboardState = CurrentKeyboardState;
             }
@@ -837,10 +947,16 @@ namespace TeamProject
             {
                 if (!GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                {
                     CurrentScreenState = ScreenState.kMain_Menu;
+                    MenuSelect.Play();
+                }
                 else if (GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
-                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
+                {
                     CurrentScreenState = ScreenState.kPaused;
+                    MenuSelect.Play();
+                }
 
                 LastKeyboardState = CurrentKeyboardState;
                 lastGamePadState = CurrentGamePadState;
@@ -1004,6 +1120,11 @@ namespace TeamProject
                 {
                     if (LevelChanged == false)
                     {
+                        for (int j = 0; j < unblockedProjectiles.Count; j++)
+                        {
+                            unblockedProjectiles[j] = null;
+                            unblockedProjectiles.RemoveAt(j);
+                        }
                         CurrentLevelNum++;
                         CurrentLevel = Levels[CurrentLevelNum];
                         ship.HP += 2;
@@ -1110,6 +1231,11 @@ namespace TeamProject
                 
             }
 
+            for(int i = 0; i < stars.Count; i++)
+            {
+                stars[i].Move();
+            }
+
             base.Update(gameTime);
         }
 
@@ -1122,15 +1248,26 @@ namespace TeamProject
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
+            if (CurrentScreenState == ScreenState.kGame_Play)
+            {
+                for (int i = 0; i < stars.Count; i++)
+                {
+                    stars[i].Draw(spriteBatch);
+                }
+            }
 
-            //MENUS WILL BE IMPLEMENTED AFTER PROTOTYPE PHASE
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
+                //draw medex logo
+                spriteBatch.Draw(Content.Load<Texture2D>("MedEx"),
+                    new Vector2((graphics.PreferredBackBufferWidth / 2) - (956f / 2), 120f), Color.White);
+                //draw main menu string
                 spriteBatch.DrawString(HeaderFont, MainMenu.HeaderText, MainMenu.HeaderPosition, Color.Yellow);
                 for (int i = 0; i < MainMenu.NumOptions; i++)
                 {
                     spriteBatch.DrawString(PixelFont, MainMenu.Options[i], MainMenu.OptionPositions[i], Color.White);
                 }
+                //draw mainmenu selector
                 MainMenu.Draw(spriteBatch);
             }
             else if (CurrentScreenState == ScreenState.kLevel_Select)
@@ -1153,6 +1290,7 @@ namespace TeamProject
             }
             else if (CurrentScreenState == ScreenState.kControls)
             {
+                //draw how to play bmp file
                 spriteBatch.Draw(Content.Load<Texture2D>("HowToPlay"), new Vector2(0f, 0f), Color.White);
             }
             else if (CurrentScreenState == ScreenState.kHigh_Scores)
@@ -1203,6 +1341,8 @@ namespace TeamProject
                     //draw function for each projectile in current projectiles
                     for (int i = 0; i < CurrentProjectiles.Count; i++)
                         CurrentProjectiles[i].Draw(spriteBatch);
+                    for (int i = 0; i < unblockedProjectiles.Count; i++)
+                        unblockedProjectiles[i].Draw(spriteBatch);
                     //draw function for each shield in current shields list
                     for (int j = 0; j < CurrentShields.Count; j++)
                     {
