@@ -679,7 +679,7 @@ namespace TeamProject
                             ShieldBlock.Play(1f, 0, 0);
                         }
                         //hits ship
-                        else if (blocked != 1)
+                        if (blocked != 1)
                         {
                             blocked = 2;
                         }
@@ -693,11 +693,12 @@ namespace TeamProject
                         }
                         else
                         {
+                            ship.HP++;
                             if (CurrentLevel == Endless)
                             {
                                 CurrentScore -= 25;
                             }
-                            ship.HP++;
+
                             //replace with powerup sound effect
                         }
 
