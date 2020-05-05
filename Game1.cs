@@ -276,7 +276,7 @@ namespace TeamProject
             Level2 = new Level(2, 15, Level.ProjectileTypes.kRed_And_Blue, 2, 11);
             Level3 = new Level(3, 25, Level.ProjectileTypes.kRBP, 2, 12);
             Level4 = new Level(4, 40, Level.ProjectileTypes.kRBP, 2, 13);
-            Level5 = new Level(5, 15, Level.ProjectileTypes.kRBP, 1, 15);
+            Level5 = new Level(5, 75, Level.ProjectileTypes.kRBP, 1, 15);
             Endless = new Level(6, 10, Level.ProjectileTypes.kRBP, 1, 15);
             CurrentLevel = Level1;
             CurrentLevelNum = 0;
