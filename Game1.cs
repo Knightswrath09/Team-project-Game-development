@@ -297,14 +297,16 @@ namespace TeamProject
             //read MedExSave.txt for HighestUnlocked and HighScores values
             try
             {
-                //Pass the file path and file name to the StreamReader constructor
+                //code for reading from a text file from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
+                //Pass the text file to the stream reader
                 StreamReader sr = new StreamReader(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
 
                 //Read the first line of text
-                string line = sr.ReadLine();
-                HighestUnlocked = Int32.Parse(line);
+                string line = sr.ReadLine(); //string that holds the value of a line to pass it on to integer
+                HighestUnlocked = Int32.Parse(line); //assigns level null to determine what level is unlocked
                 while(line != null)
                     {
+                    //reads the lines that store the five high scores
                     line = sr.ReadLine(); HighScores[0] = Int32.Parse(line);
                     line = sr.ReadLine(); HighScores[1] = Int32.Parse(line);
                     line = sr.ReadLine(); HighScores[2] = Int32.Parse(line);
@@ -314,18 +316,18 @@ namespace TeamProject
                     }
                  
 
-                //close the file
+                //close the text file so it is avliable again when needed
                 sr.Close();
                 Console.ReadLine();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception: " + e.Message);
+                Console.WriteLine("Exception: " + e.Message); //exception/error message
                 Exit();
             }
             finally
             {
-                Console.WriteLine("Executing finally block.");
+                Console.WriteLine("Executing finally block."); //finally block
             }
 
             //initialize menus
@@ -812,6 +814,7 @@ namespace TeamProject
                             Hullhit.Play(1f, 0, 0);
                         else
                         {
+                            
                             Greenhit.Play();
                             ship.HP++;
                         }
@@ -1160,29 +1163,30 @@ namespace TeamProject
                                 HighScores[i] = CurrentScore;
                                 NewHighScore = true;
 
+                                //code for writing to a text file is from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
                                 //write each element of the high score list to MedExSave.txt
                                 try{
-                                //Pass the filepath and filename to the StreamWriter Constructor
-                                StreamWriter swhs = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
+                                //Pass the textfile path and name to the streamwriter
+                                StreamWriter swhs = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path to text file
 
-                                //Write a line of text
-                                swhs.WriteLine(HighestUnlocked);
-                                swhs.WriteLine(HighScores[0]);
-                                swhs.WriteLine(HighScores[1]);
-                                swhs.WriteLine(HighScores[2]);
-                                swhs.WriteLine(HighScores[3]);
-                                swhs.WriteLine(HighScores[4]);
+                                //Writes text to text file
+                                swhs.WriteLine(HighestUnlocked); //levels unlcoked
+                                swhs.WriteLine(HighScores[0]);//high score 1
+                                swhs.WriteLine(HighScores[1]);//high score 2
+                                swhs.WriteLine(HighScores[2]);//high score 3
+                                swhs.WriteLine(HighScores[3]);//high score 4
+                                swhs.WriteLine(HighScores[4]);//high score 5
 
-                                //Close the file
+                                //Close the text file so it is avilable again when needed
                                 swhs.Close();
                                 }
                                 catch(Exception e)
                                 {
-                                    Console.WriteLine("Exception: " + e.Message);
+                                    Console.WriteLine("Exception: " + e.Message); //exception/error message
                                 }
                                 finally 
                                 {
-                                    Console.WriteLine("Executing finally block.");
+                                    Console.WriteLine("Executing finally block."); //finally block
                                 }
                             }
                         }
@@ -1238,25 +1242,24 @@ namespace TeamProject
                         {
                             HighestUnlocked = CurrentLevel.LevelNum;
                             SelectLevel = null;
+                            //streamwriter opens save text file to update highest level unlocked
+                            //writing to a text file code is from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
                             try{
-                                //Pass the filepath and filename to the StreamWriter Constructor
-                                StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
+                                //Pass the file name and path to the streamwriter
+                                StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path
 
-                                //Write a line of text
+                                //records highest unlocked level to first line of the document
                                 sw.WriteLine(HighestUnlocked);
-
-                                //Write a second line of text
-
-                                //Close the file
+                                //closes the text file so it is free to use later
                                 sw.Close();
                             }
                             catch(Exception e)
                             {
-                                Console.WriteLine("Exception: " + e.Message);
+                                Console.WriteLine("Exception: " + e.Message); //exception/error message
                             }
                             finally 
                             {
-                                Console.WriteLine("Executing finally block.");
+                                Console.WriteLine("Executing finally block."); //finally block
                             }
                         }
 
@@ -1292,25 +1295,25 @@ namespace TeamProject
                             if(HighestUnlocked < CurrentLevel.LevelNum)
                             {
                                 HighestUnlocked = CurrentLevel.LevelNum;
+                                //opens streamwriter to record the final level unlock to the text file
+                                //code for reading from a text file from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
                                 try{
-                                    //Pass the filepath and filename to the StreamWriter Constructor
-                                    StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
+                                    //Pass the text file name and path to the stream writer
+                                    StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path
 
-                                    //Write a line of text
+                                    //writes integer 6 to the first line in textfile, the highest possible.
                                     sw.WriteLine(HighestUnlocked);
 
-                                    //Write a second line of text
-
-                                        //Close the file
+                                        //Close the text file so it is avilable again when needed
                                         sw.Close();
                                 }
                                 catch(Exception e)
                                 {
-                                    Console.WriteLine("Exception: " + e.Message);
+                                    Console.WriteLine("Exception: " + e.Message);//exception/error message
                                 }
                                 finally 
                                 {
-                                    Console.WriteLine("Executing finally block.");
+                                    Console.WriteLine("Executing finally block."); //finally block
                                 }
                             }
                             SelectLevel = null;
