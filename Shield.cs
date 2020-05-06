@@ -8,12 +8,14 @@ using Microsoft.Xna.Framework; //for Vector2
 
 namespace TeamProject
 {
+    //class for the shield objects that the player will control
+    //derived from CombatSPrites, so each shield will have a SpriteColor and Direction
     class Shield : CombatSprites
     {
-        private Texture2D texture;
-        private Vector2 position;
         //red shield 0, blue 1, purple 2
         private int indexInList;
+        private Texture2D texture;
+        private Vector2 position;
         public Vector2 Position
         {
             get { return position; }
@@ -64,6 +66,7 @@ namespace TeamProject
             //position for shield on left, index 3
             PositionsByDirection.Add(new Vector2(newShipPos.X - (1.5f * newSize.X), newShipPos.Y + (newShipSize.Y / 2)));
 
+            //rotate shield and change position according to direction
             if (Direction == Directions.kTop)
             {
                 position = PositionsByDirection[0];
@@ -85,6 +88,7 @@ namespace TeamProject
                 angle = 0f;
             }
 
+            //set the purple shield to invisible when it is first created
             if (newColor == CombatSpriteColors.kPurple)
                 visible = false;
             else
@@ -96,7 +100,12 @@ namespace TeamProject
 
         }
 
-        //***SOPHIE
+        /// <summary>
+        /// changes direction of the shield
+        /// checks if the blue and red overlap, and changes visibility of each the 3 shields accordingly
+        /// </summary>
+        /// <param name="newDirection">taken from use input in Game1. The shield will move to this direction</param>
+        /// <param name="otherShields">used for purple shields and to change visbility</param>
         public void MoveShield(Directions newDirection, List<Shield> otherShields)
         {
             //sets direction of the shield to the direction determined by input from the Game1 class
@@ -142,6 +151,7 @@ namespace TeamProject
                 }
             }
 
+            //same logic but for the blue shield
             else if (indexInList == 1)
             {
                 if(otherShields[0].Direction == newDirection)
@@ -165,6 +175,7 @@ namespace TeamProject
             
         }
 
+        //draws shield
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1.0f);

@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace TeamProject
 {
+    //stores values that differentiate one level from another
     class Level
     {
         //private field storing the level number
         private int levelNum;
         //this public property can be used to read-only the level number
+        //will be displayed on the screen 
         public int LevelNum
         {
             get { return levelNum; }
         }
 
+        //projectiles will move at different speeds depending on the level
         private float projectileSpeed;
         public float ProjectileSpeed
         {
@@ -38,7 +41,9 @@ namespace TeamProject
             set { firedProjectiles = value; }
         }
 
-        //so we know which projectiles to fire in this level. all of these include green as well
+        //represents the assortments of projectiles that can be present in a level
+        //all of these include green as well
+        //ex: level one only has red and green projectiles, while level four has projectiles of all four colors
         public enum ProjectileTypes
         {
             kRed_Only = 0,
@@ -46,13 +51,15 @@ namespace TeamProject
             kRBP
         }
 
+        //stores the types of projectiles that will be fired in this level
         private ProjectileTypes typesOfProjectiles;
         public ProjectileTypes TypesOfProjectiles
         {
             get { return typesOfProjectiles; }
         }
 
-        //second between fires
+        //number of seconds between fires
+        //higher levels have higher firing frequencies
         private int fireFreq;
         public int FireFreq
         {

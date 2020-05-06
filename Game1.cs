@@ -17,10 +17,11 @@ namespace TeamProject
     {
         //GLOBAL VARIABLES THAT UPDATE THROUGH THE WHOLE GAME
 
-        //integer to keep track of current level number
-        int CurrentLevelNum = 1;
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
 
-
+        //***STORY
+        //list for story strings between levels
         List<string> Stories = new List<string>() 
         {
             "Hello Officer Joseph Stalwart, We at the board of MEDEX would like to thank you for undertaking this mission to deliver\nhighly requested medical supplies to the blockaded world of Sedeth-18. We understand that this mission would normally\nbe reserved for employees who have demonstrated a higher score of competence on their SSATs tests, but please know,\nwe have full faith in you since you scored 677th out of all MEDEX employees, and we are 67% certain that you will succeed\nin this endeavor! We have also provided you with the Goodstar, a ship that is only a mere thrity-four years old and still\nhas a working shield generator that has as of yet to critically fail!\nWe have detected a hostile drone heading to your position, good luck!\nPress Enter on your keyboard or A on your controller to start...",
@@ -30,13 +31,18 @@ namespace TeamProject
             "Officer Stalwart, judging from your recent sucess on the blockade of Sedeth-18, we have decided to task you with another\nmission of vital importance. We require you to deliver a bandage to a captain of a war vessel. This vessel is currently\nlocated in the middle of a warzone between two superpowers, but it's nothing you can't handle!\n[REDACTED MESSAGE FOR MEDEX BOARD EYES ONLY]: The Goodstar is a horribly old ship and its costing us more money to keep it\nactive than what it's bringing to us. Its lifetime warranty is about to expire in a month, so now's the time to have an \n\"unforseen desctruction of property\" so we can collect the insurance money on it.\nPress Enter on your keyboard or A on your controller to start...",
             "We are happy, Officer Stalwart, that you are above decent at your job, but if you really care about MEDEX and our values,\nwe'd like to collect that insurance money now, please.\nScoring system: Red and Blue: 100 Purple: 150 Green = -25\nPress Enter on your keyboard or A on your controller to start and eventaully blow up..."
         };
+        //list for gregg voicelines accompanying each story string between levels
         List<SoundEffectInstance> GreggV = new List<SoundEffectInstance>() {};
+        //bool to pause level until players read level start text.
+        bool levelactive = false;
+
+        //***LEVELS
         //level object for current level
-        //im thinking a list of all of the levels might be easier to handle
-        //you would access the current level object using the current level integer as the index
         Level CurrentLevel;
+        //integer to keep track of current level number
+        int CurrentLevelNum;
+        //access the current level object using CurrentLevelNum as the index
         List<Level> Levels = new List<Level>();
-        int maxLevel;
         //Levels
         Level Level1;
         Level Level2;
@@ -45,33 +51,22 @@ namespace TeamProject
         Level Level5;
         Level Endless;
         //integer indicating highest level unlocked (1 = level 1, 2 = level 2 ... 6 = endless)
-        //****WE NEED TO IMPORT THE VALUE FROM A FILE AT THE BEGINNING OF THE GAME
+        //imported from MedExSave.txt in LoadContent
         int HighestUnlocked;
-        
-        //bool to pause level until players read level start text.
-        bool levelactive = false;
-        //bool used to prevent gregg's voice from looping
-        bool Greggtalk = true;
-
         //to make sure the level only changes once when a level is beat
         bool LevelChanged = false;
 
+        //***SCORES
         //keep track of score for current game
         int CurrentScore;
-
         //reads high scores from text file in LoadContent method
         //used to compare players score with high scores, and updte them if necessary
         List<int> HighScores = new List<int>();
-
-        //true if the player beat a high score so "New highscore!" message can be displayed
+        //true if the player beat a high score so "New highscore!" message can be displayed in the Draw method
         bool NewHighScore = false;
 
-
-        //list to keep track of current projectiles on screen
-        List<Projectile> CurrentProjectiles = new List<Projectile>();
-
-
-        //sound effects
+        //***SOUND EFFECTS
+        //genreal sound effects
         SoundEffect Hullhit;
         SoundEffect HullCritical;
         SoundEffect ProjectileFired;
@@ -84,7 +79,6 @@ namespace TeamProject
         SoundEffect MenuMusic;
         SoundEffect GreenSpawn;
         SoundEffect Greenhit;
-
         //Sound effects for GREGG
         SoundEffect GREGG1;
         SoundEffect GREGG2;
@@ -103,19 +97,19 @@ namespace TeamProject
         SoundEffectInstance MenuM;
         SoundEffectInstance Greensp;
         SoundEffectInstance Greenh;
-
         //Sound effect instances for GREGG
-         SoundEffectInstance G1;
-         SoundEffectInstance G2;
-         SoundEffectInstance G3;
-         SoundEffectInstance G4;
-         SoundEffectInstance G5;
-         SoundEffectInstance GE;
-       //Soundeffect Loop disablers
+        SoundEffectInstance G1;
+        SoundEffectInstance G2;
+        SoundEffectInstance G3;
+        SoundEffectInstance G4;
+        SoundEffectInstance G5;
+        SoundEffectInstance GE;
+        //Soundeffect Loop disablers
         bool explode = true; //sound effect bool to ensure that the ShipisGone instance does not loop.
+        //bool used to prevent gregg's voice from looping
+        bool Greggtalk = true;
 
-        //font
-        SpriteFont Font1; //font
+        //***FONTS
         Vector2 FontPos; //position of font
         Vector2 StoryPos; //position for story text
         //main font
@@ -134,20 +128,27 @@ namespace TeamProject
         string Winner; //message for winning the level
         string Loser; //message for losing the level
         
-
+        //***SHIELDS AND PROJECTILES
+        //shield objects
         Shield rShield;
         Shield bShield;
         Shield pShield;
-
         //list to keep track of current shields
         //0 = red, 1 = blue, 2 = purple
         List<Shield> CurrentShields = new List<Shield>();
+        //list to keep track of current projectiles on screen
+        List<Projectile> CurrentProjectiles = new List<Projectile>();
+        //stores projectiles that have passed the shield not and were not blocked
+        //keep these moving until they hit the ship then remove them from this list
+        List<Projectile> unblockedProjectiles = new List<Projectile>();
 
+        //***SHIP
         Vector2 shipSize = new Vector2(360, 253);
         Vector2 ShipPosition;
-
         ShipSprite ship;
 
+
+        //***ENUMERATORS
         //enumerator for the possible states of the game
         enum ScreenState
         {
@@ -160,9 +161,6 @@ namespace TeamProject
         }
         //variable to store current screenstate, start with the main menu
         ScreenState CurrentScreenState = ScreenState.kMain_Menu;
-
-        
-
         //enumerator to store the win status of the player
         enum WinStatus
         {
@@ -174,9 +172,6 @@ namespace TeamProject
         //variable to store current winstatus, starts with a level in progress
         WinStatus CurrentWinStatus = WinStatus.kLevel_In_Progress;
 
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
         //list of stars in the background
         List<Stars> stars = new List<Stars>();
 
@@ -185,6 +180,7 @@ namespace TeamProject
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            //screensize is 1800px by 3200px
             graphics.PreferredBackBufferHeight = 1800;
             graphics.PreferredBackBufferWidth = 3200;
         }
@@ -260,15 +256,13 @@ namespace TeamProject
             GreggV.Add(G4);
             GreggV.Add(G5);
             GreggV.Add(GE);
-            //load font
-            Font1 = Content.Load<SpriteFont>("Courier New");
 
             //load font, header font is larger
             PixelFont = Content.Load<SpriteFont>("PixelFont");
             HeaderFont = Content.Load<SpriteFont>("MenuHeader");
 
             //load strings for font
-            Winner = "We are clear to warp! \nExcellent work, officer. \nPress Enter to continue.";
+            Winner = "We are clear to warp! \nExcellent work, officer. \nPress Enter or A to continue.";
             Loser = "Well, that could have gone just a slight bit better.";
 
             //create each level
@@ -278,8 +272,11 @@ namespace TeamProject
             Level4 = new Level(4, 40, Level.ProjectileTypes.kRBP, 2, 13);
             Level5 = new Level(5, 75, Level.ProjectileTypes.kRBP, 1, 15);
             Endless = new Level(6, 10, Level.ProjectileTypes.kRBP, 1, 15);
+            //set current level to level 1
             CurrentLevel = Level1;
+            //this integer correlates with the Levels list
             CurrentLevelNum = 0;
+            //Add each level to the Levels list, allows us to switch between levels more easily
             Levels.Add(Level1);
             Levels.Add(Level2);
             Levels.Add(Level3);
@@ -287,18 +284,17 @@ namespace TeamProject
             Levels.Add(Level5);
             Levels.Add(Endless);
 
-            maxLevel = 5;
-
             //create ship object
             ship = new ShipSprite("ship", Content.Load<Texture2D>("PlayerShip"), new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), new Vector2(360f, 253f));
 
+            //this is used in the shield contructors
             ShipPosition = new Vector2((graphics.PreferredBackBufferWidth / 2) - (shipSize.X / 2), (graphics.PreferredBackBufferHeight / 2) - (shipSize.Y / 2));
-                        //READ HIGH SCORES FROM TEXT FILE INTO HIGHSCORES LIST
-            //CURRENT VALUES FOR TESTING PURPOSES
+            
+            //list that stores high scores, these are filler values that will be overwritten when 
+            //real save values are read from MedExSave.txt
             HighScores = new List<int>() { 1000, 200, 100, 50, 50 };
 
-            //READ HIGHESTUNLOCKED FROM FILE
-            //current value is for testing purposes
+            //read MedExSave.txt for HighestUnlocked and HighScores values
             try
             {
                 //Pass the file path and file name to the StreamReader constructor
@@ -332,8 +328,6 @@ namespace TeamProject
                 Console.WriteLine("Executing finally block.");
             }
 
-
-
             //initialize menus
             MainMenu = new Menu(HeaderFont, PixelFont, "Main Menu",
                 new List<string>() { "How to Play", "Select Level", "High Scores", "Start Game" }, 
@@ -348,7 +342,7 @@ namespace TeamProject
                 new Vector2(56f, 56f),
                 new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), 3);
 
-
+            //Initalize the red, blue, and purple shield objects
             rShield = new Shield(CombatSprites.CombatSpriteColors.kRed, CombatSprites.Directions.kTop, 0,
                 Content.Load<Texture2D>("RedShield"), new Vector2(56f, 253f), shipSize, ShipPosition);
             bShield = new Shield(CombatSprites.CombatSpriteColors.kBlue, CombatSprites.Directions.kBottom, 1,
@@ -356,12 +350,15 @@ namespace TeamProject
             pShield = new Shield(CombatSprites.CombatSpriteColors.kPurple, CombatSprites.Directions.kLeft, 2,
                 Content.Load<Texture2D>("PurpleShield"), new Vector2(56f, 253f), shipSize, ShipPosition);
 
+            //add shields to CurrentShields list
+            //helpful when comparing projectiles and shield to determine if a projectile hits or is blocked
             CurrentShields.Add(rShield);
             CurrentShields.Add(bShield);
             CurrentShields.Add(pShield);
 
+            //used in Stars constructor, easier than typing new Vector2(graphics.Preferred...) every time
             Vector2 screenSize = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            //initialize stars
+            //initialize the 12 background stars and add to stars list
             Stars Star0 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 8, 1, 2f, 0, screenSize);
             stars.Add(Star0);
             Stars Star1 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 3, 2, 2f, 1, screenSize);
@@ -386,8 +383,6 @@ namespace TeamProject
             stars.Add(Star10);
             Stars Star11 = new Stars(Content.Load<Texture2D>("StarSpriteBackground"), 10, 10, 3f, 11, screenSize);
             stars.Add(Star11);
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -403,16 +398,25 @@ namespace TeamProject
         //THESE FUNCTONS WILL BE TRIGGERED IN THE GAMEPLAY SECTION OF THE UPDATE FUNCTION
         //
 
+        /// <summary>
+        ///Create projectile with random color and direction according to the types of projectiles present in the 
+        ///current level
+        ///Add new projectile to the projectile list
+        ///Use CurrentProjectiles.Count() to determine the index it was placed at, 
+        ///Will be placed at the end of the list
+        /// </summary>
         void CreateProjectile()
         {
-            //create projectile with random color and direction according to the current level
-            //add new projectile to the projectile list with CurrentProjectiles.Add(newProjectile)
-            //use CurrentProjectiles.Count() to determine the index it was placed at, will be placed at the end of the list
+            //set up random number generators
             Random random = new Random();
             int RandomColor = random.Next(1, 15); //random for color
             int RandomDirection = random.Next(0, 4); //random for direction
+
+            //stores color and direction determined from randomly generated number
             CombatSprites.CombatSpriteColors spriteColor;
             CombatSprites.Directions spriteDirection;
+
+            //stores the new projectile created from random color and direction
             Projectile newProjectile;
 
             //color randomization
@@ -445,6 +449,7 @@ namespace TeamProject
                     spriteColor = CombatSprites.CombatSpriteColors.kGreen;
             }
 
+            //direction randomization
             if (RandomDirection == 0)
             {
                 spriteDirection = CombatSprites.Directions.kTop;
@@ -462,43 +467,43 @@ namespace TeamProject
                 spriteDirection = CombatSprites.Directions.kLeft;
             }
 
+            //load correct texture with the determined color
+            //use determined direction in constructor
+            //play ProjectileFired sound effect
             if(spriteColor == CombatSprites.CombatSpriteColors.kRed)
             {
                 ProjectileFired.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("RedProjectile"));
-                
             }
             else if(spriteColor == CombatSprites.CombatSpriteColors.kBlue)
             {
                 ProjectileFired.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
-                    new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("BlueProjectile"));
-                
+                    new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("BlueProjectile"));    
             }
             else if(spriteColor == CombatSprites.CombatSpriteColors.kPurple)
             {
                 ProjectileFired.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("PurpleProjectile"));
-               
             }
             else
             {
                 GreenSpawn.Play(1f, 0, 0);
                 newProjectile = new Projectile(CurrentLevel, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight),
                     new Vector2(56f, 56f), spriteDirection, spriteColor, Content.Load<Texture2D>("GreenProjectile"));
-                
             }
 
-
-            int numProjectiles = CurrentProjectiles.Count;
+            //Add the new projectile to the list of projectiles on the screen
             CurrentProjectiles.Add(newProjectile);
             
         }
 
-        //moves all of the projectiles currently on the screen with Move() in projectile class
-        //***CARLYN
+        /// <summary>
+        /// Moves each of the projectiles cirrently on screen with CurrentProjectiles list and 
+        /// projectile move function
+        /// </summary>
         void MoveProjectiles()
         {
 
@@ -506,6 +511,9 @@ namespace TeamProject
                 CurrentProjectiles[i].Move();
         }
 
+        /// <summary>
+        /// takes user input to call the shield class MoveShield method with correct direction argument
+        /// </summary>
         void MoveShields()
         {
             KeyboardState keyboardState = Keyboard.GetState();
@@ -598,11 +606,10 @@ namespace TeamProject
                { 
                 CurrentShields[1].MoveShield(CombatSprites.Directions.kLeft, CurrentShields);
                 ShieldM2.Play();
-                }
-                
+                }      
         }
 
-        List<Projectile> unblockedProjectiles = new List<Projectile>();
+        
 
         /// <summary>
         /// checks collision between projectiles, shields, and ship
@@ -611,30 +618,35 @@ namespace TeamProject
         /// -removes projectile from projectile list and set it to null
         /// -adds to number fired so far in current level object
         /// if it hits the ship:
+        /// -add it to unblockedProjectiles list so it continues to move until it hits the ship
+        /// -then removes it from unblockedProkectiles once it hits the ship
         /// -adds a hit to the ship if it is blue red or purple
         /// -power up if it is green
         /// </summary>
-        //***IRIS
         void CheckCollision()
         {
+            //stores the winstatus that will result from any events in this function
             WinStatus newWinStatus;
             //check each projectile in list with each shield in list
             //returns Winstatus inProgress if no change
             int blocked;
             bool green;
+            //checks each projectile in CurrentProjectiles
             for (int a = 0; a < CurrentProjectiles.Count; a++) {
-                ///0 = hasn't reached shields, 1 = blocked, 2 = hit
+                //0 = hasn't reached shields, 1 = blocked, 2 = hit
                 blocked = 0;
+                //checks if the projectile is green, to trigger correct sound and change in HP
                 if (CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kGreen)
                     green = true;
                 else
                     green = false;
+
                 //when the edge of the projectile passes the edge of the shield, it is either blocked or missed
                 float projectileEdge;
                 float shieldLine;
 
                 //when the projectile is approaching from the top or the left, the projectile passes the shield when 
-                //the projectile edge is greater tha the shieldLine
+                //the projectileEdge value is greater than the shieldLine value
                 //when projectile approaches from bottom or right, passes when less than.
                 //this boolean should prevent from rewriting collision code
                 bool greaterThan;
@@ -667,12 +679,16 @@ namespace TeamProject
                 //if projectile passes the shield line, check if there is the correct shield there
                 if ((greaterThan && projectileEdge >= shieldLine) || (!greaterThan && projectileEdge <= shieldLine))
                 {
+                    //check projectile with each shield
                     for (int i = 0; i < CurrentShields.Count; i++)
                     {
-
-                        //blocked
+                        //blocked if projectile color and direction matches shield color and direction, and if the 
+                        //shield is visible
+                        //(visibility of a shield relates to the purple shield, which is insivible whenever the red and 
+                        //blue shields are visible)
                         if ((CurrentProjectiles[a].Direction == CurrentShields[i].Direction) && (CurrentProjectiles[a].SpriteColor == CurrentShields[i].SpriteColor) && CurrentShields[i].visible)
                         {
+                            //if the CurrentLevel is endless mode, count scores for each projectile
                             if (CurrentLevel == Endless && (CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kBlue ||
                                 CurrentProjectiles[a].SpriteColor == CombatSprites.CombatSpriteColors.kRed))
                             {
@@ -685,12 +701,13 @@ namespace TeamProject
                             blocked = 1;
                             ShieldBlock.Play(1f, 0, 0);
                         }
-                        else if (green == true && (CurrentProjectiles[a].Direction == CurrentShields[i].Direction))
+                        //green will never match a shield color, we just have to check if it matches the direction of any visible shield
+                        else if (green == true && (CurrentProjectiles[a].Direction == CurrentShields[i].Direction) && CurrentShields[i].visible)
                         {
                             blocked = 1;
                             ShieldBlock.Play(1f, 0, 0);
                         }
-                        //hits ship
+                        //hits ship if not blocked
                         if (blocked != 1)
                         {
                             blocked = 2;
@@ -699,78 +716,91 @@ namespace TeamProject
                     }
                     if (blocked == 2)
                     {
+                        //green is the only projectile that doesnt reduce HP
                         if (!green)
                         {
                             ship.HP--;
                         }
+                        //if it is green, reduce score if in endless mode
                         else
                         {
-                            ship.HP++;
-                            
                             if (CurrentLevel == Endless)
                             {
                                 CurrentScore -= 25;
                             }
-
-                            //replace with powerup sound effect
                         }
 
                         //emergency sound effect
                         if (ship.HP == 1)
                             Hullcrit.Play();
 
-                        //so that unblocked projectiles dont stop before hitting the ship
+                        //so that unblocked projectiles dont stop before hitting the ship, but arent checked for collision with a shield
                         unblockedProjectiles.Add(CurrentProjectiles[a]);
                     }
                     
+                    //remove projectile from Current projectiles list, regardless of it was a hit or miss
                     CurrentProjectiles[a] = null;
                     CurrentProjectiles.RemoveAt(a);
-                    
-                    
+
                     //stops level from ending if the player is playing in endless mode
                     if(CurrentLevel != Endless)
+                        //level will end when FiredProjectiles == TotalProjectiles in the CurrentLevel object
                         CurrentLevel.FiredProjectiles++;
-                }
-                
+                }   
             }
+            //player loses when the ships HP reaches 0
             if (ship.HP == 0)
             {
                 newWinStatus = WinStatus.kLose;
             }
+            //wins level when all of the projectiles of that level have been blocked or hit the ship
             else if (CurrentLevel.FiredProjectiles == CurrentLevel.TotalProjectiles)
             {
+                //win the game if they beat level 5
                 if (CurrentLevelNum == Levels.Count)
                     newWinStatus = WinStatus.kWin_Game;
                 else
                     newWinStatus = WinStatus.kWin_Level;
                 
             }
+            //keep the level going if they dont lose or win the level
             else
                 newWinStatus = WinStatus.kLevel_In_Progress;
 
+            //check each projectile in unblockedProjectiles list
             for(int x = 0; x < unblockedProjectiles.Count; x++)
             {
                 bool isGreen = false;
+                //check if the projectile is green, again
                 if (unblockedProjectiles[x].SpriteColor == CombatSprites.CombatSpriteColors.kGreen)
                     isGreen = true;
+                //depending on direction, the position at which the projectile hits the ship is different
                 if(unblockedProjectiles[x].Direction == CombatSprites.Directions.kTop)
                 {
+                    //position for direction = top
                     if(unblockedProjectiles[x].Position.Y + unblockedProjectiles[x].Velocity.Y >= 
                         ship.Position.Y + 67f - unblockedProjectiles[x].Size.Y)
                     {
+                        //remove projectile from unblockedProjectiles list
                         unblockedProjectiles[x] = null;
                         unblockedProjectiles.RemoveAt(x);
-                        if(!isGreen)
+                        //play hit ship noise if its not green
+                        if (!isGreen)
                             Hullhit.Play();
+                        //play powerup noise and increase HP if is is green
                         else
+                        {
                             Greenhit.Play();
-
+                            ship.HP++;
+                        }
                     }
+                    //if it doesnt reach the ship, it continues to move
                     else
                     {
                         unblockedProjectiles[x].Move();
                     }
                 }
+                //each other condition follows similar logic to the first
                 else if(unblockedProjectiles[x].Direction == CombatSprites.Directions.kRight)
                 {
                     if (unblockedProjectiles[x].Position.X + unblockedProjectiles[x].Velocity.X <=
@@ -781,7 +811,10 @@ namespace TeamProject
                         if(!isGreen)
                             Hullhit.Play(1f, 0, 0);
                         else
+                        {
                             Greenhit.Play();
+                            ship.HP++;
+                        }
                     }
                     else
                     {
@@ -798,7 +831,10 @@ namespace TeamProject
                         if(!isGreen)
                             Hullhit.Play(1f, 0, 0);
                         else
+                        {
                             Greenhit.Play();
+                            ship.HP++;
+                        }
                     }
                     else
                     {
@@ -815,7 +851,10 @@ namespace TeamProject
                         if(!isGreen)
                             Hullhit.Play(1f, 0, 0);
                         else
+                        {
                             Greenhit.Play();
+                            ship.HP++;
+                        }
                     }
                     else
                     {
@@ -824,6 +863,7 @@ namespace TeamProject
                 }
             }
             
+            //update winstatus
             CurrentWinStatus = newWinStatus;
         }
 
@@ -833,7 +873,7 @@ namespace TeamProject
         float currentTime = 0f;
         int Counter = 0;
 
-        //for menu selection
+        //for menu selection, so clicking a button once only registers once until it is pressed again
         KeyboardState LastKeyboardState;
         GamePadState lastGamePadState;
 
@@ -854,14 +894,18 @@ namespace TeamProject
            //main menu logic
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
+                //play main menu music 
                 MenuM.Play();
+                //this bool dtermines whether the how to play screen returns to the pause or main menu
                 GameStarted = false;
                 levelactive = false;
                 Greggtalk = true;
+                //resets Hp to 3
                 ship.HP = 3;
                 //resets all levels to firedprojectiles = 0
                 for (int i = 0; i < Levels.Count; i++)
                     Levels[i].FiredProjectiles = 0;
+                //resets CurrentProjectiles and unblockedProjectiles to 0 elements
                 for (int j = 0; j < CurrentProjectiles.Count; j++)
                 {
                     CurrentProjectiles[j] = null;
@@ -873,22 +917,24 @@ namespace TeamProject
                     unblockedProjectiles.RemoveAt(j);
                 }
                 //keyboard and controller input to change selection and select option
+                //plays menuselect sound effect
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                      || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
-                     {
-                    MainMenu.ChangeSelection(CombatSprites.Directions.kTop);
-                    MenuSelect.Play();
+                    {
+                        MainMenu.ChangeSelection(CombatSprites.Directions.kTop);
+                        MenuSelect.Play();
                     }
-                else if ((CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down))
+                else if ((CurrentKeyboardState.IsKeyDown(Keys.Down) && !LastKeyboardState.IsKeyDown(Keys.Down)) 
                     || (CurrentGamePadState.DPad.Down == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
-                    MainMenu.ChangeSelection(CombatSprites.Directions.kBottom);
-                    MenuSelect.Play();
+                        MainMenu.ChangeSelection(CombatSprites.Directions.kBottom);
+                        MenuSelect.Play();
                     }
+                //uses current selection to navigate to approproate screenstate
                 else if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
-                    MenuSelect.Play();
+                        MenuSelect.Play();
                     {
                         if (MainMenu.Selection == 0)
                             CurrentScreenState = ScreenState.kControls;
@@ -900,10 +946,13 @@ namespace TeamProject
                             CurrentScreenState = ScreenState.kGame_Play;
                     }
                 }
+                //sets last states equal to current states
                 LastKeyboardState = CurrentKeyboardState;
                 lastGamePadState = CurrentGamePadState;
             }
 
+            //changes level according to inpute on level select screen
+            //functions the same as the main menu, they are both objects of the Menu class
             else if (CurrentScreenState == ScreenState.kLevel_Select)
             {
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
@@ -922,10 +971,10 @@ namespace TeamProject
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
                     MenuSelect.Play();
+                    //sets appropriate level to current level, and the corresponding CurrentLevelNum
                     if (SelectLevel.Selection == 0)
                     {
                         CurrentLevel = Level1;
-
                         CurrentLevelNum = 0;
                     }
                     else if (SelectLevel.Selection == 1)
@@ -954,7 +1003,7 @@ namespace TeamProject
                         CurrentLevelNum = 5;
                     }
 
-
+                    //starts level after the level has been selected
                     CurrentScreenState = ScreenState.kGame_Play;
 
                 }
@@ -962,6 +1011,7 @@ namespace TeamProject
                 lastGamePadState = CurrentGamePadState;
             }
 
+            //allows player to view saved high scores
             else if (CurrentScreenState == ScreenState.kHigh_Scores)
             {
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
@@ -974,14 +1024,17 @@ namespace TeamProject
                 LastKeyboardState = CurrentKeyboardState;
             }
 
+            //allows player to see the how to play screen
             else if (CurrentScreenState == ScreenState.kControls)
             {
+                //if the game has not been started, go back to main menu
                 if (!GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
                     CurrentScreenState = ScreenState.kMain_Menu;
                     MenuSelect.Play();
                 }
+                //if the game has been started, go back to pause menu
                 else if (GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                 || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
@@ -993,6 +1046,8 @@ namespace TeamProject
                 lastGamePadState = CurrentGamePadState;
             }
 
+            //player can pause at any point during gameplay to access pause menu
+            //can see the how to play screen, resume game, or go to the main menu
             else if (CurrentScreenState == ScreenState.kPaused)
             {
                 Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
@@ -1031,15 +1086,19 @@ namespace TeamProject
                 lastGamePadState = CurrentGamePadState;
             }
 
+            //whenever the game is being played, ie. not in main menu, high scores, pause, how to play, or level select
             else if (CurrentScreenState == ScreenState.kGame_Play)
             {
-
+                //can pause with P key or right shoulder at any point
                 if (CurrentKeyboardState.IsKeyDown(Keys.P) || CurrentGamePadState.Buttons.RightShoulder == ButtonState.Pressed)
                     CurrentScreenState = ScreenState.kPaused;
+                //when level is in preogress, projectiles are being fired
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
-                    if(levelactive)
+                    //checks if level is active before starting
+                    if (levelactive)
                     {
+                        //this bool helps when the game is won, so that the level only changes once 
                         LevelChanged = false;
                         //this creates a new projectile at a frequency established in the currentlevel object
                         int Limit = CurrentLevel.FireFreq;
@@ -1056,22 +1115,16 @@ namespace TeamProject
                             CreateProjectile();
                         }
 
-                       //checks if level is active before starting
-                        //move current projectiles in CurrentProjectiles list
+                        //move current projectiles in CurrentProjectiles list with MoveProjectiles method (defined above in Game1)
                         MoveProjectiles();
 
-                        //allow player to move shields
+                        //allow player to move shields with MoveShields method (defined above in Game1)
                         MoveShields();
 
-
-                        //check collisions and if the the winstate changes
-                        //returns Winstatus inProgress if no change
-                        //returns winstatus lose if hp of ship == 0
-                        //returns winstatus win level if currentlevel firedprojectiles == totalprojectiles
-                        //returns winstatus win game if currentlevel firedprojectiles == totalprojectiles and currentlevel == maxlevel
+                        //check collisions and changes the CurrentWinState accordingly
                         CheckCollision();
                     }
-                   //turns text off and allows gameplay
+                    //turns text off and allows gameplay
                     if(levelactive == false)
                     {
                         if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState || CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState)
@@ -1081,58 +1134,64 @@ namespace TeamProject
                             GreggV[CurrentLevelNum].Stop();//stops gregg's voice when player begins level
                         }
                     }
-                                        LastKeyboardState = CurrentKeyboardState;
+
+                    LastKeyboardState = CurrentKeyboardState;
                     lastGamePadState = CurrentGamePadState;
-                    //allow player to pause game
                 }
 
+                //when ships HP reaches zero, they lose the game
                 else if (CurrentWinStatus == WinStatus.kLose)
                 {
+                    //if they are in endless mode and their score has not been checked for high score yet
                     if((CurrentLevel == Endless) && !NewHighScore)
                     {
+                        //check each score in high scores list to compare with current score
                         for(int i = 0; i < 5; i++)
                         {
+                            //if the score is higher than the current element in HighScores
                             if(CurrentScore > HighScores[i] && !NewHighScore)
                             {
+                                //move each score after and including the beaten high score down one, overwrites lowest of the high scores
                                 for(int j = 3; j >= i; j--)
                                 {
-                                    
                                     HighScores[j + 1] = HighScores[j];
-
                                 }
+                                //inserts new high score
                                 HighScores[i] = CurrentScore;
                                 NewHighScore = true;
 
-                                //WRITE EACH ELEMENT OF THE UPDATED HIGHSCORES LIST TO THE FILE
-                                                            try{
+                                //write each element of the high score list to MedExSave.txt
+                                try{
                                 //Pass the filepath and filename to the StreamWriter Constructor
                                 StreamWriter swhs = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
 
                                 //Write a line of text
                                 swhs.WriteLine(HighestUnlocked);
-                                    swhs.WriteLine(HighScores[0]);
-                                    swhs.WriteLine(HighScores[1]);
-                                    swhs.WriteLine(HighScores[2]);
-                                    swhs.WriteLine(HighScores[3]);
-                                    swhs.WriteLine(HighScores[4]);
+                                swhs.WriteLine(HighScores[0]);
+                                swhs.WriteLine(HighScores[1]);
+                                swhs.WriteLine(HighScores[2]);
+                                swhs.WriteLine(HighScores[3]);
+                                swhs.WriteLine(HighScores[4]);
 
                                 //Close the file
                                 swhs.Close();
-                            }
-                            catch(Exception e)
-                            {
-                                Console.WriteLine("Exception: " + e.Message);
-                            }
-                            finally 
-                            {
-                                Console.WriteLine("Executing finally block.");
-                            }
+                                }
+                                catch(Exception e)
+                                {
+                                    Console.WriteLine("Exception: " + e.Message);
+                                }
+                                finally 
+                                {
+                                    Console.WriteLine("Executing finally block.");
+                                }
                             }
                         }
                     }
+                    //can press enter or A to return to main menu after losing
                     if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
+                        //resets all values alterd during gameplay
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
                         GameTh.Stop(); //ends the theme song
                         levelactive = false;
@@ -1149,10 +1208,13 @@ namespace TeamProject
                     lastGamePadState = CurrentGamePadState;
                 }
 
+                //advance to next level if they win the level
                 else if (CurrentWinStatus == WinStatus.kWin_Level)
                 {
+                    //checks that the level will not be changed more than once
                     if (LevelChanged == false)
                     {
+                        //empties unblockedProjectiles and CurrentProjectiles list before next level
                         for (int j = 0; j < unblockedProjectiles.Count; j++)
                         {
                             unblockedProjectiles[j] = null;
@@ -1163,11 +1225,15 @@ namespace TeamProject
                             CurrentProjectiles[j] = null;
                             CurrentProjectiles.RemoveAt(j);
                         }
+                        //increases level num
                         CurrentLevelNum++;
+                        //sets current level to level object at next index in Levels list
                         CurrentLevel = Levels[CurrentLevelNum];
+                        //add 2 HP to the ship each time the player beats a levle
                         ship.HP += 2;
                         levelactive = false;
                         Greggtalk = true;
+                        //unlock a new level if it was not unlocked already
                         if(HighestUnlocked < CurrentLevel.LevelNum)
                         {
                             HighestUnlocked = CurrentLevel.LevelNum;
@@ -1194,14 +1260,14 @@ namespace TeamProject
                             }
                         }
 
+                        //update select level menu so that the unlocked level can be selected and no longer has "(locked)" next to it
                         SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
                             new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode" },
                             Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f),
                             new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), HighestUnlocked);
                         LevelChanged = true;
-
-
                     }
+                    //go to next level when the player presses enter or A
                     if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
@@ -1212,6 +1278,7 @@ namespace TeamProject
                     LastKeyboardState = CurrentKeyboardState;
                     lastGamePadState = CurrentGamePadState;
                 }
+                //beating level five unlocks endless mode and wins the game, will show special win game message
                 else if (CurrentWinStatus == WinStatus.kWin_Game)
                 {
                     if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
@@ -1225,7 +1292,6 @@ namespace TeamProject
                             if(HighestUnlocked < CurrentLevel.LevelNum)
                             {
                                 HighestUnlocked = CurrentLevel.LevelNum;
-                                SelectLevel = null;
                                 try{
                                     //Pass the filepath and filename to the StreamWriter Constructor
                                     StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt"));
@@ -1269,6 +1335,7 @@ namespace TeamProject
                 
             }
 
+            //move all of the stars to create synamic background
             for(int i = 0; i < stars.Count; i++)
             {
                 stars[i].Move();
@@ -1286,6 +1353,7 @@ namespace TeamProject
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
+            //draw the stars only if the player is in gameplay 
             if (CurrentScreenState == ScreenState.kGame_Play)
             {
                 for (int i = 0; i < stars.Count; i++)
@@ -1294,12 +1362,13 @@ namespace TeamProject
                 }
             }
 
+            //draw main menu
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
                 //draw medex logo
                 spriteBatch.Draw(Content.Load<Texture2D>("MedEx"),
                     new Vector2((graphics.PreferredBackBufferWidth / 2) - (956f / 2), 120f), Color.White);
-                //draw main menu string
+                //draw main menu strings
                 spriteBatch.DrawString(HeaderFont, MainMenu.HeaderText, MainMenu.HeaderPosition, Color.Yellow);
                 for (int i = 0; i < MainMenu.NumOptions; i++)
                 {
@@ -1308,76 +1377,93 @@ namespace TeamProject
                 //draw mainmenu selector
                 MainMenu.Draw(spriteBatch);
             }
+            //draw level select menu
             else if (CurrentScreenState == ScreenState.kLevel_Select)
             {
+                //draw level select strings
                 spriteBatch.DrawString(HeaderFont, SelectLevel.HeaderText, SelectLevel.HeaderPosition, Color.Yellow);
                 for (int i = 0; i < SelectLevel.NumOptions; i++)
                 {
                     spriteBatch.DrawString(PixelFont, SelectLevel.Options[i], SelectLevel.OptionPositions[i], Color.White);
                 }
+                //draw selector
                 SelectLevel.Draw(spriteBatch);
             }
+            //draw pause menu
             else if (CurrentScreenState == ScreenState.kPaused)
             {
+                //draw pause menu strings
                 spriteBatch.DrawString(HeaderFont, PauseMenu.HeaderText, PauseMenu.HeaderPosition, Color.Yellow);
                 for (int i = 0; i < PauseMenu.NumOptions; i++)
                 {
                     spriteBatch.DrawString(PixelFont, PauseMenu.Options[i], PauseMenu.OptionPositions[i], Color.White);
                 }
+                //draw selector
                 PauseMenu.Draw(spriteBatch);
             }
+            //shows how to screen
             else if (CurrentScreenState == ScreenState.kControls)
             {
                 //draw how to play bmp file
                 spriteBatch.Draw(Content.Load<Texture2D>("HowToPlay"), new Vector2(0f, 0f), Color.White);
             }
+            //displays high scores
             else if (CurrentScreenState == ScreenState.kHigh_Scores)
             {
-                //show high scores
+                //writes high score header
                 spriteBatch.DrawString(HeaderFont, "High Scores",
                     new Vector2((graphics.PreferredBackBufferWidth / 2) - (HeaderFont.MeasureString("High Scores").X / 2), 300), Color.Yellow);
+                //displays each high score in the HighScores list
                 for (int i = 0; i < 5; i++)
                 {
                     spriteBatch.DrawString(PixelFont, HighScores[i].ToString(), 
                         new Vector2((graphics.PreferredBackBufferWidth / 2) - (PixelFont.MeasureString(HighScores[i].ToString()).X / 2), 400 + (i*100)), Color.White);
                 }
             }
+
+            //Draw logic for each winstatus during gameplay
             else if (CurrentScreenState == ScreenState.kGame_Play)
             {
                 if (CurrentWinStatus == WinStatus.kLevel_In_Progress)
                 {
+                    //stop menu music
                     MenuM.Stop();
                     //draw the ship
                     ship.Draw(spriteBatch);
                     //play theme music
                     GameTh.Play();
-                    //font position
+                    //font and story text position
                     FontPos = new Vector2((graphics.GraphicsDevice.Viewport.Width / 15) - 150, (graphics.GraphicsDevice.Viewport.Height / 2) + 550);
                     StoryPos = new Vector2((graphics.GraphicsDevice.Viewport.Width/2 - 1600), (graphics.GraphicsDevice.Viewport.Height-1800));
+                    //checks if the level is active
                     if (levelactive == false)
-                        {
+                    {
+                        //draws story text and plays voicelines for the current level
                         spriteBatch.DrawString(PixelFont, Stories[CurrentLevelNum], StoryPos, Color.White);
                         if(Greggtalk)
                         {
-                        GreggV[CurrentLevelNum].Play();
+                            GreggV[CurrentLevelNum].Play();
                             Greggtalk = false;
-                            }
                         }
+                    }
+
                     //draw hull status on screen
                     spriteBatch.DrawString(PixelFont, "HULL INTEGRITY: " + ship.HP, FontPos, Color.White);
 
+                    //if not in endless mode, display current level
                     if (CurrentLevel != Endless)
                     {
                         //draw current level on screen
                         int levelDisplayed = CurrentLevel.LevelNum;
                         spriteBatch.DrawString(PixelFont, "Current Level: " + levelDisplayed, FontPos + new Vector2(0, 150), Color.White);
                     }
+                    //if in endless mode, draw current score
                     else
                     {
                         spriteBatch.DrawString(PixelFont, "Current Score: " + CurrentScore, FontPos + new Vector2(0, 150), Color.White);
                     }
 
-                    //draw function for each projectile in current projectiles
+                    //draw function for each projectile in CurrentProjectiles and unblockedProjectiles
                     for (int i = 0; i < CurrentProjectiles.Count; i++)
                         CurrentProjectiles[i].Draw(spriteBatch);
                     for (int i = 0; i < unblockedProjectiles.Count; i++)
@@ -1389,6 +1475,7 @@ namespace TeamProject
                             CurrentShields[j].Draw(spriteBatch);
                     }
                 }
+                //when the player loses, draw lose message
                 else if (CurrentWinStatus == WinStatus.kLose)
                 {
                     Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
@@ -1396,15 +1483,15 @@ namespace TeamProject
                     if (explode)
                     { ShipisGone.Play(); explode = false; } //plays instanced sound effect and disables looping.
                     //Defeat message
-                    spriteBatch.DrawString(PixelFont, Loser + "\n Press enter to return to main menu or esc to quit", FontPos, Color.White);
+                    spriteBatch.DrawString(PixelFont, Loser + "\n Press enter or A to return to main menu or esc to quit", FontPos, Color.White);
                     //if the player is in endless mode
                     //show them their final score and high scores
-                    //if they beat the high score, notify them
                     if(CurrentLevel == Endless)
                     {
                         spriteBatch.DrawString(PixelFont, "Your Score: " + CurrentScore,
                             new Vector2((graphics.PreferredBackBufferWidth / 2) - (PixelFont.MeasureString("Your Score: " + CurrentScore).X / 2), 300),
                             Color.White);
+                        //if they beat the high score, notify them
                         if (NewHighScore)
                         {
                             spriteBatch.DrawString(PixelFont, "New High Score!",
@@ -1422,6 +1509,8 @@ namespace TeamProject
                     }
                     
                 }
+
+                //draw victory string
                 else if (CurrentWinStatus == WinStatus.kWin_Level)
                 {
                     Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship is out of danger.
@@ -1432,9 +1521,10 @@ namespace TeamProject
                     //victory message
                     spriteBatch.DrawString(PixelFont, Winner, FontPos, Color.White);
                 }
+
                 else if (CurrentWinStatus == WinStatus.kWin_Game)
                 {
-                    spriteBatch.DrawString(PixelFont, "You win! Press Enter to return to main menu or esc to exit",
+                    spriteBatch.DrawString(PixelFont, "You Made It! Press Enter or A to return to main menu or esc to exit",
                         FontPos, Color.White);
                 }
             } 
