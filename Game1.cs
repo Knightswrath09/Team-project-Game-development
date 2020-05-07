@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio; //for sound effects and music.
-using System.Collections.Generic; //for list
+using Microsoft.Xna.Framework.Audio; //for sound effects and music. Dustin
+using System.Collections.Generic; //for list Sophia
 using System;
-using System.IO;
+using System.IO; //for text reader and writer Dustin
 
 
 
@@ -21,7 +21,7 @@ namespace TeamProject
         SpriteBatch spriteBatch;
 
         //***STORY
-        //list for story strings between levels
+        //list for story strings between levels Dustin
         List<string> Stories = new List<string>() 
         {
             "Hello Officer Joseph Stalwart, We at the board of MEDEX would like to thank you for undertaking this mission to deliver\nhighly requested medical supplies to the blockaded world of Sedeth-18. We understand that this mission would normally\nbe reserved for employees who have demonstrated a higher score of competence on their SSATs tests, but please know,\nwe have full faith in you since you scored 677th out of all MEDEX employees, and we are 67% certain that you will succeed\nin this endeavor! We have also provided you with the Goodstar, a ship that is only a mere thrity-four years old and still\nhas a working shield generator that has as of yet to critically fail!\nWe have detected a hostile drone heading to your position, good luck!\nPress Enter on your keyboard or A on your controller to start...",
@@ -31,7 +31,7 @@ namespace TeamProject
             "Officer Stalwart, judging from your recent sucess on the blockade of Sedeth-18, we have decided to task you with another\nmission of vital importance. We require you to deliver a bandage to a captain of a war vessel. This vessel is currently\nlocated in the middle of a warzone between two superpowers, but it's nothing you can't handle!\n[REDACTED MESSAGE FOR MEDEX BOARD EYES ONLY]: The Goodstar is a horribly old ship and its costing us more money to keep it\nactive than what it's bringing to us. Its lifetime warranty is about to expire in a month, so now's the time to have an \n\"unforseen desctruction of property\" so we can collect the insurance money on it.\nPress Enter on your keyboard or A on your controller to start...",
             "We are happy, Officer Stalwart, that you are above decent at your job, but if you really care about MEDEX and our values,\nwe'd like to collect that insurance money now, please.\nScoring system: Red and Blue: 100 Purple: 150 Green = -25\nPress Enter on your keyboard or A on your controller to start and eventaully blow up..."
         };
-        //list for gregg voicelines accompanying each story string between levels
+        //list for gregg voicelines accompanying each story string between levels Dustin
         List<SoundEffectInstance> GreggV = new List<SoundEffectInstance>() {};
         //bool to pause level until players read level start text.
         bool levelactive = false;
@@ -67,19 +67,19 @@ namespace TeamProject
 
         //***SOUND EFFECTS
         //genreal sound effects
-        SoundEffect Hullhit;
-        SoundEffect HullCritical;
-        SoundEffect ProjectileFired;
-        SoundEffect ShieldBlock;
-        SoundEffect ShieldMove;
-        SoundEffect ShipBlowsUp;
-        SoundEffect VictoryJingle;
-        SoundEffect GameTheme;
-        SoundEffect MenuSound;
-        SoundEffect MenuMusic;
-        SoundEffect GreenSpawn;
-        SoundEffect Greenhit;
-        //Sound effects for GREGG
+        SoundEffect Hullhit; //Dustin
+        SoundEffect HullCritical;//Dustin
+        SoundEffect ProjectileFired;//Dustin
+        SoundEffect ShieldBlock;//Dustin
+        SoundEffect ShieldMove;//Dustin
+        SoundEffect ShipBlowsUp;//Dustin
+        SoundEffect VictoryJingle;//Dustin
+        SoundEffect GameTheme;//Dustin
+        SoundEffect MenuSound; //Iris
+        SoundEffect MenuMusic;//Iris
+        SoundEffect GreenSpawn;//Dustin
+        SoundEffect Greenhit;//Dustin
+        //Sound effects for GREGG, all voice acted by Dustin
         SoundEffect GREGG1;
         SoundEffect GREGG2;
         SoundEffect GREGG3;
@@ -87,46 +87,46 @@ namespace TeamProject
         SoundEffect GREGG5;
         SoundEffect GREGGEndless;
         //sound effect instances
-        SoundEffectInstance ShieldM; //sound effect instance of shieldmove soundeffect.
-        SoundEffectInstance ShieldM2; //sound effect instance for blue shield.
-        SoundEffectInstance Victory; //sound effect instance for victory song so it doesn't sound haunted.
-        SoundEffectInstance ShipisGone; //sound effect instance for the ship blowing up
-        SoundEffectInstance Hullcrit; //sound effect instance of HullCritical
-        SoundEffectInstance GameTh; //sound effect instance of GameTheme
-        SoundEffectInstance MenuSelect; //sound effect instance of cursor moving over menu options.
-        SoundEffectInstance MenuM;
-        SoundEffectInstance Greensp;
-        SoundEffectInstance Greenh;
-        //Sound effect instances for GREGG
+        SoundEffectInstance ShieldM; //sound effect instance of shieldmove soundeffect. Dustin
+        SoundEffectInstance ShieldM2; //sound effect instance for blue shield. Dustin
+        SoundEffectInstance Victory; //sound effect instance for victory song so it doesn't sound haunted. Dustin
+        SoundEffectInstance ShipisGone; //sound effect instance for the ship blowing up Dustin
+        SoundEffectInstance Hullcrit; //sound effect instance of HullCritical Dustin
+        SoundEffectInstance GameTh; //sound effect instance of GameTheme Dustin
+        SoundEffectInstance MenuSelect; //sound effect instance of cursor moving over menu options. Dustin
+        SoundEffectInstance MenuM; //Iris
+        SoundEffectInstance Greensp; //Dustin
+        SoundEffectInstance Greenh;//Dustin
+        //Sound effect instances for GREGG, Dustin
         SoundEffectInstance G1;
         SoundEffectInstance G2;
         SoundEffectInstance G3;
         SoundEffectInstance G4;
         SoundEffectInstance G5;
         SoundEffectInstance GE;
-        //Soundeffect Loop disablers
+        //Soundeffect Loop disablers Dustin
         bool explode = true; //sound effect bool to ensure that the ShipisGone instance does not loop.
         //bool used to prevent gregg's voice from looping
         bool Greggtalk = true;
 
         //***FONTS
-        Vector2 FontPos; //position of font
-        Vector2 StoryPos; //position for story text
+        Vector2 FontPos; //position of font Iris and Dustin
+        Vector2 StoryPos; //position for story text Dustin
         //main font
-        SpriteFont PixelFont;
-        //header font
+        SpriteFont PixelFont; //Sophia
+        //header font Sophia
         SpriteFont HeaderFont;
 
-        //Menu objects for each menu
+        //Menu objects for each menu Sophia
         Menu MainMenu;
         Menu SelectLevel;
         Menu PauseMenu;
 
-        //mostly to determine if controls or volume menus direct back to pause menu or main menu
+        //mostly to determine if controls or volume menus direct back to pause menu or main menu Sophia
         bool GameStarted = false;
 
-        string Winner; //message for winning the level
-        string Loser; //message for losing the level
+        string Winner; //message for winning the level Dustin
+        string Loser; //message for losing the level Dustin
         
         //***SHIELDS AND PROJECTILES
         //shield objects
@@ -208,20 +208,20 @@ namespace TeamProject
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //load sound effects
-            HullCritical = Content.Load<SoundEffect>("SirenandVoice"); //siren sound effect made by user Samsterbirdies on FreeSound.org
-            ProjectileFired = Content.Load<SoundEffect>("Blast"); //laster-shots sound effect made by user theogobbo on FreeSound.org
-            ShieldBlock = Content.Load<SoundEffect>("440783__wcoltd__pulsar");//pulsar sound effect made by user Wcoltd on FreeSound.org
-            ShieldMove = Content.Load<SoundEffect>("274211__littlerobotsoundfactory__whoosh-electric-00");//Whoosh eletric sound effect made by user Littlerobotsoundfactory on Freesound.org
-            Hullhit = Content.Load<SoundEffect>("111048__cyberkineticfilms__gunshot-with-metal-hit");//Gunshot with metal hit sound effect made by user Cyberkineticfilms on FreeSound.org
-            ShipBlowsUp = Content.Load<SoundEffect>("244394__werra__bang-explosion-metallic");//Bang explosion metallic sound effect made by user Werra on FreeSound.org
-            GameTheme = Content.Load<SoundEffect>("371516__mrthenoronha__space-game-theme-loop");//Space Game Loop sound effect by user Mrthenoronha on Freesound.org
-            VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Move Dream Boy sound effect by user Xcreenplay on Freesound.org
-            MenuSound = Content.Load<SoundEffect>("menu-select");//cursor select sound effect, originally titled "cursor.mp3", made by user Loyalty_Freak_Music on Freesound.org
-            MenuMusic = Content.Load<SoundEffect>("menu-music");//menu background music, originally titled "Futuristic Rhythmic Game Ambience", made by user PatrickLieberkind on Freesound.org
-            GreenSpawn = Content.Load<SoundEffect>("55853__sergenious__teleport"); //teleport sound effect by user Sergenious on Freesound.org
-            Greenhit = Content.Load<SoundEffect>("GreenHeal"); //improved healing chime sound effect by user Raclure on Freesound.org
+            HullCritical = Content.Load<SoundEffect>("SirenandVoice"); //siren sound effect made by user Samsterbirdies on FreeSound.org Dustin
+            ProjectileFired = Content.Load<SoundEffect>("Blast"); //laster-shots sound effect made by user theogobbo on FreeSound.org Dustin
+            ShieldBlock = Content.Load<SoundEffect>("440783__wcoltd__pulsar");//pulsar sound effect made by user Wcoltd on FreeSound.org Dustin
+            ShieldMove = Content.Load<SoundEffect>("274211__littlerobotsoundfactory__whoosh-electric-00");//Whoosh eletric sound effect made by user Littlerobotsoundfactory on Freesound.org Dustin
+            Hullhit = Content.Load<SoundEffect>("111048__cyberkineticfilms__gunshot-with-metal-hit");//Gunshot with metal hit sound effect made by user Cyberkineticfilms on FreeSound.org Dustin
+            ShipBlowsUp = Content.Load<SoundEffect>("244394__werra__bang-explosion-metallic");//Bang explosion metallic sound effect made by user Werra on FreeSound.org Dustin
+            GameTheme = Content.Load<SoundEffect>("371516__mrthenoronha__space-game-theme-loop");//Space Game Loop sound effect by user Mrthenoronha on Freesound.org Dustin
+            VictoryJingle = Content.Load<SoundEffect>("453296__xcreenplay__your-move-dream-boy-buchla-fif9th-131bpm");//Your Move Dream Boy sound effect by user Xcreenplay on Freesound.org Dustin
+            MenuSound = Content.Load<SoundEffect>("menu-select");//cursor select sound effect, originally titled "cursor.mp3", made by user Loyalty_Freak_Music on Freesound.org Iris
+            MenuMusic = Content.Load<SoundEffect>("menu-music");//menu background music, originally titled "Futuristic Rhythmic Game Ambience", made by user PatrickLieberkind on Freesound.org Iris
+            GreenSpawn = Content.Load<SoundEffect>("55853__sergenious__teleport"); //teleport sound effect by user Sergenious on Freesound.org Dustin
+            Greenhit = Content.Load<SoundEffect>("GreenHeal"); //improved healing chime sound effect by user Raclure on Freesound.org Dustin
 
-            //load GREGG voiceLines
+            //load GREGG voiceLines Dustin
             GREGG1 = Content.Load<SoundEffect>("GreggLevel1");
             GREGG2 = Content.Load<SoundEffect>("VoiceGreggLevel2");
             GREGG3 = Content.Load<SoundEffect>("VoiceGregLevel3");
@@ -230,18 +230,18 @@ namespace TeamProject
             GREGGEndless = Content.Load<SoundEffect>("VoiceGreggEndless");
 
             //sound effect instances
-            ShieldM = ShieldMove.CreateInstance();
-            ShieldM2 = ShieldMove.CreateInstance();
-            Victory = VictoryJingle.CreateInstance();
-            ShipisGone = ShipBlowsUp.CreateInstance();
-            Hullcrit = HullCritical.CreateInstance();
-            GameTh = GameTheme.CreateInstance();
-            MenuSelect = MenuSound.CreateInstance();
-            MenuM = MenuMusic.CreateInstance();
-            Greensp = GreenSpawn.CreateInstance();
-            Greenh = Greenhit.CreateInstance();
+            ShieldM = ShieldMove.CreateInstance(); //Dustin
+            ShieldM2 = ShieldMove.CreateInstance();//Dustin
+            Victory = VictoryJingle.CreateInstance();//Dustin
+            ShipisGone = ShipBlowsUp.CreateInstance();//Dustin
+            Hullcrit = HullCritical.CreateInstance();//Dustin
+            GameTh = GameTheme.CreateInstance();//Dustin
+            MenuSelect = MenuSound.CreateInstance();//Iris
+            MenuM = MenuMusic.CreateInstance();//Iris
+            Greensp = GreenSpawn.CreateInstance();//Dustin
+            Greenh = Greenhit.CreateInstance();//Dustin
 
-            //sound effect instances for GREGG
+            //sound effect instances for GREGG Dustin
             G1 = GREGG1.CreateInstance();
             G2 = GREGG2.CreateInstance();
             G3 = GREGG3.CreateInstance();
@@ -249,7 +249,7 @@ namespace TeamProject
             G5 = GREGG5.CreateInstance();
             GE = GREGGEndless.CreateInstance();
 
-            //adds gregg's lines to the gregg list
+            //adds gregg's lines to the gregg list Dustin
             GreggV.Add(G1);
             GreggV.Add(G2);
             GreggV.Add(G3);
@@ -257,26 +257,26 @@ namespace TeamProject
             GreggV.Add(G5);
             GreggV.Add(GE);
 
-            //load font, header font is larger
+            //load font, header font is larger Sophia
             PixelFont = Content.Load<SpriteFont>("PixelFont");
             HeaderFont = Content.Load<SpriteFont>("MenuHeader");
 
-            //load strings for font
+            //load strings for font Dustin
             Winner = "We are clear to warp! \nExcellent work, officer. \nPress Enter or A to continue.";
             Loser = "Well, that could have gone just a slight bit better.";
 
-            //create each level
+            //create each level Dustin
             Level1 = new Level(1, 10, Level.ProjectileTypes.kRed_Only, 3, 10);
             Level2 = new Level(2, 15, Level.ProjectileTypes.kRed_And_Blue, 2, 11);
             Level3 = new Level(3, 25, Level.ProjectileTypes.kRBP, 2, 12);
             Level4 = new Level(4, 40, Level.ProjectileTypes.kRBP, 2, 13);
             Level5 = new Level(5, 75, Level.ProjectileTypes.kRBP, 1, 15);
             Endless = new Level(6, 10, Level.ProjectileTypes.kRBP, 1, 15);
-            //set current level to level 1
+            //set current level to level 1 Sophia
             CurrentLevel = Level1;
-            //this integer correlates with the Levels list
+            //this integer correlates with the Levels list Sophia
             CurrentLevelNum = 0;
-            //Add each level to the Levels list, allows us to switch between levels more easily
+            //Add each level to the Levels list, allows us to switch between levels more easily Sophia
             Levels.Add(Level1);
             Levels.Add(Level2);
             Levels.Add(Level3);
@@ -295,6 +295,7 @@ namespace TeamProject
             HighScores = new List<int>() { 1000, 200, 100, 50, 50 };
 
             //read MedExSave.txt for HighestUnlocked and HighScores values
+            //Dustin
             try
             {
                 //code for reading from a text file from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
@@ -330,7 +331,7 @@ namespace TeamProject
                 Console.WriteLine("Executing finally block."); //finally block
             }
 
-            //initialize menus
+            //initialize menus Sophia
             MainMenu = new Menu(HeaderFont, PixelFont, "Main Menu",
                 new List<string>() { "How to Play", "Select Level", "High Scores", "Start Game" }, 
                 Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f), 
@@ -409,7 +410,7 @@ namespace TeamProject
         /// </summary>
         void CreateProjectile()
         {
-            //set up random number generators
+            //set up random number generators Dustin
             Random random = new Random();
             int RandomColor = random.Next(1, 15); //random for color
             int RandomDirection = random.Next(0, 4); //random for direction
@@ -505,6 +506,7 @@ namespace TeamProject
         /// <summary>
         /// Moves each of the projectiles cirrently on screen with CurrentProjectiles list and 
         /// projectile move function
+        /// Caryln
         /// </summary>
         void MoveProjectiles()
         {
@@ -515,12 +517,14 @@ namespace TeamProject
 
         /// <summary>
         /// takes user input to call the shield class MoveShield method with correct direction argument
+        /// Sophia
         /// </summary>
         void MoveShields()
         {
             KeyboardState keyboardState = Keyboard.GetState();
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
             //Checks if a controller is connected, and if so, implements the controller buttons for the shield
+            //keyboard controlls by Sophia, controller controls by Iris and Carlyn
             if (gamePadState.IsConnected)
             {
                 //DPad controls blue shield
@@ -624,6 +628,7 @@ namespace TeamProject
         /// -then removes it from unblockedProkectiles once it hits the ship
         /// -adds a hit to the ship if it is blue red or purple
         /// -power up if it is green
+        /// Iris and Sophia
         /// </summary>
         void CheckCollision()
         {
@@ -894,7 +899,7 @@ namespace TeamProject
             KeyboardState CurrentKeyboardState = Keyboard.GetState();
             GamePadState CurrentGamePadState = GamePad.GetState(PlayerIndex.One);
 
-           //main menu logic
+           //main menu logic Sophia
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
                 //play main menu music 
@@ -1014,7 +1019,7 @@ namespace TeamProject
                 lastGamePadState = CurrentGamePadState;
             }
 
-            //allows player to view saved high scores
+            //allows player to view saved high scores Sophia
             else if (CurrentScreenState == ScreenState.kHigh_Scores)
             {
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
@@ -1027,7 +1032,7 @@ namespace TeamProject
                 LastKeyboardState = CurrentKeyboardState;
             }
 
-            //allows player to see the how to play screen
+            //allows player to see the how to play screen Sophia
             else if (CurrentScreenState == ScreenState.kControls)
             {
                 //if the game has not been started, go back to main menu
@@ -1037,7 +1042,7 @@ namespace TeamProject
                     CurrentScreenState = ScreenState.kMain_Menu;
                     MenuSelect.Play();
                 }
-                //if the game has been started, go back to pause menu
+                //if the game has been started, go back to pause menu Sophia
                 else if (GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                 || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
@@ -1053,9 +1058,9 @@ namespace TeamProject
             //can see the how to play screen, resume game, or go to the main menu
             else if (CurrentScreenState == ScreenState.kPaused)
             {
-                Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
-                GameTh.Stop(); //ends the theme song
-                Victory.Stop(); //ends victory Jingle
+                Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up. Dustin
+                GameTh.Stop(); //ends the theme song Dustin
+                Victory.Stop(); //ends victory Jingle Dustin
                 if ((CurrentKeyboardState.IsKeyDown(Keys.Up) && !LastKeyboardState.IsKeyDown(Keys.Up))
                     || (CurrentGamePadState.DPad.Up == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
@@ -1089,10 +1094,10 @@ namespace TeamProject
                 lastGamePadState = CurrentGamePadState;
             }
 
-            //whenever the game is being played, ie. not in main menu, high scores, pause, how to play, or level select
+            //whenever the game is being played, ie. not in main menu, high scores, pause, how to play, or level select Sophia
             else if (CurrentScreenState == ScreenState.kGame_Play)
             {
-                //can pause with P key or right shoulder at any point
+                //can pause with P key or right shoulder at any point Sophia
                 if (CurrentKeyboardState.IsKeyDown(Keys.P) || CurrentGamePadState.Buttons.RightShoulder == ButtonState.Pressed)
                     CurrentScreenState = ScreenState.kPaused;
                 //when level is in preogress, projectiles are being fired
@@ -1127,14 +1132,14 @@ namespace TeamProject
                         //check collisions and changes the CurrentWinState accordingly
                         CheckCollision();
                     }
-                    //turns text off and allows gameplay
+                    //turns text off and allows gameplay Dustin
                     if(levelactive == false)
                     {
                         if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState || CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState)
                         {
                             levelactive = true; 
                             GameStarted = true;
-                            GreggV[CurrentLevelNum].Stop();//stops gregg's voice when player begins level
+                            GreggV[CurrentLevelNum].Stop();//stops gregg's voice when player begins level Dustin
                         }
                     }
 
@@ -1165,6 +1170,7 @@ namespace TeamProject
 
                                 //code for writing to a text file is from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
                                 //write each element of the high score list to MedExSave.txt
+                                //Dustin
                                 try{
                                 //Pass the textfile path and name to the streamwriter
                                 StreamWriter swhs = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path to text file
@@ -1196,10 +1202,10 @@ namespace TeamProject
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
                         //resets all values alterd during gameplay
-                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
-                        GameTh.Stop(); //ends the theme song
-                        levelactive = false;
-                        Greggtalk = true;
+                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up. Dustin
+                        GameTh.Stop(); //ends the theme song Dustin
+                        levelactive = false; //Dustin
+                        Greggtalk = true;//Dustin
                         CurrentLevel = Level1;
                         CurrentLevelNum = 0;
                         CurrentScreenState = ScreenState.kMain_Menu;
@@ -1244,12 +1250,18 @@ namespace TeamProject
                             SelectLevel = null;
                             //streamwriter opens save text file to update highest level unlocked
                             //writing to a text file code is from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
+                            //Dustin
                             try{
                                 //Pass the file name and path to the streamwriter
                                 StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path
 
                                 //records highest unlocked level to first line of the document
-                                sw.WriteLine(HighestUnlocked);
+                                 sw.WriteLine(HighestUnlocked); //levels unlcoked
+                                sw.WriteLine(HighScores[0]);//high score 1
+                                sw.WriteLine(HighScores[1]);//high score 2
+                                sw.WriteLine(HighScores[2]);//high score 3
+                                sw.WriteLine(HighScores[3]);//high score 4
+                                sw.WriteLine(HighScores[4]);//high score 5
                                 //closes the text file so it is free to use later
                                 sw.Close();
                             }
@@ -1263,14 +1275,14 @@ namespace TeamProject
                             }
                         }
 
-                        //update select level menu so that the unlocked level can be selected and no longer has "(locked)" next to it
+                        //update select level menu so that the unlocked level can be selected and no longer has "(locked)" next to it Sophia
                         SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
                             new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode" },
                             Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f),
                             new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), HighestUnlocked);
                         LevelChanged = true;
                     }
-                    //go to next level when the player presses enter or A
+                    //go to next level when the player presses enter or A Sophia
                     if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
@@ -1281,14 +1293,14 @@ namespace TeamProject
                     LastKeyboardState = CurrentKeyboardState;
                     lastGamePadState = CurrentGamePadState;
                 }
-                //beating level five unlocks endless mode and wins the game, will show special win game message
+                //beating level five unlocks endless mode and wins the game, will show special win game message Sophia
                 else if (CurrentWinStatus == WinStatus.kWin_Game)
                 {
                     if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
-                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up.
-                        GameTh.Stop(); //ends the theme song
+                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up. Dustin
+                        GameTh.Stop(); //ends the theme song Dustin
                         if(HighestUnlocked != 6)
                         {
                             HighestUnlocked = 6;
@@ -1297,12 +1309,18 @@ namespace TeamProject
                                 HighestUnlocked = CurrentLevel.LevelNum;
                                 //opens streamwriter to record the final level unlock to the text file
                                 //code for reading from a text file from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
+                                //Dustin
                                 try{
                                     //Pass the text file name and path to the stream writer
                                     StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path
 
                                     //writes integer 6 to the first line in textfile, the highest possible.
-                                    sw.WriteLine(HighestUnlocked);
+                                 sw.WriteLine(HighestUnlocked); //levels unlcoked
+                                sw.WriteLine(HighScores[0]);//high score 1
+                                sw.WriteLine(HighScores[1]);//high score 2
+                                sw.WriteLine(HighScores[2]);//high score 3
+                                sw.WriteLine(HighScores[3]);//high score 4
+                                sw.WriteLine(HighScores[4]);//high score 5
 
                                         //Close the text file so it is avilable again when needed
                                         sw.Close();
@@ -1516,12 +1534,12 @@ namespace TeamProject
                 //draw victory string
                 else if (CurrentWinStatus == WinStatus.kWin_Level)
                 {
-                    Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship is out of danger.
-                    GameTh.Stop(); //ends the theme song
+                    Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship is out of danger. Dustin
+                    GameTh.Stop(); //ends the theme song Dustin
                     ship.Draw(spriteBatch);
-                    //victory jingle
+                    //victory jingle Dustin
                     Victory.Play();
-                    //victory message
+                    //victory message Dustin
                     spriteBatch.DrawString(PixelFont, Winner, FontPos, Color.White);
                 }
 
