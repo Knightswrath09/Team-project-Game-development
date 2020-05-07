@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework; //for Vector2
 namespace TeamProject
 {
     //class for the ship, which tracks HP and is displayed in the middle of the screen for each level
-    class ShipSprite
+    class ShipSprite // Made by Carlyn Solomon
     {
         //name of the ship
         private string name;
