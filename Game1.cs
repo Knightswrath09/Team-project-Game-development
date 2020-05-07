@@ -166,8 +166,7 @@ namespace TeamProject
         {
             kLevel_In_Progress = 0,
             kLose,
-            kWin_Level,
-            kWin_Game
+            kWin_Level
         }
         //variable to store current winstatus, starts with a level in progress
         WinStatus CurrentWinStatus = WinStatus.kLevel_In_Progress;
@@ -763,12 +762,7 @@ namespace TeamProject
             //wins level when all of the projectiles of that level have been blocked or hit the ship
             else if (CurrentLevel.FiredProjectiles == CurrentLevel.TotalProjectiles)
             {
-                //win the game if they beat level 5
-                if (CurrentLevelNum == Levels.Count)
-                    newWinStatus = WinStatus.kWin_Game;
-                else
-                    newWinStatus = WinStatus.kWin_Level;
-                
+                    newWinStatus = WinStatus.kWin_Level;  
             }
             //keep the level going if they dont lose or win the level
             else
@@ -1257,7 +1251,7 @@ namespace TeamProject
                                 StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path
 
                                 //records highest unlocked level to first line of the document
-                                 sw.WriteLine(HighestUnlocked); //levels unlcoked
+                                sw.WriteLine(HighestUnlocked); //levels unlcoked
                                 sw.WriteLine(HighScores[0]);//high score 1
                                 sw.WriteLine(HighScores[1]);//high score 2
                                 sw.WriteLine(HighScores[2]);//high score 3
@@ -1294,67 +1288,6 @@ namespace TeamProject
                     LastKeyboardState = CurrentKeyboardState;
                     lastGamePadState = CurrentGamePadState;
                 }
-                //beating level five unlocks endless mode and wins the game, will show special win game message Sophia
-                else if (CurrentWinStatus == WinStatus.kWin_Game)
-                {
-                    if ((CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
-                    || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
-                    {
-                        Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up. Dustin
-                        GameTh.Stop(); //***ends the theme song Dustin
-                        if(HighestUnlocked != 6)
-                        {
-                            HighestUnlocked = 6;
-                            if(HighestUnlocked < CurrentLevel.LevelNum)
-                            {
-                                HighestUnlocked = CurrentLevel.LevelNum;
-                                //opens streamwriter to record the final level unlock to the text file
-                                //code for reading from a text file from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
-                                //***Dustin
-                                try{
-                                    //Pass the text file name and path to the stream writer
-                                    StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path
-
-                                    //writes integer 6 to the first line in textfile, the highest possible.
-                                 sw.WriteLine(HighestUnlocked); //levels unlcoked
-                                sw.WriteLine(HighScores[0]);//high score 1
-                                sw.WriteLine(HighScores[1]);//high score 2
-                                sw.WriteLine(HighScores[2]);//high score 3
-                                sw.WriteLine(HighScores[3]);//high score 4
-                                sw.WriteLine(HighScores[4]);//high score 5
-
-                                        //Close the text file so it is avilable again when needed
-                                        sw.Close();
-                                }
-                                catch(Exception e)
-                                {
-                                    Console.WriteLine("Exception: " + e.Message);//exception/error message
-                                }
-                                finally 
-                                {
-                                    Console.WriteLine("Executing finally block."); //finally block
-                                }
-                            }
-                            SelectLevel = null;
-                            SelectLevel = new Menu(HeaderFont, PixelFont, "Select Level",
-                            new List<string>() { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Endless Mode" },
-                            Content.Load<Texture2D>("StarSprite"), new Vector2(56f, 56f),
-                            new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), HighestUnlocked);
-                        }
-                        CurrentScreenState = ScreenState.kMain_Menu;
-                        CurrentWinStatus = WinStatus.kLevel_In_Progress;
-                        CurrentLevel = Level1;
-                        CurrentLevelNum = 0;
-                        ship.HP = 3;
-                        for(int i = 0; i < Levels.Count; i++)
-                        {
-                            Levels[i].FiredProjectiles = 0;
-                        }
-                    }
-                    LastKeyboardState = CurrentKeyboardState;
-                    lastGamePadState = CurrentGamePadState;
-                }
-                
             }
 
             //move all of the stars to create synamic background
@@ -1545,12 +1478,6 @@ namespace TeamProject
                     Victory.Play();
                     //***victory message Dustin
                     spriteBatch.DrawString(PixelFont, Winner, FontPos, Color.White);
-                }
-
-                else if (CurrentWinStatus == WinStatus.kWin_Game)
-                {
-                    spriteBatch.DrawString(PixelFont, "You Made It! Press Enter or A to return to main menu or esc to exit",
-                        FontPos, Color.White);
                 }
             } 
            
