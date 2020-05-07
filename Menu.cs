@@ -7,11 +7,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace TeamProject
-{
+{   //***Sophia
     //can create menus with different options and number of options from this class
     //includes a selector that shows the user which option they currently have selected
     class Menu
     {
+        
         //string and positon of the menu header
         public string HeaderText { get; set; }
         public Vector2 HeaderPosition { get; set; }

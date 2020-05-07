@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework; //for Vector2
 
 namespace TeamProject
 {
+    //***Made by Sophia
     //class for the shield objects that the player will control
     //derived from CombatSPrites, so each shield will have a SpriteColor and Direction
     class Shield : CombatSprites

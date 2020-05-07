@@ -359,6 +359,7 @@ namespace TeamProject
             CurrentShields.Add(bShield);
             CurrentShields.Add(pShield);
 
+            //***Sophia
             //used in Stars constructor, easier than typing new Vector2(graphics.Preferred...) every time
             Vector2 screenSize = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             //initialize the 12 background stars and add to stars list
@@ -410,7 +411,7 @@ namespace TeamProject
         /// </summary>
         void CreateProjectile()
         {
-            //set up random number generators Dustin
+            //***set up random number generators Dustin
             Random random = new Random();
             int RandomColor = random.Next(1, 15); //random for color
             int RandomDirection = random.Next(0, 4); //random for direction
@@ -506,7 +507,7 @@ namespace TeamProject
         /// <summary>
         /// Moves each of the projectiles cirrently on screen with CurrentProjectiles list and 
         /// projectile move function
-        /// Caryln
+        /// ***Caryln
         /// </summary>
         void MoveProjectiles()
         {
@@ -517,14 +518,13 @@ namespace TeamProject
 
         /// <summary>
         /// takes user input to call the shield class MoveShield method with correct direction argument
-        /// Sophia
+        /// ***keyboard controlls by Sophia, controller controls by Iris and Carlyn
         /// </summary>
         void MoveShields()
         {
             KeyboardState keyboardState = Keyboard.GetState();
             GamePadState gamePadState = GamePad.GetState(PlayerIndex.One);
             //Checks if a controller is connected, and if so, implements the controller buttons for the shield
-            //keyboard controlls by Sophia, controller controls by Iris and Carlyn
             if (gamePadState.IsConnected)
             {
                 //DPad controls blue shield
@@ -628,7 +628,7 @@ namespace TeamProject
         /// -then removes it from unblockedProkectiles once it hits the ship
         /// -adds a hit to the ship if it is blue red or purple
         /// -power up if it is green
-        /// Iris and Sophia
+        /// ***Iris and Sophia
         /// </summary>
         void CheckCollision()
         {
@@ -899,7 +899,7 @@ namespace TeamProject
             KeyboardState CurrentKeyboardState = Keyboard.GetState();
             GamePadState CurrentGamePadState = GamePad.GetState(PlayerIndex.One);
 
-           //main menu logic Sophia
+           //***menu logic Sophia
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
                 //play main menu music 
@@ -1032,7 +1032,8 @@ namespace TeamProject
                 LastKeyboardState = CurrentKeyboardState;
             }
 
-            //allows player to see the how to play screen Sophia
+            //***allows player to see the how to play screen Sophia
+            //***how to screen designed by Sophia
             else if (CurrentScreenState == ScreenState.kControls)
             {
                 //if the game has not been started, go back to main menu
@@ -1042,7 +1043,7 @@ namespace TeamProject
                     CurrentScreenState = ScreenState.kMain_Menu;
                     MenuSelect.Play();
                 }
-                //if the game has been started, go back to pause menu Sophia
+                //***if the game has been started, go back to pause menu Sophia
                 else if (GameStarted && (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState)
                 || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                 {
@@ -1097,7 +1098,7 @@ namespace TeamProject
             //whenever the game is being played, ie. not in main menu, high scores, pause, how to play, or level select Sophia
             else if (CurrentScreenState == ScreenState.kGame_Play)
             {
-                //can pause with P key or right shoulder at any point Sophia
+                //***can pause with P key or right shoulder at any point Sophia
                 if (CurrentKeyboardState.IsKeyDown(Keys.P) || CurrentGamePadState.Buttons.RightShoulder == ButtonState.Pressed)
                     CurrentScreenState = ScreenState.kPaused;
                 //when level is in preogress, projectiles are being fired
@@ -1132,7 +1133,7 @@ namespace TeamProject
                         //check collisions and changes the CurrentWinState accordingly
                         CheckCollision();
                     }
-                    //turns text off and allows gameplay Dustin
+                    //***turns text off and allows gameplay Dustin
                     if(levelactive == false)
                     {
                         if (CurrentKeyboardState.IsKeyDown(Keys.Enter) && CurrentKeyboardState != LastKeyboardState || CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState)
@@ -1170,7 +1171,7 @@ namespace TeamProject
 
                                 //code for writing to a text file is from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
                                 //write each element of the high score list to MedExSave.txt
-                                //Dustin
+                                //***Dustin
                                 try{
                                 //Pass the textfile path and name to the streamwriter
                                 StreamWriter swhs = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path to text file
@@ -1203,9 +1204,9 @@ namespace TeamProject
                     {
                         //resets all values alterd during gameplay
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up. Dustin
-                        GameTh.Stop(); //ends the theme song Dustin
-                        levelactive = false; //Dustin
-                        Greggtalk = true;//Dustin
+                        GameTh.Stop(); //***ends the theme song Dustin
+                        levelactive = false; //***Dustin
+                        Greggtalk = true;//***Dustin
                         CurrentLevel = Level1;
                         CurrentLevelNum = 0;
                         CurrentScreenState = ScreenState.kMain_Menu;
@@ -1217,7 +1218,7 @@ namespace TeamProject
                     LastKeyboardState = CurrentKeyboardState;
                     lastGamePadState = CurrentGamePadState;
                 }
-
+                //***Sophia
                 //advance to next level if they win the level
                 else if (CurrentWinStatus == WinStatus.kWin_Level)
                 {
@@ -1250,7 +1251,7 @@ namespace TeamProject
                             SelectLevel = null;
                             //streamwriter opens save text file to update highest level unlocked
                             //writing to a text file code is from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
-                            //Dustin
+                            //***Dustin
                             try{
                                 //Pass the file name and path to the streamwriter
                                 StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path
@@ -1300,7 +1301,7 @@ namespace TeamProject
                     || (CurrentGamePadState.Buttons.A == ButtonState.Pressed && CurrentGamePadState != lastGamePadState))
                     {
                         Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship blows up. Dustin
-                        GameTh.Stop(); //ends the theme song Dustin
+                        GameTh.Stop(); //***ends the theme song Dustin
                         if(HighestUnlocked != 6)
                         {
                             HighestUnlocked = 6;
@@ -1309,7 +1310,7 @@ namespace TeamProject
                                 HighestUnlocked = CurrentLevel.LevelNum;
                                 //opens streamwriter to record the final level unlock to the text file
                                 //code for reading from a text file from https://support.microsoft.com/en-us/help/816149/how-to-read-from-and-write-to-a-text-file-by-using-visual-c
-                                //Dustin
+                                //***Dustin
                                 try{
                                     //Pass the text file name and path to the stream writer
                                     StreamWriter sw = new StreamWriter(System.IO.Path.GetFullPath(@"..\MedExSave.txt")); //relative path
@@ -1374,6 +1375,7 @@ namespace TeamProject
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
+            //***Sophia
             //draw the stars only if the player is in gameplay 
             if (CurrentScreenState == ScreenState.kGame_Play)
             {
@@ -1383,6 +1385,7 @@ namespace TeamProject
                 }
             }
 
+            //***Sophia handled darwing main menus
             //draw main menu
             if (CurrentScreenState == ScreenState.kMain_Menu)
             {
@@ -1505,6 +1508,7 @@ namespace TeamProject
                     { ShipisGone.Play(); explode = false; } //plays instanced sound effect and disables looping.
                     //Defeat message
                     spriteBatch.DrawString(PixelFont, Loser + "\n Press enter or A to return to main menu or esc to quit", FontPos, Color.White);
+                    //***Sophia
                     //if the player is in endless mode
                     //show them their final score and high scores
                     if(CurrentLevel == Endless)
@@ -1535,11 +1539,11 @@ namespace TeamProject
                 else if (CurrentWinStatus == WinStatus.kWin_Level)
                 {
                     Hullcrit.Stop(); //ends siren and AI sound effect so it no longer plays when ship is out of danger. Dustin
-                    GameTh.Stop(); //ends the theme song Dustin
+                    GameTh.Stop(); //***ends the theme song Dustin
                     ship.Draw(spriteBatch);
-                    //victory jingle Dustin
+                    //***victory jingle Dustin
                     Victory.Play();
-                    //victory message Dustin
+                    //***victory message Dustin
                     spriteBatch.DrawString(PixelFont, Winner, FontPos, Color.White);
                 }
 
@@ -1549,7 +1553,7 @@ namespace TeamProject
                         FontPos, Color.White);
                 }
             } 
-            //}
+           
 
             spriteBatch.End();
             base.Draw(gameTime);

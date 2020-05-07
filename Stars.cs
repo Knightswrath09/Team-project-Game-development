@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace TeamProject
 {
+    //***Made by Sophia
     //class for the star sprites which create a dynamic background
     class Stars
     {

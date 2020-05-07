@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeamProject
 {
+    //***Sophia
     //this class is basically so that the color and direction of the projectiles and shields are in the same format
     //makes shields and projectiles easier to compare in CheckCollision function
     class CombatSprites

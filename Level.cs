@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TeamProject
 {
+    //***Sophia
     //stores values that differentiate one level from another
     class Level
     {
@@ -66,7 +67,7 @@ namespace TeamProject
             get { return fireFreq; }
         }
 
-
+       
         //constructor
         public Level(int newLevelNum, int newTotalProjectiles, ProjectileTypes newTypesProj, int newFireFreq, float newSpeed)
         {

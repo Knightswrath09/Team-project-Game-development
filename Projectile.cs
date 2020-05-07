@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework; //for Vector2
 
 namespace TeamProject
 {
+    //***Move() by Iris, rest by Sophia
     //class for projectile objects that generate on the screen during each level
     //derived from CombatSprites, so has a SpriteColor and Direction
     class Projectile : CombatSprites
@@ -84,6 +85,7 @@ namespace TeamProject
             spriteBatch.Draw(texture, position, Color.White);
         }
 
+        //**Iris
         /// <summary>
         /// moves projectile towards ship at velocity according to level
         /// </summary>
